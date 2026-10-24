@@ -530,6 +530,130 @@
           "does": "Chat command, no hotkeys: /carpet list shows every rule"
         }
       ]
+    },
+    {
+      "id": "clientcommands",
+      "name": "clientcommands",
+      "category": "enchanting",
+      "what": "Cracks the enchanting table’s hidden seed, then tells you how to get the exact enchantments you ask for.",
+      "features": [
+        "/cenchant",
+        "/cconfig"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Get the jar from GitHub, not Modrinth. Not on Paper servers; many servers ban it.",
+      "available_for_version": true,
+      "version_checked": "clientcommands 2.16.3 for 26.3 on GitHub, 2026-10-19",
+      "requires": [
+        "fabric-api"
+      ],
+      "url": "https://github.com/Earthcomputer/clientcommands/releases",
+      "priority": "nice",
+      "used_for_farms": [],
+      "guide": {
+        "title": "Crack the enchanting table",
+        "steps": [
+          {
+            "do": "Turn on enchanting prediction. It switches off on every restart, so run this each session.",
+            "cmd": "/cconfig clientcommands enchantingPrediction set true"
+          },
+          {
+            "do": "Stand at a table with your bookshelves. Put an item you can enchant in the table. The screen now shows how many seeds are left. Swap items and add or remove bookshelves until it says Cracked."
+          },
+          {
+            "do": "Enchant something with the cheapest option, then crack again like in step 2. Do that twice in total, so the mod also knows your player seed. Check it:",
+            "cmd": "/cconfig clientcommands playerCrackState get"
+          },
+          {
+            "do": "When it says Cracked, keep a stack of junk in your inventory, like cobblestone. The mod throws items for you."
+          },
+          {
+            "do": "Ask for what you want. Tab completes the names. Examples:",
+            "cmd": "/cenchant minecraft:diamond_sword with minecraft:sharpness 5 with minecraft:looting 3"
+          },
+          {
+            "do": "Pickaxe:",
+            "cmd": "/cenchant minecraft:diamond_pickaxe with minecraft:efficiency 5 with minecraft:fortune 3 with minecraft:unbreaking 3"
+          },
+          {
+            "do": "Chestplate:",
+            "cmd": "/cenchant minecraft:diamond_chestplate with minecraft:protection 4 with minecraft:unbreaking 3"
+          },
+          {
+            "do": "Book:",
+            "cmd": "/cenchant minecraft:book with minecraft:efficiency 5"
+          },
+          {
+            "do": "Follow the chat. It throws the items, then says \"Do a dummy enchantment\" (enchant any junk item). At \"Your enchantment seed is ready\", set the bookshelves it names, put your item in and click the slot it names."
+          },
+          {
+            "do": "If it says \"impossible or would take too long\", ask for fewer or lower enchantments. Mending never comes from the table. Eating, getting hit or other random events reset it: crack again from step 2."
+          },
+          {
+            "do": "Status of the table seed:",
+            "cmd": "/cconfig clientcommands enchCrackState get"
+          }
+        ]
+      },
+      "hotkeys": [
+        {
+          "keys": "/cconfig",
+          "does": "Turn on prediction: /cconfig clientcommands enchantingPrediction set true"
+        },
+        {
+          "keys": "/cenchant",
+          "does": "Get exact enchantments after cracking (steps on the clientcommands card)"
+        }
+      ]
+    },
+    {
+      "id": "clumps",
+      "name": "Clumps",
+      "category": "enchanting",
+      "what": "Merges XP orbs and removes the pickup delay, so farm XP reaches you at once. Mending still gets all of it.",
+      "features": [
+        "XP orbs merge into one",
+        "No delay between orb pickups",
+        "Less lag at XP farms"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Works in singleplayer; a server needs it too.",
+      "available_for_version": true,
+      "version_checked": "Clumps 26.3.2 on Modrinth, 2026-09-16",
+      "requires": [
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/clumps",
+      "priority": "nice",
+      "used_for_farms": [
+        "enderman-farm",
+        "raid-farm"
+      ],
+      "hotkeys": []
+    },
+    {
+      "id": "enchanting-infuser",
+      "name": "Enchanting Infuser",
+      "category": "enchanting",
+      "what": "A new enchanting table where you pick the exact enchantments for levels. The advanced one also repairs with levels and removes enchantments.",
+      "features": [
+        "Choose enchantments, no randomness",
+        "Bookshelves work like on the normal table",
+        "Advanced infuser: modify, repair, get XP back"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Adds blocks: placed infusers vanish if you remove the mod. Mending is off by default.",
+      "available_for_version": true,
+      "version_checked": "Enchanting Infuser 26.3.0 on Modrinth, 2026-09-23",
+      "requires": [
+        "puzzles-lib",
+        "forge-config-api-port",
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/enchanting-infuser",
+      "priority": "nice",
+      "used_for_farms": [],
+      "hotkeys": []
     }
   ],
   "sources": [

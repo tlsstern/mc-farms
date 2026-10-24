@@ -319,7 +319,16 @@
   @media (max-width: 520px) { .hk-row { grid-template-columns:minmax(0,8.5rem) minmax(0,1fr); gap:4px 12px; } }
   @media (min-width: 1100px) { .hk-cards { display:block; columns:2; column-gap:12px; } .hk-cards .hk { break-inside:avoid; margin-bottom:12px; } .hk-notes { max-width:760px; } }
   .mod small { font-size:13px; color:var(--faint); }
-  .mod .needs a { color:var(--accent-ink); font-weight:600; }
+  .guide { border-top:1px solid var(--line); }
+  .guide-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:48px; font-weight:650; text-align:left; border-radius:10px; }
+  .guide-toggle small { font-weight:500; margin-left:4px; }
+  .steps { display:grid; gap:12px; padding:4px 0 8px 22px; font-size:15px; }
+  .steps li { display:grid; gap:6px; }
+  .cmd { display:flex; align-items:center; gap:4px; border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding-left:10px; }
+  .cmd code { flex:1; min-width:0; font:500 13px/1.45 var(--mono); overflow-wrap:anywhere; padding:8px 0; user-select:all; }
+  .cmd-copy { flex:none; display:grid; place-items:center; width:44px; height:44px; border-radius:10px; color:var(--muted); }
+  .cmd-copy svg { width:18px; height:18px; }
+  .mod .needs a { color:var(--accent-ink); font-weight:600; display:inline-flex; align-items:center; min-height:44px; padding:0 2px; }
   .mod-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid var(--line); padding-top:6px; margin-top:2px; }
   .mod-foot .check-row { grid-template-columns: 24px auto; padding-right:8px; }
   .link-out { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 4px; color:var(--accent-ink); font-weight:600; text-decoration:none; font-size:15px; }
@@ -376,6 +385,7 @@
     .link-out:hover, .mods-line a:hover { text-decoration:underline; }
     .sources a:hover { color:var(--fg); }
     .howto > button:hover { background:var(--press-bg); }
+    .cmd-copy:hover, .guide-toggle:hover { background:var(--press-bg); color:var(--fg); }
     .mod:hover { border-color:var(--line-strong); }
     .used-in a:hover { color:var(--accent-ink); }
   }
@@ -853,7 +863,7 @@
   }
 
   /* ---------- views: mods tab ---------- */
-  const CATS = [['map', 'Map'], ['building', 'Building'], ['redstone', 'Redstone'], ['info', 'Info and HUD'], ['movement', 'Movement'], ['performance', 'Performance'], ['qol', 'Quality of life']];
+  const CATS = [['map', 'Map'], ['building', 'Building'], ['redstone', 'Redstone'], ['info', 'Info and HUD'], ['movement', 'Movement'], ['performance', 'Performance'], ['enchanting', 'Enchanting and XP'], ['qol', 'Quality of life']];
   function lunarBadge(m) {
     const v = txt(m.lunar).toLowerCase();
     if (v === 'built-in') return '<span class="b b-good">Built into Lunar</span>';
@@ -877,13 +887,21 @@
       ${txt(m.what) ? `<p>${esc(txt(m.what))}</p>` : ''}
       <div class="badges">${lunarBadge(m)}${versionBadge(m)}</div>
       ${txt(m.lunar_note) ? `<small>${esc(txt(m.lunar_note))}</small>` : ''}
-      ${txt(m.version_checked) ? `<small>Checked: ${esc(txt(m.version_checked))}</small>` : ''}
-      ${feats.length ? `<ul class="req-list">${feats.map((x) => `<li class="tag">${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${txt(m.version_checked) ? `<small class="desk-only">Checked:${esc(txt(m.version_checked))}</small>` : ''}
+      ${feats.length ? `<ul class="req-list desk-only">${feats.map((x) => `<li class="tag">${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${guideHtml(m)}
       ${req.length ? `<p class="needs muted">Needs ${req.map((r) => byId[r] ? `<a href="#/mods/${encodeURIComponent(r)}">${esc(txt(byId[r].name) || r)}</a>` : `<span>${esc(FR.prettyName(r))}</span>`).join(', ')}</p>` : ''}
       <div class="mod-foot">
         <label class="check-row"><input type="checkbox" class="sr-only" data-installed="${esc(id)}"${S.installed[id] ? ' checked' : ''}><span class="box">${I.tick}</span><span class="mat-name">Installed</span></label>
         ${url ? `<a class="link-out" href="${esc(url)}" target="_blank" rel="noopener">${esc(hostOf(url))}${I.ext}</a>` : '<small>No link yet</small>'}
       </div></article>`;
+  }
+  function guideHtml(m) {
+    const g = m.guide; const steps = arr(g && g.steps).filter((s) => s && (txt(s.do) || txt(s.cmd)));
+    if (!steps.length) return '';
+    const pid = `guide-${esc(txt(m.id))}`;
+    return `<div class="guide"><button type="button" class="guide-toggle press" data-action="guide" aria-expanded="false" aria-controls="${pid}"><span>${esc(txt(g.title) || 'How to use it')} <small>${steps.length} steps</small></span>${I.chevD}</button>
+      <div class="acc" id="${pid}" inert><div class="acc-inner"><ol class="steps">${steps.map((s) => `<li>${txt(s.do) ? `<p>${esc(txt(s.do))}</p>` : ''}${txt(s.cmd) ? `<div class="cmd"><code>${esc(txt(s.cmd))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(txt(s.cmd))}" aria-label="Copy command">${I.copy}</button></div>` : ''}</li>`).join('')}</ol></div></div></div>`;
   }
   function keysHtml(s) {
     return s.split(/(\s\+\s|\s\/\s|\s…\s)/).map((t) => {
@@ -1091,13 +1109,13 @@
     document.body.appendChild(t);
     toastTimer = setTimeout(() => { t.classList.add('leaving'); t.addEventListener('transitionend', () => t.remove(), { once: true }); setTimeout(() => t.remove(), 400); }, 2600);
   }
-  async function copy(text, n) {
+  async function copy(text, n, msg) {
     try { await navigator.clipboard.writeText(text); }
     catch (e) {
       const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
       document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e2) { /* nothing more to try */ } ta.remove();
     }
-    toast(`Copied ${n} item${n === 1 ? '' : 's'}`);
+    toast(msg || `Copied ${n} item${n === 1 ? '' : 's'}`);
   }
 
   /* ---------- status change ---------- */
@@ -1160,6 +1178,11 @@
       refreshList(); const sc = $('[data-show-count]'); if (sc) sc.textContent = `Show ${visibleFarms().length} farms`;
     }
     else if (act === 'copy-farm' && f) { const d = designOf(f); const res = FR.expand(d ? d.materials : [], S.depthFarm); if (res.items.length) copy(`${txt(f.name)} (${S.depthFarm})\n` + listText(res), res.items.length); else toast('No materials to copy'); }
+    else if (act === 'guide') {
+      const open = a.getAttribute('aria-expanded') !== 'true'; a.setAttribute('aria-expanded', String(open));
+      const p = document.getElementById(a.getAttribute('aria-controls')); if (p) { p.toggleAttribute('data-open', open); p.toggleAttribute('inert', !open); }
+    }
+    else if (act === 'copy-cmd') { copy(a.dataset.cmd, 1, 'Command copied'); }
     else if (act === 'copy-all') { const { res } = shoppingData(); copy(`Farm Plan materials (${S.depthMats})\n` + listText(res), res.items.length); }
     else if (act === 'reset-got') {
       const prefix = `all|${S.depthMats}|`; Object.keys(S.got).forEach((k) => { if (k.startsWith(prefix)) delete S.got[k]; });
