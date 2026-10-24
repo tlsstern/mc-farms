@@ -1,5 +1,5 @@
 {
-  "researched": "2026-10-24",
+  "researched": "2026-10-25",
   "minecraft_version": "Java 26.3",
   "farms": [
     {
@@ -13,47 +13,79 @@
         "4 beds and 1 composter"
       ],
       "primary": {
-        "title": "Auto Villager Breeder in 5 minute! [STILL works] [TUTORIAL]",
-        "creator": "Rays Works",
-        "video_url": "https://www.youtube.com/watch?v=hyia7TmE3Ag",
-        "video_id": "hyia7TmE3Ag",
-        "published": "2023-01-14",
-        "works_on": "Java 1.16 - 26.3+",
-        "rate": "6-12 villagers/h",
-        "size": "18x11x12",
-        "difficulty": "easy",
+        "title": "Why Your Villager Breeder Is Now Obsolete  |  Explanation + Tutorial",
+        "creator": "potato_noir",
+        "video_url": "https://www.youtube.com/watch?v=vGQ05s7QU-E",
+        "video_id": "vGQ05s7QU-E",
+        "published": "2025-07-27",
+        "works_on": "Java 1.21 - 26.3",
+        "rate": "~8-12 villagers/h + ~350 iron ingots/h",
+        "size": "13x15x20",
+        "difficulty": "medium",
         "schematic": {
-          "url": "https://www.mediafire.com/file/nk1slz28fygmihf/villager+farm.litematic/file",
+          "url": "https://www.mediafire.com/file/2olzgshptv1odl6/potato_noir_voidbreeder_%252B_iron_simple.litematic/file",
           "format": "litematic",
           "found_in": "video description"
         },
         "materials": [
           {
-            "item": "cobblestone",
-            "count": 99
-          },
-          {
             "item": "dirt",
-            "count": 82
-          },
-          {
-            "item": "carrot",
             "count": 80
           },
           {
-            "item": "light_gray_stained_glass",
-            "count": 51
+            "item": "carrot",
+            "count": 76
+          },
+          {
+            "item": "oak_planks",
+            "count": 43
+          },
+          {
+            "item": "smooth_stone_slab",
+            "count": 41
+          },
+          {
+            "item": "oak_fence",
+            "count": 36
+          },
+          {
+            "item": "ladder",
+            "count": 22
+          },
+          {
+            "item": "cherry_sign",
+            "count": 13
+          },
+          {
+            "item": "redstone",
+            "count": 11
+          },
+          {
+            "item": "oak_trapdoor",
+            "count": 8
+          },
+          {
+            "item": "rail",
+            "count": 8
           },
           {
             "item": "torch",
             "count": 8
           },
           {
-            "item": "cobblestone_slab",
-            "count": 4
+            "item": "chest",
+            "count": 6
           },
           {
-            "item": "oak_trapdoor",
+            "item": "oak_sign",
+            "count": 5
+          },
+          {
+            "item": "red_bed",
+            "count": 5
+          },
+          {
+            "item": "oak_slab",
             "count": 4
           },
           {
@@ -61,19 +93,19 @@
             "count": 4
           },
           {
-            "item": "white_bed",
-            "count": 4
+            "item": "glass_pane",
+            "count": 3
           },
           {
-            "item": "oak_sign",
+            "item": "hopper",
+            "count": 3
+          },
+          {
+            "item": "oak_fence_gate",
             "count": 2
           },
           {
-            "item": "rail",
-            "count": 2
-          },
-          {
-            "item": "stone",
+            "item": "soul_sand",
             "count": 2
           },
           {
@@ -81,26 +113,186 @@
             "count": 1
           },
           {
+            "item": "lava_bucket",
+            "count": 1
+          },
+          {
+            "item": "lever",
+            "count": 1
+          },
+          {
             "item": "lightning_rod",
             "count": 1
           },
           {
-            "item": "oak_fence_gate",
+            "item": "minecart",
             "count": 1
           },
           {
-            "item": "powered_rail",
+            "item": "oak_boat",
             "count": 1
           },
           {
-            "item": "stone_button",
+            "item": "oak_pressure_plate",
+            "count": 1
+          },
+          {
+            "item": "piston",
+            "count": 1
+          },
+          {
+            "item": "redstone_torch",
+            "count": 1
+          },
+          {
+            "item": "smithing_table",
+            "count": 1
+          },
+          {
+            "item": "stone_pressure_plate",
             "count": 1
           }
         ],
         "materials_source": "schematic",
-        "notes": "Confirmed working in Java 26.1 - 26.3+ with the updated baby villager hitbox sizes. Place the lightning rod 1 block higher than shown in the video so lightning strikes cannot turn villagers into witches; since 1.21.5+ crops also grow in chunk-loaded areas without a player."
+        "notes": "Combines an early-game villager breeder with a passive iron farm in one footprint."
       },
       "alternatives": [
+        {
+          "title": "Simplest Infinite Villager Breeder for 1.20.2+, 1.21",
+          "creator": "bigbooty17",
+          "video_url": "https://www.youtube.com/watch?v=RSt7dcl8xsc",
+          "video_id": "RSt7dcl8xsc",
+          "published": "2024-04-17",
+          "works_on": "Java 1.20.2 - 26.3 (26.3 assumed)",
+          "rate": null,
+          "size": "3x7x8",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://discord.com/invite/tvpccRczWx",
+            "format": "Discord",
+            "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
+          },
+          "materials": [
+            {
+              "item": "white_bed",
+              "count": 4
+            },
+            {
+              "item": "oak_chest_boat",
+              "count": 2
+            },
+            {
+              "item": "oak_boat",
+              "count": 1
+            },
+            {
+              "item": "stone_bricks",
+              "count": 10
+            },
+            {
+              "item": "ladder",
+              "count": 5
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            },
+            {
+              "item": "torch",
+              "count": 1
+            }
+          ],
+          "materials_source": "counted-from-video",
+          "notes": "Place a solid block directly in front of each chest boat to block parent line of sight to babies in the 2x3x2 water pit, or parents will throw food to babies instead of breeding."
+        },
+        {
+          "title": "Auto Villager Breeder in 5 minute! [STILL works] [TUTORIAL]",
+          "creator": "Rays Works",
+          "video_url": "https://www.youtube.com/watch?v=hyia7TmE3Ag",
+          "video_id": "hyia7TmE3Ag",
+          "published": "2023-01-14",
+          "works_on": "Java 1.16 - 26.3+",
+          "rate": "6-12 villagers/h",
+          "size": "18x11x12",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://www.mediafire.com/file/nk1slz28fygmihf/villager+farm.litematic/file",
+            "format": "litematic",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "cobblestone",
+              "count": 99
+            },
+            {
+              "item": "dirt",
+              "count": 82
+            },
+            {
+              "item": "carrot",
+              "count": 80
+            },
+            {
+              "item": "light_gray_stained_glass",
+              "count": 51
+            },
+            {
+              "item": "torch",
+              "count": 8
+            },
+            {
+              "item": "cobblestone_slab",
+              "count": 4
+            },
+            {
+              "item": "oak_trapdoor",
+              "count": 4
+            },
+            {
+              "item": "water_bucket",
+              "count": 4
+            },
+            {
+              "item": "white_bed",
+              "count": 4
+            },
+            {
+              "item": "oak_sign",
+              "count": 2
+            },
+            {
+              "item": "rail",
+              "count": 2
+            },
+            {
+              "item": "stone",
+              "count": 2
+            },
+            {
+              "item": "composter",
+              "count": 1
+            },
+            {
+              "item": "lightning_rod",
+              "count": 1
+            },
+            {
+              "item": "oak_fence_gate",
+              "count": 1
+            },
+            {
+              "item": "powered_rail",
+              "count": 1
+            },
+            {
+              "item": "stone_button",
+              "count": 1
+            }
+          ],
+          "materials_source": "schematic",
+          "notes": "Confirmed working in Java 26.1 - 26.3+ with the updated baby villager hitbox sizes. Place the lightning rod 1 block higher than shown in the video so lightning strikes cannot turn villagers into witches; since 1.21.5+ crops also grow in chunk-loaded areas without a player."
+        },
         {
           "title": "Easy Infinite Villager Breeder For Minecraft (Tutorial)",
           "creator": "impulseSV",
@@ -172,150 +364,6 @@
           ],
           "materials_source": "description",
           "notes": "Requires mobGriefing set to true so the farmer can harvest and toss crops. Place an open trapdoor above the bed pillows if breeding villagers occasionally wake up on the wrong side."
-        },
-        {
-          "title": "Why Your Villager Breeder Is Now Obsolete  |  Explanation + Tutorial",
-          "creator": "potato_noir",
-          "video_url": "https://www.youtube.com/watch?v=vGQ05s7QU-E",
-          "video_id": "vGQ05s7QU-E",
-          "published": "2025-07-27",
-          "works_on": "Java 1.21 - 26.3",
-          "rate": "~8-12 villagers/h + ~350 iron ingots/h",
-          "size": "13x15x20",
-          "difficulty": "medium",
-          "schematic": {
-            "url": "https://www.mediafire.com/file/2olzgshptv1odl6/potato_noir_voidbreeder_%252B_iron_simple.litematic/file",
-            "format": "litematic",
-            "found_in": "video description"
-          },
-          "materials": [
-            {
-              "item": "dirt",
-              "count": 80
-            },
-            {
-              "item": "carrot",
-              "count": 76
-            },
-            {
-              "item": "oak_planks",
-              "count": 43
-            },
-            {
-              "item": "smooth_stone_slab",
-              "count": 41
-            },
-            {
-              "item": "oak_fence",
-              "count": 36
-            },
-            {
-              "item": "ladder",
-              "count": 22
-            },
-            {
-              "item": "cherry_sign",
-              "count": 13
-            },
-            {
-              "item": "redstone",
-              "count": 11
-            },
-            {
-              "item": "oak_trapdoor",
-              "count": 8
-            },
-            {
-              "item": "rail",
-              "count": 8
-            },
-            {
-              "item": "torch",
-              "count": 8
-            },
-            {
-              "item": "chest",
-              "count": 6
-            },
-            {
-              "item": "oak_sign",
-              "count": 5
-            },
-            {
-              "item": "red_bed",
-              "count": 5
-            },
-            {
-              "item": "oak_slab",
-              "count": 4
-            },
-            {
-              "item": "water_bucket",
-              "count": 4
-            },
-            {
-              "item": "glass_pane",
-              "count": 3
-            },
-            {
-              "item": "hopper",
-              "count": 3
-            },
-            {
-              "item": "oak_fence_gate",
-              "count": 2
-            },
-            {
-              "item": "soul_sand",
-              "count": 2
-            },
-            {
-              "item": "composter",
-              "count": 1
-            },
-            {
-              "item": "lava_bucket",
-              "count": 1
-            },
-            {
-              "item": "lever",
-              "count": 1
-            },
-            {
-              "item": "lightning_rod",
-              "count": 1
-            },
-            {
-              "item": "minecart",
-              "count": 1
-            },
-            {
-              "item": "oak_boat",
-              "count": 1
-            },
-            {
-              "item": "oak_pressure_plate",
-              "count": 1
-            },
-            {
-              "item": "piston",
-              "count": 1
-            },
-            {
-              "item": "redstone_torch",
-              "count": 1
-            },
-            {
-              "item": "smithing_table",
-              "count": 1
-            },
-            {
-              "item": "stone_pressure_plate",
-              "count": 1
-            }
-          ],
-          "materials_source": "schematic",
-          "notes": "Combines an early-game villager breeder with a passive iron farm in one footprint."
         }
       ],
       "sources": [
@@ -325,46 +373,38 @@
         "https://www.youtube.com/watch?v=VTseLpa9Iyc",
         "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVTseLpa9Iyc&format=json",
         "https://www.youtube.com/watch?v=vGQ05s7QU-E",
-        "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DvGQ05s7QU-E&format=json"
+        "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DvGQ05s7QU-E&format=json",
+        "https://www.youtube.com/watch?v=RSt7dcl8xsc"
       ]
     },
     {
       "id": "cobblestone-farm",
       "name": "Cobblestone Farm",
       "dimension": "overworld",
-      "where": "Any biome; build at least 10 blocks off the ground so TNT blasts only hit the cobblestone chamber",
+      "where": "Any biome; the farm is 12 blocks tall, check the height in the video",
       "requirements": [
-        "TNT duping allowed on server (vanilla Java default)",
-        "1 tripwire hook + string + tnt for the TNT duper",
-        "Water and lava buckets"
+        "TNT duping (on in vanilla Java)",
+        "1 TNT, water and lava buckets"
       ],
       "primary": {
-        "title": "Minecraft Easy 5 Minute Cobblestone Farm - Fully Automatic",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=YCDP2H0B4Tg",
-        "video_id": "YCDP2H0B4Tg",
-        "published": "2024-01-17",
-        "works_on": "Java 1.20 - 26.3",
-        "rate": "~28,600 cobblestone/h",
-        "size": "9x7x10",
+        "title": "Fast Simple Auto Cobblestone for 1.21+",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=NZRiQwVCfcE",
+        "video_id": "NZRiQwVCfcE",
+        "published": "2025-01-20",
+        "works_on": "Java 1.21 - 26.3 (26.3 assumed)",
+        "rate": "28,800 cobblestone/h",
+        "size": "5x7x12",
         "difficulty": "easy",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Easy-TNT-Cobblestone-Farm",
-          "format": "world download",
-          "found_in": "video description"
+          "url": "https://discord.com/invite/tvpccRczWx",
+          "format": "Discord",
+          "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
         },
         "materials": [
           {
-            "item": "smooth_stone",
-            "count": 20
-          },
-          {
-            "item": "scaffolding",
-            "count": 17
-          },
-          {
-            "item": "cobblestone",
-            "count": 12
+            "item": "stone",
+            "count": 30
           },
           {
             "item": "hopper",
@@ -375,8 +415,16 @@
             "count": 8
           },
           {
+            "item": "oak_leaves",
+            "count": 8
+          },
+          {
             "item": "redstone",
-            "count": 6
+            "count": 7
+          },
+          {
+            "item": "repeater",
+            "count": 5
           },
           {
             "item": "observer",
@@ -387,27 +435,23 @@
             "count": 2
           },
           {
-            "item": "tripwire_hook",
-            "count": 2
-          },
-          {
             "item": "water_bucket",
             "count": 2
-          },
-          {
-            "item": "dispenser",
-            "count": 1
           },
           {
             "item": "lava_bucket",
             "count": 1
           },
           {
-            "item": "note_block",
+            "item": "tnt",
             "count": 1
           },
           {
-            "item": "oak_button",
+            "item": "deepslate_brick_slab",
+            "count": 1
+          },
+          {
+            "item": "deepslate_brick_stairs",
             "count": 1
           },
           {
@@ -415,30 +459,122 @@
             "count": 1
           },
           {
-            "item": "stone_brick_slab",
+            "item": "redstone_torch",
             "count": 1
           },
           {
-            "item": "stone_brick_stairs",
+            "item": "lever",
             "count": 1
           },
           {
-            "item": "stone_brick_wall",
-            "count": 1
-          },
-          {
-            "item": "string",
-            "count": 1
-          },
-          {
-            "item": "tnt",
-            "count": 1
+            "item": "dirt",
+            "count": 32
           }
         ],
-        "materials_source": "schematic",
-        "notes": "Designed by bigbooty17; uses no slime blocks or coral fan for the TNT duper. Always waterlog the top slab and turn the farm off before unloading the chunks so TNT does not detonate early."
+        "materials_source": "counted-from-video",
+        "notes": "Waterlog the top slab over the TNT duper, count the 8-block pillar height exactly, and wait for the final TNT to explode before unloading the area or restarting."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Easy 5 Minute Cobblestone Farm - Fully Automatic",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=YCDP2H0B4Tg",
+          "video_id": "YCDP2H0B4Tg",
+          "published": "2024-01-17",
+          "works_on": "Java 1.20 - 26.3",
+          "rate": "~28,600 cobblestone/h",
+          "size": "9x7x10",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://wisehosting.com/dl?w=Easy-TNT-Cobblestone-Farm",
+            "format": "world download",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "smooth_stone",
+              "count": 20
+            },
+            {
+              "item": "scaffolding",
+              "count": 17
+            },
+            {
+              "item": "cobblestone",
+              "count": 12
+            },
+            {
+              "item": "hopper",
+              "count": 12
+            },
+            {
+              "item": "chest",
+              "count": 8
+            },
+            {
+              "item": "redstone",
+              "count": 6
+            },
+            {
+              "item": "observer",
+              "count": 2
+            },
+            {
+              "item": "piston",
+              "count": 2
+            },
+            {
+              "item": "tripwire_hook",
+              "count": 2
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            },
+            {
+              "item": "dispenser",
+              "count": 1
+            },
+            {
+              "item": "lava_bucket",
+              "count": 1
+            },
+            {
+              "item": "note_block",
+              "count": 1
+            },
+            {
+              "item": "oak_button",
+              "count": 1
+            },
+            {
+              "item": "oak_fence_gate",
+              "count": 1
+            },
+            {
+              "item": "stone_brick_slab",
+              "count": 1
+            },
+            {
+              "item": "stone_brick_stairs",
+              "count": 1
+            },
+            {
+              "item": "stone_brick_wall",
+              "count": 1
+            },
+            {
+              "item": "string",
+              "count": 1
+            },
+            {
+              "item": "tnt",
+              "count": 1
+            }
+          ],
+          "materials_source": "schematic",
+          "notes": "Designed by bigbooty17; uses no slime blocks or coral fan for the TNT duper. Always waterlog the top slab and turn the farm off before unloading the chunks so TNT does not detonate early."
+        },
         {
           "title": "Minecraft Fully Automatic Cobblestone Farm - 120,000 Cobble Per Hour - 1.20+",
           "creator": "Shulkercraft",
@@ -677,66 +813,86 @@
         "https://www.youtube.com/watch?v=4KGkH-jqZoY",
         "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D4KGkH-jqZoY&format=json",
         "https://wisehosting.com/dl?w=Huge-Cobblestone-Farm-Litematic",
-        "https://www.youtube.com/watch?v=_5kQSeqANKs"
+        "https://www.youtube.com/watch?v=_5kQSeqANKs",
+        "https://www.youtube.com/watch?v=NZRiQwVCfcE"
       ]
     },
     {
       "id": "enderman-farm",
       "name": "Enderman Farm",
       "dimension": "end",
-      "where": "The End void at Y=1, at least 128 blocks away from the main End island",
+      "where": "The End, out in the void about 128 blocks from the main island (boat bridge)",
       "requirements": [
         "Ender Dragon defeated",
-        "1 name tag (craftable in Java 26.1+ from 1 paper and 1 iron nugget)",
-        "~16-32 ender pearls to spawn an endermite",
-        "Leaves for a 128-block spawn-proof bridge over the void"
+        "27 boats for the bridge",
+        "On 26.3: spawnable blocks along the path (End skylight since 1.21.9)"
       ],
       "primary": {
-        "title": "Minecraft Enderman 1 Hit Farm - Super Fast XP",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=nh8voJScSbw",
-        "video_id": "nh8voJScSbw",
-        "published": "2020-10-11",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "Level 0 to 33 in ~60s (~60,000 XP/h)",
-        "size": "43x43x45 (plus 128-block leaf bridge)",
-        "difficulty": "easy",
+        "title": "One-Hit, No Endermite Enderman Farm for Minecraft 1.20+, 1.21",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=jn8C8uY3fHM",
+        "video_id": "jn8C8uY3fHM",
+        "published": "2024-04-22",
+        "works_on": "Java 1.20 - 26.3 (26.3 assumed)",
+        "rate": "Max player XP absorption (~180,000 XP/h)",
+        "size": "12x43x33 (plus 128-block bridge)",
+        "difficulty": "medium",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Enderman-XP-Farm",
-          "format": "world download",
-          "found_in": "video description"
+          "url": "https://discord.com/invite/tvpccRczWx",
+          "format": "Discord",
+          "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
         },
         "materials": [
           {
-            "item": "cobblestone",
-            "count": 1414
-          },
-          {
             "item": "oak_leaves",
-            "count": 128
+            "count": 448
           },
           {
-            "item": "white_carpet",
-            "count": 123
+            "item": "oak_boat",
+            "count": 27
           },
           {
-            "item": "ladder",
-            "count": 64
+            "item": "cobblestone",
+            "count": 21
           },
           {
-            "item": "ender_pearl",
-            "count": 16
+            "item": "cobblestone_slab",
+            "count": 18
           },
           {
-            "item": "hopper",
-            "count": 9
+            "item": "water_bucket",
+            "count": 4
+          },
+          {
+            "item": "composter",
+            "count": 3
           },
           {
             "item": "oak_trapdoor",
-            "count": 8
+            "count": 2
+          },
+          {
+            "item": "cobblestone_stairs",
+            "count": 2
+          },
+          {
+            "item": "ladder",
+            "count": 2
           },
           {
             "item": "chest",
+            "count": 2
+          },
+          {
+            "item": "lever",
+            "count": 2
+          },
+          {
+            "item": "dispenser",
+            "count": 2
+          },
+          {
+            "item": "hopper",
             "count": 2
           },
           {
@@ -744,15 +900,27 @@
             "count": 1
           },
           {
-            "item": "lava_bucket",
+            "item": "heavy_weighted_pressure_plate",
             "count": 1
           },
           {
-            "item": "minecart",
+            "item": "crafting_table",
             "count": 1
           },
           {
-            "item": "name_tag",
+            "item": "armor_stand",
+            "count": 1
+          },
+          {
+            "item": "redstone",
+            "count": 1
+          },
+          {
+            "item": "piston",
+            "count": 1
+          },
+          {
+            "item": "observer",
             "count": 1
           },
           {
@@ -760,14 +928,98 @@
             "count": 1
           },
           {
-            "item": "water_bucket",
+            "item": "hopper_minecart",
+            "count": 1
+          },
+          {
+            "item": "lava_bucket",
+            "count": 1
+          },
+          {
+            "item": "torch",
             "count": 1
           }
         ],
-        "materials_source": "description",
-        "notes": "Since 1.21.9+ (including 26.3), Mojang added End skylight mechanics that slightly lower uncovered Enderman spawn rates unless you place a roof over the spawning platform. Name tags are craftable in 26.1+."
+        "materials_source": "counted-from-video",
+        "notes": "In 1.21.9+ (including 26.3), End skylight reduces rates unless you replace the leaf path along the spawning platform with spawnable blocks (https://imgur.com/a/v06D3pZ); if using Fire Aspect in 1.21.4+, put lava instead of water on the armor stand."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Enderman 1 Hit Farm - Super Fast XP",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=nh8voJScSbw",
+          "video_id": "nh8voJScSbw",
+          "published": "2020-10-11",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "Level 0 to 33 in ~60s (~60,000 XP/h)",
+          "size": "43x43x45 (plus 128-block leaf bridge)",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://wisehosting.com/dl?w=Enderman-XP-Farm",
+            "format": "world download",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "cobblestone",
+              "count": 1414
+            },
+            {
+              "item": "oak_leaves",
+              "count": 128
+            },
+            {
+              "item": "white_carpet",
+              "count": 123
+            },
+            {
+              "item": "ladder",
+              "count": 64
+            },
+            {
+              "item": "ender_pearl",
+              "count": 16
+            },
+            {
+              "item": "hopper",
+              "count": 9
+            },
+            {
+              "item": "oak_trapdoor",
+              "count": 8
+            },
+            {
+              "item": "chest",
+              "count": 2
+            },
+            {
+              "item": "iron_bars",
+              "count": 1
+            },
+            {
+              "item": "lava_bucket",
+              "count": 1
+            },
+            {
+              "item": "minecart",
+              "count": 1
+            },
+            {
+              "item": "name_tag",
+              "count": 1
+            },
+            {
+              "item": "rail",
+              "count": 1
+            },
+            {
+              "item": "water_bucket",
+              "count": 1
+            }
+          ],
+          "materials_source": "description",
+          "notes": "Since 1.21.9+ (including 26.3), Mojang added End skylight mechanics that slightly lower uncovered Enderman spawn rates unless you place a roof over the spawning platform. Name tags are craftable in 26.1+."
+        },
         {
           "title": "Max Enderman XP Farm in 10 minutes! Minecraft 1.17-26.3+ [tutorial] ender pearls, experience orb exp",
           "creator": "Rays Works",
@@ -911,67 +1163,87 @@
       "dimension": "overworld",
       "where": "Any biome, at least 16 blocks away from other villagers, beds, and iron golems",
       "requirements": [
-        "3 villagers (or 6 for the 600/h design)",
-        "1 zombie (trapped in a boat or named with a name tag)"
+        "3 villagers",
+        "1 zombie"
       ],
       "primary": {
-        "title": "Minecraft Easiest 3 Villager Iron Farm - 350+ Per Hour",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=MMsYeKntoEI",
-        "video_id": "MMsYeKntoEI",
-        "published": "2020-08-12",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~350 ingots/h",
-        "size": "9x9x15",
-        "difficulty": "easy",
+        "title": "Simple Iron farm | 1200 per hour | 1.17 - 1.21*",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=icbCWOybI80",
+        "video_id": "icbCWOybI80",
+        "published": "2023-09-27",
+        "works_on": "Java 1.17 - 26.3",
+        "rate": "~1,100-1,200 ingots/h",
+        "size": "15x15x30",
+        "difficulty": "medium",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Iron-Farm-v2",
-          "format": "world download",
+          "url": "https://www.mediafire.com/file/kkj9gg7d2zsktz1/1D_3x_Iron_Farm.litematic/file",
+          "format": "litematic",
           "found_in": "video description"
         },
         "materials": [
           {
-            "item": "smooth_stone_slab",
-            "count": 59
+            "item": "dirt",
+            "count": 128
           },
           {
-            "item": "ladder",
+            "item": "oak_fence",
+            "count": 39
+          },
+          {
+            "item": "white_carpet",
+            "count": 22
+          },
+          {
+            "item": "cobblestone",
             "count": 19
           },
           {
-            "item": "oak_fence_gate",
-            "count": 8
+            "item": "ladder",
+            "count": 16
           },
           {
             "item": "glass",
-            "count": 7
+            "count": 14
+          },
+          {
+            "item": "white_bed",
+            "count": 11
+          },
+          {
+            "item": "spruce_trapdoor",
+            "count": 8
+          },
+          {
+            "item": "torch",
+            "count": 8
+          },
+          {
+            "item": "chest",
+            "count": 6
+          },
+          {
+            "item": "oak_fence_gate",
+            "count": 6
           },
           {
             "item": "oak_sign",
             "count": 6
           },
           {
-            "item": "chest",
+            "item": "water_bucket",
             "count": 4
           },
           {
-            "item": "white_bed",
+            "item": "hopper",
             "count": 3
           },
           {
-            "item": "hopper",
-            "count": 2
+            "item": "dropper",
+            "count": 1
           },
           {
-            "item": "oak_trapdoor",
-            "count": 2
-          },
-          {
-            "item": "water_bucket",
-            "count": 2
-          },
-          {
-            "item": "composter",
+            "item": "glass_pane",
             "count": 1
           },
           {
@@ -979,18 +1251,106 @@
             "count": 1
           },
           {
-            "item": "name_tag",
+            "item": "lever",
             "count": 1
           },
           {
-            "item": "stone_button",
+            "item": "lightning_rod",
+            "count": 1
+          },
+          {
+            "item": "oak_door",
+            "count": 1
+          },
+          {
+            "item": "oak_pressure_plate",
+            "count": 1
+          },
+          {
+            "item": "redstone_torch",
             "count": 1
           }
         ],
         "materials_source": "description",
-        "notes": "Inspired by Rays Works. Let the 3 villagers sleep for one night before revealing the zombie so they link to their beds properly."
+        "notes": "3-cell pillager/zombie iron farm; use the alternate hopper clock linked in the video description (https://imgur.com/a/pQUI96v) for better reload stability in 1.21+ / 26.3."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Easiest 3 Villager Iron Farm - 350+ Per Hour",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=MMsYeKntoEI",
+          "video_id": "MMsYeKntoEI",
+          "published": "2020-08-12",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~350 ingots/h",
+          "size": "9x9x15",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://wisehosting.com/dl?w=Iron-Farm-v2",
+            "format": "world download",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "smooth_stone_slab",
+              "count": 59
+            },
+            {
+              "item": "ladder",
+              "count": 19
+            },
+            {
+              "item": "oak_fence_gate",
+              "count": 8
+            },
+            {
+              "item": "glass",
+              "count": 7
+            },
+            {
+              "item": "oak_sign",
+              "count": 6
+            },
+            {
+              "item": "chest",
+              "count": 4
+            },
+            {
+              "item": "white_bed",
+              "count": 3
+            },
+            {
+              "item": "hopper",
+              "count": 2
+            },
+            {
+              "item": "oak_trapdoor",
+              "count": 2
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            },
+            {
+              "item": "composter",
+              "count": 1
+            },
+            {
+              "item": "lava_bucket",
+              "count": 1
+            },
+            {
+              "item": "name_tag",
+              "count": 1
+            },
+            {
+              "item": "stone_button",
+              "count": 1
+            }
+          ],
+          "materials_source": "description",
+          "notes": "Inspired by Rays Works. Let the 3 villagers sleep for one night before revealing the zombie so they link to their beds properly."
+        },
         {
           "title": "Minecraft 1.21+ Reliable Iron Farm Tutorial - 600 Per Hour",
           "creator": "Shulkercraft",
@@ -1066,114 +1426,6 @@
           ],
           "materials_source": "schematic",
           "notes": "Uses 6 villagers (2 pods of 3) and 1 zombie in an oak boat (no name tag required)."
-        },
-        {
-          "title": "Simple Iron farm | 1200 per hour | 1.17 - 1.21*",
-          "creator": "bigbooty17",
-          "video_url": "https://www.youtube.com/watch?v=icbCWOybI80",
-          "video_id": "icbCWOybI80",
-          "published": "2023-09-27",
-          "works_on": "Java 1.17 - 26.3",
-          "rate": "~1,100-1,200 ingots/h",
-          "size": "15x15x30",
-          "difficulty": "medium",
-          "schematic": {
-            "url": "https://www.mediafire.com/file/kkj9gg7d2zsktz1/1D_3x_Iron_Farm.litematic/file",
-            "format": "litematic",
-            "found_in": "video description"
-          },
-          "materials": [
-            {
-              "item": "dirt",
-              "count": 128
-            },
-            {
-              "item": "oak_fence",
-              "count": 39
-            },
-            {
-              "item": "white_carpet",
-              "count": 22
-            },
-            {
-              "item": "cobblestone",
-              "count": 19
-            },
-            {
-              "item": "ladder",
-              "count": 16
-            },
-            {
-              "item": "glass",
-              "count": 14
-            },
-            {
-              "item": "white_bed",
-              "count": 11
-            },
-            {
-              "item": "spruce_trapdoor",
-              "count": 8
-            },
-            {
-              "item": "torch",
-              "count": 8
-            },
-            {
-              "item": "chest",
-              "count": 6
-            },
-            {
-              "item": "oak_fence_gate",
-              "count": 6
-            },
-            {
-              "item": "oak_sign",
-              "count": 6
-            },
-            {
-              "item": "water_bucket",
-              "count": 4
-            },
-            {
-              "item": "hopper",
-              "count": 3
-            },
-            {
-              "item": "dropper",
-              "count": 1
-            },
-            {
-              "item": "glass_pane",
-              "count": 1
-            },
-            {
-              "item": "lava_bucket",
-              "count": 1
-            },
-            {
-              "item": "lever",
-              "count": 1
-            },
-            {
-              "item": "lightning_rod",
-              "count": 1
-            },
-            {
-              "item": "oak_door",
-              "count": 1
-            },
-            {
-              "item": "oak_pressure_plate",
-              "count": 1
-            },
-            {
-              "item": "redstone_torch",
-              "count": 1
-            }
-          ],
-          "materials_source": "description",
-          "notes": "3-cell pillager/zombie iron farm; use the alternate hopper clock linked in the video description (https://imgur.com/a/pQUI96v) for better reload stability in 1.21+ / 26.3."
         }
       ],
       "sources": [
@@ -1194,63 +1446,83 @@
       "dimension": "overworld",
       "where": "Strictly inside the 7x9x7 bounding box of a naturally generated Swamp Hut",
       "requirements": [
-        "Swamp hut (regular Swamp only; Mangrove Swamps do not generate witch huts)",
-        "AFK platform ~120 blocks above the kill chamber so underground caves are outside the 128-block despawn sphere"
+        "A swamp hut (regular Swamp, not Mangrove)",
+        "Kill chamber exactly 127 blocks above the collection floor"
       ],
       "primary": {
-        "title": "Minecraft Witch Farm - Easy and Efficient Build - 1.20+",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=sofyZ44Rw_E",
-        "video_id": "sofyZ44Rw_E",
-        "published": "2020-09-09",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~2,000+ items/h (~4,000+ items/h in 1.21+ / 26.3 after witch redstone drop buff)",
-        "size": "11x13x30",
+        "title": "Fast Redstone and Gunpowder from Witches in Minecraft 1.21+",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=uprHDRHJZ7A",
+        "video_id": "uprHDRHJZ7A",
+        "published": "2024-10-26",
+        "works_on": "Java 1.21 - 26.3 (26.3 assumed)",
+        "rate": "8,300 redstone/h, 1,580 sticks/h, 790 gunpowder/h (790 each other drop/h)",
+        "size": "18x18x127",
         "difficulty": "medium",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Witch-Farm-WD",
-          "format": "world download",
-          "found_in": "video description"
+          "url": "https://discord.com/invite/tvpccRczWx",
+          "format": "Discord",
+          "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
         },
         "materials": [
           {
-            "item": "smooth_stone",
-            "count": 420
+            "item": "stone_brick_slab",
+            "count": 448
           },
           {
-            "item": "string",
-            "count": 189
-          },
-          {
-            "item": "smooth_stone_slab",
-            "count": 131
-          },
-          {
-            "item": "redstone",
-            "count": 54
-          },
-          {
-            "item": "tripwire_hook",
-            "count": 42
+            "item": "stone_bricks",
+            "count": 360
           },
           {
             "item": "oak_trapdoor",
-            "count": 27
+            "count": 190
           },
           {
-            "item": "minecart",
-            "count": 24
+            "item": "stone_brick_stairs",
+            "count": 115
           },
           {
-            "item": "glass",
-            "count": 9
+            "item": "soul_sand",
+            "count": 87
+          },
+          {
+            "item": "torch",
+            "count": 64
+          },
+          {
+            "item": "redstone",
+            "count": 57
+          },
+          {
+            "item": "piston",
+            "count": 42
+          },
+          {
+            "item": "repeater",
+            "count": 6
+          },
+          {
+            "item": "observer",
+            "count": 6
           },
           {
             "item": "chest",
             "count": 4
           },
           {
-            "item": "redstone_torch",
+            "item": "ladder",
+            "count": 4
+          },
+          {
+            "item": "stone_brick_wall",
+            "count": 3
+          },
+          {
+            "item": "oak_sign",
+            "count": 3
+          },
+          {
+            "item": "water_bucket",
             "count": 3
           },
           {
@@ -1258,22 +1530,142 @@
             "count": 2
           },
           {
-            "item": "water_bucket",
+            "item": "lava_bucket",
             "count": 2
           },
           {
-            "item": "oak_sign",
+            "item": "oak_door",
             "count": 1
           },
           {
-            "item": "rail",
+            "item": "lever",
             "count": 1
+          },
+          {
+            "item": "sticky_piston",
+            "count": 1
+          },
+          {
+            "item": "comparator",
+            "count": 1
+          },
+          {
+            "item": "redstone_torch",
+            "count": 1
+          },
+          {
+            "item": "dispenser",
+            "count": 1
+          },
+          {
+            "item": "copper_bulb",
+            "count": 1
+          },
+          {
+            "item": "magma_block",
+            "count": 1
+          },
+          {
+            "item": "blue_ice",
+            "count": 1
+          },
+          {
+            "item": "armor_stand",
+            "count": 1
+          },
+          {
+            "item": "kelp",
+            "count": 2
+          },
+          {
+            "item": "bone_meal",
+            "count": 256
+          },
+          {
+            "item": "scaffolding",
+            "count": 126
           }
         ],
-        "materials_source": "description",
-        "notes": "In Java 1.21+, Mojang buffed witches to always drop 4-8 redstone dust on death, roughly doubling redstone output compared to older versions. Extend the roof overhang so internal spawning floors stay at block light 0."
+        "materials_source": "counted-from-video",
+        "notes": "Build the killing chamber exactly 127 blocks above the collection floor so witches do not despawn without a perimeter; if using a Fire Aspect sword, use the alternative killing chamber (https://imgur.com/7sedbKc) so the armor stand does not burn."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Witch Farm - Easy and Efficient Build - 1.20+",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=sofyZ44Rw_E",
+          "video_id": "sofyZ44Rw_E",
+          "published": "2020-09-09",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~2,000+ items/h (~4,000+ items/h in 1.21+ / 26.3 after witch redstone drop buff)",
+          "size": "11x13x30",
+          "difficulty": "medium",
+          "schematic": {
+            "url": "https://wisehosting.com/dl?w=Witch-Farm-WD",
+            "format": "world download",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "smooth_stone",
+              "count": 420
+            },
+            {
+              "item": "string",
+              "count": 189
+            },
+            {
+              "item": "smooth_stone_slab",
+              "count": 131
+            },
+            {
+              "item": "redstone",
+              "count": 54
+            },
+            {
+              "item": "tripwire_hook",
+              "count": 42
+            },
+            {
+              "item": "oak_trapdoor",
+              "count": 27
+            },
+            {
+              "item": "minecart",
+              "count": 24
+            },
+            {
+              "item": "glass",
+              "count": 9
+            },
+            {
+              "item": "chest",
+              "count": 4
+            },
+            {
+              "item": "redstone_torch",
+              "count": 3
+            },
+            {
+              "item": "hopper",
+              "count": 2
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            },
+            {
+              "item": "oak_sign",
+              "count": 1
+            },
+            {
+              "item": "rail",
+              "count": 1
+            }
+          ],
+          "materials_source": "description",
+          "notes": "In Java 1.21+, Mojang buffed witches to always drop 4-8 redstone dust on death, roughly doubling redstone output compared to older versions. Extend the roof overhang so internal spawning floors stay at block light 0."
+        },
         {
           "title": "Best Witch Redstone Farm for 1.16-26.3+ Minecraft (Witch, gunpowder, glowstone, stick, bottle)",
           "creator": "Rays Works",
@@ -1353,91 +1745,228 @@
         "https://wisehosting.com/dl?w=Witch-Farm-WD",
         "https://www.youtube.com/watch?v=xn5FhPuhy8M",
         "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dxn5FhPuhy8M&format=json",
-        "https://www.mediafire.com/file/mdx4uun5sbikcwq/witchfarmsnowgolem.nbt/file"
+        "https://www.mediafire.com/file/mdx4uun5sbikcwq/witchfarmsnowgolem.nbt/file",
+        "https://www.youtube.com/watch?v=uprHDRHJZ7A"
       ]
     },
     {
       "id": "slime-farm",
       "name": "Slime Farm",
       "dimension": "overworld",
-      "where": "Inside a Slime Chunk below Y=40 (primary), or any biome for the 1.21+ Oozing potion alternative",
+      "where": "Any biome: it uses Oozing potions, no slime chunk needed",
       "requirements": [
-        "1 slime chunk located via seed map or chunk borders below Y=40",
-        "6 iron golems to lure slimes into magma kill trenches"
+        "Oozing splash potions",
+        "Snow blocks (960 per run) and carved pumpkins for snow golems"
       ],
       "primary": {
-        "title": "Minecraft Slime Farm + How to Find Slime Chunks Tutorial",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=zgs4K6aURmY",
-        "video_id": "zgs4K6aURmY",
-        "published": "2020-04-01",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~1,500+ slimeballs/h (~350+ slimes/h)",
-        "size": "16x16x25",
+        "title": "Fast Simple Oozing Slime Farm for Minecraft 1.21+",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=Ln-F7y669nk",
+        "video_id": "Ln-F7y669nk",
+        "published": "2024-07-12",
+        "works_on": "Java 1.21 - 26.3 (26.3 assumed)",
+        "rate": "120,000 - 216,000 slime_ball/h (~4 shulker boxes per oozing potion)",
+        "size": "9x9x15",
         "difficulty": "medium",
         "schematic": {
-          "url": null,
-          "format": null,
-          "found_in": "none"
+          "url": "https://discord.com/invite/tvpccRczWx",
+          "format": "Discord",
+          "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
         },
         "materials": [
           {
-            "item": "smooth_stone_slab",
-            "count": 768
-          },
-          {
             "item": "smooth_stone",
-            "count": 268
+            "count": 46
           },
           {
-            "item": "oak_fence",
-            "count": 120
-          },
-          {
-            "item": "torch",
-            "count": 100
-          },
-          {
-            "item": "magma_block",
-            "count": 96
-          },
-          {
-            "item": "iron_block",
-            "count": 30
-          },
-          {
-            "item": "hopper",
-            "count": 28
-          },
-          {
-            "item": "hopper_minecart",
-            "count": 24
-          },
-          {
-            "item": "rail",
-            "count": 24
-          },
-          {
-            "item": "chest",
-            "count": 12
-          },
-          {
-            "item": "oak_fence_gate",
-            "count": 12
+            "item": "smooth_stone_slab",
+            "count": 23
           },
           {
             "item": "carved_pumpkin",
+            "count": 16
+          },
+          {
+            "item": "stone_brick_wall",
+            "count": 13
+          },
+          {
+            "item": "scaffolding",
+            "count": 10
+          },
+          {
+            "item": "oak_fence",
+            "count": 9
+          },
+          {
+            "item": "shears",
+            "count": 9
+          },
+          {
+            "item": "oak_fence_gate",
             "count": 6
           },
           {
+            "item": "ladder",
+            "count": 5
+          },
+          {
+            "item": "redstone",
+            "count": 5
+          },
+          {
             "item": "water_bucket",
+            "count": 4
+          },
+          {
+            "item": "hopper",
+            "count": 4
+          },
+          {
+            "item": "mud",
+            "count": 4
+          },
+          {
+            "item": "dispenser",
+            "count": 3
+          },
+          {
+            "item": "splash_potion",
+            "count": 3
+          },
+          {
+            "item": "oak_trapdoor",
             "count": 2
+          },
+          {
+            "item": "observer",
+            "count": 2
+          },
+          {
+            "item": "heavy_weighted_pressure_plate",
+            "count": 2
+          },
+          {
+            "item": "iron_trapdoor",
+            "count": 2
+          },
+          {
+            "item": "repeater",
+            "count": 2
+          },
+          {
+            "item": "piston",
+            "count": 2
+          },
+          {
+            "item": "campfire",
+            "count": 1
+          },
+          {
+            "item": "lever",
+            "count": 1
+          },
+          {
+            "item": "chest",
+            "count": 1
+          },
+          {
+            "item": "stone_brick_stairs",
+            "count": 1
+          },
+          {
+            "item": "sticky_piston",
+            "count": 1
+          },
+          {
+            "item": "redstone_torch",
+            "count": 1
+          },
+          {
+            "item": "stone_button",
+            "count": 1
+          },
+          {
+            "item": "dirt",
+            "count": 64
           }
         ],
-        "materials_source": "description",
-        "notes": "Slimes spawn in slime chunks below Y=40 regardless of light level, so light up the platforms with torches to prevent other hostile mobs from spawning. Light up surrounding caves within 128 blocks of your AFK spot for full rates."
+        "materials_source": "counted-from-video",
+        "notes": "Hold (do not spam) the place key while placing snow blocks (960 snow_block per 480-golem batch), orient iron trapdoor hinges against the slab near the dispenser, and place immovable blocks (obsidian/chests) behind the fences if ghosts occur on laggy servers."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Slime Farm + How to Find Slime Chunks Tutorial",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=zgs4K6aURmY",
+          "video_id": "zgs4K6aURmY",
+          "published": "2020-04-01",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~1,500+ slimeballs/h (~350+ slimes/h)",
+          "size": "16x16x25",
+          "difficulty": "medium",
+          "schematic": {
+            "url": null,
+            "format": null,
+            "found_in": "none"
+          },
+          "materials": [
+            {
+              "item": "smooth_stone_slab",
+              "count": 768
+            },
+            {
+              "item": "smooth_stone",
+              "count": 268
+            },
+            {
+              "item": "oak_fence",
+              "count": 120
+            },
+            {
+              "item": "torch",
+              "count": 100
+            },
+            {
+              "item": "magma_block",
+              "count": 96
+            },
+            {
+              "item": "iron_block",
+              "count": 30
+            },
+            {
+              "item": "hopper",
+              "count": 28
+            },
+            {
+              "item": "hopper_minecart",
+              "count": 24
+            },
+            {
+              "item": "rail",
+              "count": 24
+            },
+            {
+              "item": "chest",
+              "count": 12
+            },
+            {
+              "item": "oak_fence_gate",
+              "count": 12
+            },
+            {
+              "item": "carved_pumpkin",
+              "count": 6
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            }
+          ],
+          "materials_source": "description",
+          "notes": "Slimes spawn in slime chunks below Y=40 regardless of light level, so light up the platforms with torches to prevent other hostile mobs from spawning. Light up surrounding caves within 128 blocks of your AFK spot for full rates."
+        },
         {
           "title": "OP yet Simple Slime farm [TUTORIAL] 1.21.0-26.3+ Minecraft automatic slimeball redstone machine",
           "creator": "Rays Works",
@@ -1626,7 +2155,8 @@
         "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dj_BPhn7nVw4&format=json",
         "https://www.mediafire.com/file/icr45rm4ryvcg58/rayallayslimefarm.nbt/file",
         "https://www.youtube.com/watch?v=VA4R14oL_dg",
-        "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVA4R14oL_dg&format=json"
+        "https://www.youtube.com/oembed?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3DVA4R14oL_dg&format=json",
+        "https://www.youtube.com/watch?v=Ln-F7y669nk"
       ]
     },
     {
@@ -1815,109 +2345,189 @@
       "where": "Any biome; since Java 1.21.5+ sugar cane grows in any chunk-loaded area even without a player nearby",
       "requirements": [
         "Sugar cane to plant",
-        "Honey blocks or slime blocks for the sweeping flying machine"
+        "Water buckets (no redstone)"
       ],
       "primary": {
-        "title": "Easy to PRO: 15 Cane, Melon, Pumpkin Auto Farms Minecraft [STILL WORKS]",
-        "creator": "Rays Works",
-        "video_url": "https://www.youtube.com/watch?v=Pa_B9XJ79o4",
-        "video_id": "Pa_B9XJ79o4",
-        "published": "2023-01-01",
-        "works_on": "Java 1.16 - 26.3+",
-        "rate": "~800-1,500 sugar cane/h",
-        "size": "51x6x7",
+        "title": "Controversial & Insane Sugarcane Farm! (Minecraft Java 1.19+)",
+        "creator": "potato_noir",
+        "video_url": "https://www.youtube.com/watch?v=4m4V-KTsGR0",
+        "video_id": "4m4V-KTsGR0",
+        "published": "2024-01-22",
+        "works_on": "Java 1.19 - 26.3",
+        "rate": "~1,500+ sugar cane/h",
+        "size": "32x36x13",
         "difficulty": "easy",
         "schematic": {
-          "url": "https://www.mediafire.com/file/w8oyuqkv51fx3i8/cane+farm.litematic/file",
+          "url": "https://www.mediafire.com/file/kjc17ztr5495v7e/Potato_Noir_Sugarcane_Farm_Small.litematic/file",
           "format": "litematic",
           "found_in": "video description"
         },
         "materials": [
           {
-            "item": "dirt",
-            "count": 180
+            "item": "grass_block",
+            "count": 984
+          },
+          {
+            "item": "glass",
+            "count": 546
           },
           {
             "item": "sugar_cane",
-            "count": 180
-          },
-          {
-            "item": "stone",
-            "count": 102
-          },
-          {
-            "item": "water_bucket",
-            "count": 6
-          },
-          {
-            "item": "honey_block",
-            "count": 5
-          },
-          {
-            "item": "chest",
-            "count": 4
-          },
-          {
-            "item": "hopper_minecart",
-            "count": 4
+            "count": 451
           },
           {
             "item": "oak_leaves",
-            "count": 4
+            "count": 187
           },
           {
-            "item": "observer",
-            "count": 4
+            "item": "torch",
+            "count": 19
+          },
+          {
+            "item": "scaffolding",
+            "count": 12
+          },
+          {
+            "item": "dirt",
+            "count": 9
+          },
+          {
+            "item": "chest",
+            "count": 8
           },
           {
             "item": "hopper",
-            "count": 2
+            "count": 5
           },
           {
-            "item": "redstone",
-            "count": 2
+            "item": "ladder",
+            "count": 5
           },
           {
-            "item": "repeater",
-            "count": 2
+            "item": "string",
+            "count": 5
           },
           {
-            "item": "soul_sand",
-            "count": 2
-          },
-          {
-            "item": "sticky_piston",
-            "count": 2
-          },
-          {
-            "item": "crying_obsidian",
+            "item": "acacia_door",
             "count": 1
           },
           {
-            "item": "lever",
+            "item": "acacia_trapdoor",
             "count": 1
           },
           {
-            "item": "oak_sign",
+            "item": "chiseled_stone_bricks",
             "count": 1
           },
           {
-            "item": "oak_trapdoor",
-            "count": 1
-          },
-          {
-            "item": "piston",
-            "count": 1
-          },
-          {
-            "item": "stone_button",
+            "item": "jungle_trapdoor",
             "count": 1
           }
         ],
         "materials_source": "schematic",
-        "notes": "Includes both simple observer-piston modules (6simplefarms.nbt) and the low-cost flying machine row farm (cane+farm.litematic). Park the flying machine before unloading chunks."
+        "notes": "Zero-redstone water-flushing field harvested by the player walking along waterlogged leaves (or via AHK script)."
       },
       "alternatives": [
+        {
+          "title": "Easy to PRO: 15 Cane, Melon, Pumpkin Auto Farms Minecraft [STILL WORKS]",
+          "creator": "Rays Works",
+          "video_url": "https://www.youtube.com/watch?v=Pa_B9XJ79o4",
+          "video_id": "Pa_B9XJ79o4",
+          "published": "2023-01-01",
+          "works_on": "Java 1.16 - 26.3+",
+          "rate": "~800-1,500 sugar cane/h",
+          "size": "51x6x7",
+          "difficulty": "easy",
+          "schematic": {
+            "url": "https://www.mediafire.com/file/w8oyuqkv51fx3i8/cane+farm.litematic/file",
+            "format": "litematic",
+            "found_in": "video description"
+          },
+          "materials": [
+            {
+              "item": "dirt",
+              "count": 180
+            },
+            {
+              "item": "sugar_cane",
+              "count": 180
+            },
+            {
+              "item": "stone",
+              "count": 102
+            },
+            {
+              "item": "water_bucket",
+              "count": 6
+            },
+            {
+              "item": "honey_block",
+              "count": 5
+            },
+            {
+              "item": "chest",
+              "count": 4
+            },
+            {
+              "item": "hopper_minecart",
+              "count": 4
+            },
+            {
+              "item": "oak_leaves",
+              "count": 4
+            },
+            {
+              "item": "observer",
+              "count": 4
+            },
+            {
+              "item": "hopper",
+              "count": 2
+            },
+            {
+              "item": "redstone",
+              "count": 2
+            },
+            {
+              "item": "repeater",
+              "count": 2
+            },
+            {
+              "item": "soul_sand",
+              "count": 2
+            },
+            {
+              "item": "sticky_piston",
+              "count": 2
+            },
+            {
+              "item": "crying_obsidian",
+              "count": 1
+            },
+            {
+              "item": "lever",
+              "count": 1
+            },
+            {
+              "item": "oak_sign",
+              "count": 1
+            },
+            {
+              "item": "oak_trapdoor",
+              "count": 1
+            },
+            {
+              "item": "piston",
+              "count": 1
+            },
+            {
+              "item": "stone_button",
+              "count": 1
+            }
+          ],
+          "materials_source": "schematic",
+          "notes": "Includes both simple observer-piston modules (6simplefarms.nbt) and the low-cost flying machine row farm (cane+farm.litematic). Park the flying machine before unloading chunks."
+        },
         {
           "title": "Minecraft Sugar Cane Farm - 1300 Per Hour - 1.20+",
           "creator": "Shulkercraft",
@@ -2025,86 +2635,6 @@
           ],
           "materials_source": "description",
           "notes": "Uses an Etho hopper clock to trigger the flying machine periodically and hopper minecarts under the dirt layer for lossless pickup."
-        },
-        {
-          "title": "Controversial & Insane Sugarcane Farm! (Minecraft Java 1.19+)",
-          "creator": "potato_noir",
-          "video_url": "https://www.youtube.com/watch?v=4m4V-KTsGR0",
-          "video_id": "4m4V-KTsGR0",
-          "published": "2024-01-22",
-          "works_on": "Java 1.19 - 26.3",
-          "rate": "~1,500+ sugar cane/h",
-          "size": "32x36x13",
-          "difficulty": "easy",
-          "schematic": {
-            "url": "https://www.mediafire.com/file/kjc17ztr5495v7e/Potato_Noir_Sugarcane_Farm_Small.litematic/file",
-            "format": "litematic",
-            "found_in": "video description"
-          },
-          "materials": [
-            {
-              "item": "grass_block",
-              "count": 984
-            },
-            {
-              "item": "glass",
-              "count": 546
-            },
-            {
-              "item": "sugar_cane",
-              "count": 451
-            },
-            {
-              "item": "oak_leaves",
-              "count": 187
-            },
-            {
-              "item": "torch",
-              "count": 19
-            },
-            {
-              "item": "scaffolding",
-              "count": 12
-            },
-            {
-              "item": "dirt",
-              "count": 9
-            },
-            {
-              "item": "chest",
-              "count": 8
-            },
-            {
-              "item": "hopper",
-              "count": 5
-            },
-            {
-              "item": "ladder",
-              "count": 5
-            },
-            {
-              "item": "string",
-              "count": 5
-            },
-            {
-              "item": "acacia_door",
-              "count": 1
-            },
-            {
-              "item": "acacia_trapdoor",
-              "count": 1
-            },
-            {
-              "item": "chiseled_stone_bricks",
-              "count": 1
-            },
-            {
-              "item": "jungle_trapdoor",
-              "count": 1
-            }
-          ],
-          "materials_source": "schematic",
-          "notes": "Zero-redstone water-flushing field harvested by the player walking along waterlogged leaves (or via AHK script)."
         }
       ],
       "sources": [
@@ -2377,102 +2907,226 @@
         "Slime blocks or honey blocks for the flying machine harvester"
       ],
       "primary": {
-        "title": "Minecraft Bamboo Farm - 8500+ Per Hour - Easy Build 1.20+",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=UXJX5xXW1z0",
-        "video_id": "UXJX5xXW1z0",
-        "published": "2020-03-21",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~8,500+ bamboo/h",
-        "size": "21x29x12",
-        "difficulty": "easy",
+        "title": "Easy, Compact Bamboo Farm Super Smelter! (Minecraft 1.20, 1.17+, Java)",
+        "creator": "potato_noir",
+        "video_url": "https://www.youtube.com/watch?v=K6dEeGHEIOY",
+        "video_id": "K6dEeGHEIOY",
+        "published": "2023-05-21",
+        "works_on": "Java 1.17 - 26.3",
+        "rate": "~3,800+ bamboo/h feeding a 64-furnace super smelter",
+        "size": "27x15x17",
+        "difficulty": "medium",
         "schematic": {
-          "url": null,
-          "format": null,
-          "found_in": "none"
+          "url": "https://www.mediafire.com/file/r27a6q4wl91po95/Potato_Noir_Bamboo_Farm_Super_Smelter.litematic/file",
+          "format": "litematic",
+          "found_in": "video description"
         },
         "materials": [
           {
             "item": "glass",
-            "count": 649
-          },
-          {
-            "item": "bamboo",
-            "count": 486
+            "count": 536
           },
           {
             "item": "rail",
-            "count": 400
-          },
-          {
-            "item": "powered_rail",
-            "count": 160
+            "count": 296
           },
           {
             "item": "smooth_stone",
-            "count": 158
-          },
-          {
-            "item": "redstone_torch",
-            "count": 41
+            "count": 267
           },
           {
             "item": "hopper",
-            "count": 20
+            "count": 209
           },
           {
-            "item": "hopper_minecart",
-            "count": 20
+            "item": "grass_block",
+            "count": 160
           },
           {
-            "item": "slime_block",
-            "count": 18
+            "item": "bamboo",
+            "count": 160
           },
           {
-            "item": "observer",
-            "count": 5
+            "item": "powered_rail",
+            "count": 88
           },
           {
-            "item": "obsidian",
-            "count": 3
-          },
-          {
-            "item": "redstone",
-            "count": 3
-          },
-          {
-            "item": "repeater",
-            "count": 3
+            "item": "furnace",
+            "count": 66
           },
           {
             "item": "chest",
-            "count": 2
+            "count": 25
           },
           {
-            "item": "sticky_piston",
-            "count": 2
-          },
-          {
-            "item": "water_bucket",
-            "count": 2
+            "item": "oak_leaves",
+            "count": 21
           },
           {
             "item": "lever",
+            "count": 17
+          },
+          {
+            "item": "redstone",
+            "count": 11
+          },
+          {
+            "item": "composter",
+            "count": 7
+          },
+          {
+            "item": "oak_sign",
+            "count": 7
+          },
+          {
+            "item": "honey_block",
+            "count": 6
+          },
+          {
+            "item": "comparator",
+            "count": 5
+          },
+          {
+            "item": "detector_rail",
+            "count": 5
+          },
+          {
+            "item": "observer",
+            "count": 4
+          },
+          {
+            "item": "redstone_torch",
+            "count": 3
+          },
+          {
+            "item": "sticky_piston",
+            "count": 3
+          },
+          {
+            "item": "redstone_block",
+            "count": 2
+          },
+          {
+            "item": "spruce_trapdoor",
+            "count": 2
+          },
+          {
+            "item": "chest_minecart",
             "count": 1
           },
           {
-            "item": "redstone_lamp",
+            "item": "ender_chest",
             "count": 1
           },
           {
-            "item": "stone_button",
+            "item": "hopper_minecart",
+            "count": 1
+          },
+          {
+            "item": "repeater",
             "count": 1
           }
         ],
-        "materials_source": "description",
-        "notes": "Since 1.20+ bamboo can be auto-crafted with Crafters into bamboo blocks and planks (wood) as well as furnace fuel. Park the flying machine before leaving the area."
+        "materials_source": "schematic",
+        "notes": "Integrates a flying-machine bamboo farm directly on top of a 64-furnace super smelter."
       },
       "alternatives": [
+        {
+          "title": "Minecraft Bamboo Farm - 8500+ Per Hour - Easy Build 1.20+",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=UXJX5xXW1z0",
+          "video_id": "UXJX5xXW1z0",
+          "published": "2020-03-21",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~8,500+ bamboo/h",
+          "size": "21x29x12",
+          "difficulty": "easy",
+          "schematic": {
+            "url": null,
+            "format": null,
+            "found_in": "none"
+          },
+          "materials": [
+            {
+              "item": "glass",
+              "count": 649
+            },
+            {
+              "item": "bamboo",
+              "count": 486
+            },
+            {
+              "item": "rail",
+              "count": 400
+            },
+            {
+              "item": "powered_rail",
+              "count": 160
+            },
+            {
+              "item": "smooth_stone",
+              "count": 158
+            },
+            {
+              "item": "redstone_torch",
+              "count": 41
+            },
+            {
+              "item": "hopper",
+              "count": 20
+            },
+            {
+              "item": "hopper_minecart",
+              "count": 20
+            },
+            {
+              "item": "slime_block",
+              "count": 18
+            },
+            {
+              "item": "observer",
+              "count": 5
+            },
+            {
+              "item": "obsidian",
+              "count": 3
+            },
+            {
+              "item": "redstone",
+              "count": 3
+            },
+            {
+              "item": "repeater",
+              "count": 3
+            },
+            {
+              "item": "chest",
+              "count": 2
+            },
+            {
+              "item": "sticky_piston",
+              "count": 2
+            },
+            {
+              "item": "water_bucket",
+              "count": 2
+            },
+            {
+              "item": "lever",
+              "count": 1
+            },
+            {
+              "item": "redstone_lamp",
+              "count": 1
+            },
+            {
+              "item": "stone_button",
+              "count": 1
+            }
+          ],
+          "materials_source": "description",
+          "notes": "Since 1.20+ bamboo can be auto-crafted with Crafters into bamboo blocks and planks (wood) as well as furnace fuel. Park the flying machine before leaving the area."
+        },
         {
           "title": "OP Bamboo Auto Farm Wood and XP [STILL WORKS] [TUTORIAL]",
           "creator": "Rays Works",
@@ -2580,130 +3234,6 @@
           ],
           "materials_source": "schematic",
           "notes": "Description also includes a 5x5x9 starter 1-plant schematic (bamboosmall.nbt) and a large 55x30x17 litematic (bamboo+farm.litematic)."
-        },
-        {
-          "title": "Easy, Compact Bamboo Farm Super Smelter! (Minecraft 1.20, 1.17+, Java)",
-          "creator": "potato_noir",
-          "video_url": "https://www.youtube.com/watch?v=K6dEeGHEIOY",
-          "video_id": "K6dEeGHEIOY",
-          "published": "2023-05-21",
-          "works_on": "Java 1.17 - 26.3",
-          "rate": "~3,800+ bamboo/h feeding a 64-furnace super smelter",
-          "size": "27x15x17",
-          "difficulty": "medium",
-          "schematic": {
-            "url": "https://www.mediafire.com/file/r27a6q4wl91po95/Potato_Noir_Bamboo_Farm_Super_Smelter.litematic/file",
-            "format": "litematic",
-            "found_in": "video description"
-          },
-          "materials": [
-            {
-              "item": "glass",
-              "count": 536
-            },
-            {
-              "item": "rail",
-              "count": 296
-            },
-            {
-              "item": "smooth_stone",
-              "count": 267
-            },
-            {
-              "item": "hopper",
-              "count": 209
-            },
-            {
-              "item": "grass_block",
-              "count": 160
-            },
-            {
-              "item": "bamboo",
-              "count": 160
-            },
-            {
-              "item": "powered_rail",
-              "count": 88
-            },
-            {
-              "item": "furnace",
-              "count": 66
-            },
-            {
-              "item": "chest",
-              "count": 25
-            },
-            {
-              "item": "oak_leaves",
-              "count": 21
-            },
-            {
-              "item": "lever",
-              "count": 17
-            },
-            {
-              "item": "redstone",
-              "count": 11
-            },
-            {
-              "item": "composter",
-              "count": 7
-            },
-            {
-              "item": "oak_sign",
-              "count": 7
-            },
-            {
-              "item": "honey_block",
-              "count": 6
-            },
-            {
-              "item": "comparator",
-              "count": 5
-            },
-            {
-              "item": "detector_rail",
-              "count": 5
-            },
-            {
-              "item": "observer",
-              "count": 4
-            },
-            {
-              "item": "redstone_torch",
-              "count": 3
-            },
-            {
-              "item": "sticky_piston",
-              "count": 3
-            },
-            {
-              "item": "redstone_block",
-              "count": 2
-            },
-            {
-              "item": "spruce_trapdoor",
-              "count": 2
-            },
-            {
-              "item": "chest_minecart",
-              "count": 1
-            },
-            {
-              "item": "ender_chest",
-              "count": 1
-            },
-            {
-              "item": "hopper_minecart",
-              "count": 1
-            },
-            {
-              "item": "repeater",
-              "count": 1
-            }
-          ],
-          "materials_source": "schematic",
-          "notes": "Integrates a flying-machine bamboo farm directly on top of a 64-furnace super smelter."
         }
       ],
       "sources": [
@@ -4279,135 +4809,135 @@
       "id": "hoglin-farm",
       "name": "Hoglin Farm",
       "dimension": "nether",
-      "where": "On the Nether roof (above Y=128) strictly inside a Crimson Forest biome",
+      "where": "Inside a Crimson Forest, built into the natural canopy",
       "requirements": [
-        "Access to the Nether roof over a Crimson Forest biome",
-        "Warped fungus to scare hoglins into the lava kill trap"
+        "A Crimson Forest",
+        "Soul torches to keep piglins away"
       ],
       "primary": {
-        "title": "Minecraft 1.21+ Hoglin Food and Leather Farm - Super Easy",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=GlgCZbHSk6c",
-        "video_id": "GlgCZbHSk6c",
-        "published": "2020-07-04",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~1,700 cooked porkchop + 250 leather/h",
-        "size": "15x15x12 (plus AFK ladder to Y=250)",
+        "title": "Minecraft's Instant Hoglin Food and Leather Farm",
+        "creator": "bigbooty17",
+        "video_url": "https://www.youtube.com/watch?v=Hv6oxFIQCC4",
+        "video_id": "Hv6oxFIQCC4",
+        "published": "2025-05-13",
+        "works_on": "Java 1.20 - 26.3",
+        "rate": "~2,500+ cooked porkchop/h",
+        "size": "13x13x10",
         "difficulty": "easy",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Hoglin-Farm",
-          "format": "world download",
-          "found_in": "video description"
+          "url": "https://discord.com/invite/tvpccRczWx",
+          "format": "Discord",
+          "found_in": "bigbooty17's Discord (farm catalogue), linked in the video description"
         },
         "materials": [
           {
-            "item": "smooth_stone",
-            "count": 192
+            "item": "warped_trapdoor",
+            "count": 44
           },
           {
-            "item": "torch",
-            "count": 36
+            "item": "soul_torch",
+            "count": 20
           },
           {
-            "item": "oak_trapdoor",
-            "count": 15
+            "item": "warped_fungus",
+            "count": 14
           },
           {
-            "item": "oak_fence",
-            "count": 9
+            "item": "crimson_nylium",
+            "count": 12
           },
           {
-            "item": "hopper",
-            "count": 8
-          },
-          {
-            "item": "smooth_stone_slab",
+            "item": "glass",
             "count": 8
           },
           {
             "item": "chest",
-            "count": 6
-          },
-          {
-            "item": "dirt",
-            "count": 5
-          },
-          {
-            "item": "warped_fungus",
-            "count": 5
-          },
-          {
-            "item": "glass",
             "count": 4
+          },
+          {
+            "item": "hopper",
+            "count": 4
+          },
+          {
+            "item": "scaffolding",
+            "count": 4
+          },
+          {
+            "item": "campfire",
+            "count": 2
           },
           {
             "item": "lava_bucket",
             "count": 1
           }
         ],
-        "materials_source": "description",
-        "notes": "Inspired by Rays Works. Place torches on the spawning platform to keep block light above 11 so piglins cannot spawn alongside hoglins."
+        "materials_source": "counted-from-video",
+        "notes": "Builds directly inside the natural Crimson Forest canopy using natural crimson nylium floors and soul torches (which repel piglins while allowing hoglins to spawn)."
       },
       "alternatives": [
         {
-          "title": "Minecraft's Instant Hoglin Food and Leather Farm",
-          "creator": "bigbooty17",
-          "video_url": "https://www.youtube.com/watch?v=Hv6oxFIQCC4",
-          "video_id": "Hv6oxFIQCC4",
-          "published": "2025-05-13",
-          "works_on": "Java 1.20 - 26.3",
-          "rate": "~2,500+ cooked porkchop/h",
-          "size": "13x13x10",
+          "title": "Minecraft 1.21+ Hoglin Food and Leather Farm - Super Easy",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=GlgCZbHSk6c",
+          "video_id": "GlgCZbHSk6c",
+          "published": "2020-07-04",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~1,700 cooked porkchop + 250 leather/h",
+          "size": "15x15x12 (plus AFK ladder to Y=250)",
           "difficulty": "easy",
           "schematic": {
-            "url": null,
-            "format": null,
-            "found_in": "TMC Farm Catalogue Discord"
+            "url": "https://wisehosting.com/dl?w=Hoglin-Farm",
+            "format": "world download",
+            "found_in": "video description"
           },
           "materials": [
             {
-              "item": "warped_trapdoor",
-              "count": 44
+              "item": "smooth_stone",
+              "count": 192
             },
             {
-              "item": "soul_torch",
-              "count": 20
+              "item": "torch",
+              "count": 36
             },
             {
-              "item": "warped_fungus",
-              "count": 14
+              "item": "oak_trapdoor",
+              "count": 15
             },
             {
-              "item": "crimson_nylium",
-              "count": 12
+              "item": "oak_fence",
+              "count": 9
             },
             {
-              "item": "glass",
+              "item": "hopper",
+              "count": 8
+            },
+            {
+              "item": "smooth_stone_slab",
               "count": 8
             },
             {
               "item": "chest",
-              "count": 4
+              "count": 6
             },
             {
-              "item": "hopper",
-              "count": 4
+              "item": "dirt",
+              "count": 5
             },
             {
-              "item": "scaffolding",
-              "count": 4
+              "item": "warped_fungus",
+              "count": 5
             },
             {
-              "item": "campfire",
-              "count": 2
+              "item": "glass",
+              "count": 4
             },
             {
               "item": "lava_bucket",
               "count": 1
             }
           ],
-          "materials_source": "counted-from-video",
-          "notes": "Builds directly inside the natural Crimson Forest canopy using natural crimson nylium floors and soul torches (which repel piglins while allowing hoglins to spawn). The schematic is only in the TMC Farm Catalogue Discord (discord.com/invite/tvpccRczWx), no direct link."
+          "materials_source": "description",
+          "notes": "Inspired by Rays Works. Place torches on the spawning platform to keep block light above 11 so piglins cannot spawn alongside hoglins."
         }
       ],
       "sources": [
@@ -4425,242 +4955,242 @@
       "dimension": "nether",
       "where": "On the Nether roof (above Y=128) strictly inside a Nether Wastes biome",
       "requirements": [
-        "Access to the Nether roof over a Nether Wastes biome",
-        "4 turtle eggs (harvested with Silk Touch)",
-        "Magma blocks for zombified piglin spawning platforms"
+        "Access to the Nether roof over Nether Wastes",
+        "A llama (its spit angers the piglins)",
+        "Magma blocks for the spawning platforms"
       ],
       "primary": {
-        "title": "Minecraft Gold Farm for 1.21+ - Easy and Efficient Build Design",
-        "creator": "Shulkercraft",
-        "video_url": "https://www.youtube.com/watch?v=GaLYbKJ5keI",
-        "video_id": "GaLYbKJ5keI",
-        "published": "2020-07-08",
-        "works_on": "Java 1.16 - 26.3",
-        "rate": "~650 gold ingots/h (~75 gold blocks/h)",
-        "size": "29x29x28",
-        "difficulty": "easy",
+        "title": "Minecraft 1.21 Cheap + Powerful Gold Farm (JAVA 1.21+)",
+        "creator": "potato_noir",
+        "video_url": "https://www.youtube.com/watch?v=wLLTKyptV0k",
+        "video_id": "wLLTKyptV0k",
+        "published": "2024-07-21",
+        "works_on": "Java 1.21 - 26.3",
+        "rate": "~1,450 gold blocks/h (~13,050 gold ingots/h)",
+        "size": "66x56x128",
+        "difficulty": "medium",
         "schematic": {
-          "url": "https://wisehosting.com/dl?w=Easy-Gold-Farm",
-          "format": "world download",
+          "url": "https://www.mediafire.com/file/j6h74ue15j0l9cq/potato_noir_1.21_Gold_Nether_Side.litematic/file",
+          "format": "litematic",
           "found_in": "video description"
         },
         "materials": [
           {
             "item": "magma_block",
-            "count": 2880
+            "count": 8452
           },
           {
-            "item": "glass",
-            "count": 541
+            "item": "black_stained_glass",
+            "count": 3437
           },
           {
             "item": "oak_trapdoor",
-            "count": 60
+            "count": 534
           },
           {
-            "item": "chest",
-            "count": 12
+            "item": "polished_blackstone_wall",
+            "count": 138
+          },
+          {
+            "item": "gray_concrete",
+            "count": 107
+          },
+          {
+            "item": "redstone",
+            "count": 54
+          },
+          {
+            "item": "obsidian",
+            "count": 50
           },
           {
             "item": "hopper",
+            "count": 39
+          },
+          {
+            "item": "polished_blackstone_button",
+            "count": 24
+          },
+          {
+            "item": "comparator",
+            "count": 16
+          },
+          {
+            "item": "redstone_torch",
+            "count": 16
+          },
+          {
+            "item": "repeater",
+            "count": 14
+          },
+          {
+            "item": "iron_bars",
             "count": 12
           },
           {
-            "item": "white_carpet",
+            "item": "observer",
+            "count": 11
+          },
+          {
+            "item": "dropper",
+            "count": 10
+          },
+          {
+            "item": "powder_snow_bucket",
+            "count": 10
+          },
+          {
+            "item": "crafter",
             "count": 9
           },
           {
-            "item": "smooth_stone",
-            "count": 4
+            "item": "powered_rail",
+            "count": 9
           },
           {
-            "item": "turtle_egg",
-            "count": 4
+            "item": "packed_ice",
+            "count": 8
+          },
+          {
+            "item": "sticky_piston",
+            "count": 8
+          },
+          {
+            "item": "torch",
+            "count": 8
+          },
+          {
+            "item": "chest",
+            "count": 7
+          },
+          {
+            "item": "honey_block",
+            "count": 7
+          },
+          {
+            "item": "oak_fence",
+            "count": 7
+          },
+          {
+            "item": "gray_stained_glass",
+            "count": 5
+          },
+          {
+            "item": "polished_blackstone_slab",
+            "count": 5
+          },
+          {
+            "item": "oak_leaves",
+            "count": 3
+          },
+          {
+            "item": "composter",
+            "count": 2
+          },
+          {
+            "item": "lever",
+            "count": 2
+          },
+          {
+            "item": "armor_stand",
+            "count": 1
+          },
+          {
+            "item": "cactus",
+            "count": 1
+          },
+          {
+            "item": "dispenser",
+            "count": 1
+          },
+          {
+            "item": "iron_trapdoor",
+            "count": 1
+          },
+          {
+            "item": "ladder",
+            "count": 1
+          },
+          {
+            "item": "piston",
+            "count": 1
+          },
+          {
+            "item": "sand",
+            "count": 1
+          },
+          {
+            "item": "slime_block",
+            "count": 1
+          },
+          {
+            "item": "soul_soil",
+            "count": 1
+          },
+          {
+            "item": "waxed_copper_bulb",
+            "count": 1
+          },
+          {
+            "item": "yellow_shulker_box",
+            "count": 1
           }
         ],
-        "materials_source": "description",
-        "notes": "Uses turtle eggs to lure zombified piglins into a drop chute (no alarm piglins needed). Leave 2 air blocks above the turtle eggs so zombified piglins can pathfind toward them."
+        "materials_source": "schematic",
+        "notes": "Uses llama spit aggro and boat looting with built-in Crafters to auto-craft gold blocks; description includes an updated Overworld elevator schematic for 1.21.11+ / 26.3."
       },
       "alternatives": [
         {
-          "title": "Minecraft 1.21 Cheap + Powerful Gold Farm (JAVA 1.21+)",
-          "creator": "potato_noir",
-          "video_url": "https://www.youtube.com/watch?v=wLLTKyptV0k",
-          "video_id": "wLLTKyptV0k",
-          "published": "2024-07-21",
-          "works_on": "Java 1.21 - 26.3",
-          "rate": "~1,450 gold blocks/h (~13,050 gold ingots/h)",
-          "size": "66x56x128",
-          "difficulty": "medium",
+          "title": "Minecraft Gold Farm for 1.21+ - Easy and Efficient Build Design",
+          "creator": "Shulkercraft",
+          "video_url": "https://www.youtube.com/watch?v=GaLYbKJ5keI",
+          "video_id": "GaLYbKJ5keI",
+          "published": "2020-07-08",
+          "works_on": "Java 1.16 - 26.3",
+          "rate": "~650 gold ingots/h (~75 gold blocks/h)",
+          "size": "29x29x28",
+          "difficulty": "easy",
           "schematic": {
-            "url": "https://www.mediafire.com/file/j6h74ue15j0l9cq/potato_noir_1.21_Gold_Nether_Side.litematic/file",
-            "format": "litematic",
+            "url": "https://wisehosting.com/dl?w=Easy-Gold-Farm",
+            "format": "world download",
             "found_in": "video description"
           },
           "materials": [
             {
               "item": "magma_block",
-              "count": 8452
+              "count": 2880
             },
             {
-              "item": "black_stained_glass",
-              "count": 3437
+              "item": "glass",
+              "count": 541
             },
             {
               "item": "oak_trapdoor",
-              "count": 534
-            },
-            {
-              "item": "polished_blackstone_wall",
-              "count": 138
-            },
-            {
-              "item": "gray_concrete",
-              "count": 107
-            },
-            {
-              "item": "redstone",
-              "count": 54
-            },
-            {
-              "item": "obsidian",
-              "count": 50
-            },
-            {
-              "item": "hopper",
-              "count": 39
-            },
-            {
-              "item": "polished_blackstone_button",
-              "count": 24
-            },
-            {
-              "item": "comparator",
-              "count": 16
-            },
-            {
-              "item": "redstone_torch",
-              "count": 16
-            },
-            {
-              "item": "repeater",
-              "count": 14
-            },
-            {
-              "item": "iron_bars",
-              "count": 12
-            },
-            {
-              "item": "observer",
-              "count": 11
-            },
-            {
-              "item": "dropper",
-              "count": 10
-            },
-            {
-              "item": "powder_snow_bucket",
-              "count": 10
-            },
-            {
-              "item": "crafter",
-              "count": 9
-            },
-            {
-              "item": "powered_rail",
-              "count": 9
-            },
-            {
-              "item": "packed_ice",
-              "count": 8
-            },
-            {
-              "item": "sticky_piston",
-              "count": 8
-            },
-            {
-              "item": "torch",
-              "count": 8
+              "count": 60
             },
             {
               "item": "chest",
-              "count": 7
+              "count": 12
             },
             {
-              "item": "honey_block",
-              "count": 7
+              "item": "hopper",
+              "count": 12
             },
             {
-              "item": "oak_fence",
-              "count": 7
+              "item": "white_carpet",
+              "count": 9
             },
             {
-              "item": "gray_stained_glass",
-              "count": 5
+              "item": "smooth_stone",
+              "count": 4
             },
             {
-              "item": "polished_blackstone_slab",
-              "count": 5
-            },
-            {
-              "item": "oak_leaves",
-              "count": 3
-            },
-            {
-              "item": "composter",
-              "count": 2
-            },
-            {
-              "item": "lever",
-              "count": 2
-            },
-            {
-              "item": "armor_stand",
-              "count": 1
-            },
-            {
-              "item": "cactus",
-              "count": 1
-            },
-            {
-              "item": "dispenser",
-              "count": 1
-            },
-            {
-              "item": "iron_trapdoor",
-              "count": 1
-            },
-            {
-              "item": "ladder",
-              "count": 1
-            },
-            {
-              "item": "piston",
-              "count": 1
-            },
-            {
-              "item": "sand",
-              "count": 1
-            },
-            {
-              "item": "slime_block",
-              "count": 1
-            },
-            {
-              "item": "soul_soil",
-              "count": 1
-            },
-            {
-              "item": "waxed_copper_bulb",
-              "count": 1
-            },
-            {
-              "item": "yellow_shulker_box",
-              "count": 1
+              "item": "turtle_egg",
+              "count": 4
             }
           ],
-          "materials_source": "schematic",
-          "notes": "Uses llama spit aggro and boat looting with built-in Crafters to auto-craft gold blocks; description includes an updated Overworld elevator schematic for 1.21.11+ / 26.3."
+          "materials_source": "description",
+          "notes": "Uses turtle eggs to lure zombified piglins into a drop chute (no alarm piglins needed). Leave 2 air blocks above the turtle eggs so zombified piglins can pathfind toward them."
         },
         {
           "title": "Minecraft’s Greatest Gold XP Farm - 1000 Gold Blocks Per Hour",
