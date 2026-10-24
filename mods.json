@@ -541,13 +541,13 @@
         "/cconfig"
       ],
       "lunar": "addable",
-      "lunar_note": "Get the jar from GitHub, not Modrinth. Not on Paper servers; many servers ban it.",
+      "lunar_note": "Needs Fabric API. Not on Paper servers; many servers ban it.",
       "available_for_version": true,
-      "version_checked": "clientcommands 2.16.3 for 26.3 on GitHub, 2026-10-19",
+      "version_checked": "clientcommands 2.16.3 for 26.3 on Modrinth, 2026-10-19",
       "requires": [
         "fabric-api"
       ],
-      "url": "https://github.com/Earthcomputer/clientcommands/releases",
+      "url": "https://modrinth.com/mod/client-commands",
       "priority": "nice",
       "used_for_farms": [],
       "guide": {
@@ -582,10 +582,10 @@
         }
       ],
       "video": {
-        "url": "https://www.youtube.com/watch?v=78y4xnYRG_g",
-        "title": "How to RNG Manipulate for Max Enchants in Minecraft Java",
-        "channel": "Acrylic",
-        "note": "Made on 1.21.1; the same steps work on 26.3."
+        "url": "https://www.youtube.com/watch?v=_yq6OkjshCQ",
+        "title": "Jedes mal die perfekten Verzauberungen!",
+        "channel": "J0KER2J0KER",
+        "note": "German, 2026-08-08"
       }
     },
     {
