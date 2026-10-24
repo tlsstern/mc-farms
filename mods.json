@@ -1,0 +1,490 @@
+{
+  "researched": "2026-10-24",
+  "client": "Lunar Client",
+  "loader": "Fabric",
+  "minecraft_version": "26.3",
+  "how_to_add": [
+    "Open the Lunar Client Launcher and click the Versions / Profiles button on the left sidebar.",
+    "Select Minecraft 26.3 and ensure the Fabric add-on is selected (Lunar bundles Fabric Loader 0.20.1, Fabric API, Sodium, Iris, Replay Mod, FerriteCore, and Noxesium automatically).",
+    "Click the Settings Gear (⚙) button at the bottom-right of the 26.3 version card.",
+    "Select the Mods tab at the top of the profile settings window.",
+    "Drag and drop your downloaded Fabric .jar files (including required library jars like malilib-fabric-26.3-0.30.2.jar and cicada-lib-0.15.3+26.3.jar) into the window, or click the folder (📁) icon at the top to open the profile's mods folder directly.",
+    "Keep the Enabled checkbox ticked next to each mod (or use the launcher's Explore / Modpacks tabs to install directly from Modrinth); if a custom Fabric mod conflicts with Lunar hooks, click the Vanilla icon at the bottom-right of the version card to launch vanilla Fabric inside Lunar."
+  ],
+  "notes": [
+    "Minecraft Java Edition 26.3 ('Wilderness Bound', released 2026-09-15) is the current stable release under Mojang's calendar-year numbering system (26 = 2026, .3 = third Java drop of the year).",
+    "Lunar Client does not restrict you to an allowlist on modern versions: any third-party Fabric .jar can be added on Minecraft 1.16.5 and newer (including 26.3). Legacy versions (1.7.10-1.12.2) do not support custom Fabric mod loading.",
+    "Lunar Client already includes 65+ built-in HUD mods (Minimap, Waypoints, Coordinates, Zoom, FPS, WAILA) toggled in-game via Right Shift (RShift) -> Mods, plus pre-bundled Fabric mods (Sodium, Iris, Fabric API, Replay Mod, FerriteCore, Noxesium).",
+    "All four of Masa's technical mods (Litematica, MiniHUD, Tweakeroo, Item Scroller) have official 26.3 Fabric builds on Modrinth (maintained with sakura-ryoko) and require MaLiLib (malilib-fabric-26.3-0.30.2.jar).",
+    "Litematica schematic ghost rendering breaks when Iris shaders are active on 1.21.3+ and 26.3; press K to toggle shaders off while placing schematics.",
+    "Do a Barrel Roll 3.8.5+26.3 requires CICADA (cicada-lib-0.15.3+26.3.jar) in the mods folder.",
+    "MiniHUD's Structure Bounding Boxes (witch huts, nether fortresses, pillager outposts) work out-of-the-box in singleplayer; on a multiplayer server, the server must run Servux (servux-fabric-26.3-0.12.2.jar) and you must enter /minihud-seed <seed> for slime chunks.",
+    "Tweakeroo's Easy Place / Accurate Block Placement / Free Camera features and Do a Barrel Roll flight physics can trigger anti-cheat on public servers unless the server allows them or runs Carpet / Servux."
+  ],
+  "mods": [
+    {
+      "id": "minimap",
+      "name": "Minimap Mod",
+      "category": "map",
+      "what": "Top-down terrain radar and 3D world/Nether waypoints for farm sites, portals, and death recovery.",
+      "features": [
+        "Lunar built-in Minimap (Right Shift -> Mods -> Minimap) with rotating terrain view, cardinal directions, entity heads, and full-view map",
+        "Lunar built-in Waypoints (on by default; press N to create waypoint, M to open Waypoints menu, automatic Death Waypoint beam)",
+        "Alternative addable Fabric combo: Xaero's Minimap + Xaero's World Map for persistent full-screen explored chunk mapping",
+        "Alternative addable all-in-one: JourneyMap with full-screen map and browser webmap"
+      ],
+      "lunar": "built-in",
+      "lunar_note": "Recommendation: start with Lunar's built-in Minimap + Waypoints (press Right Shift -> Mods -> enable Minimap; Waypoints is enabled by default with N/M keys); if you want a persistent full-screen world map with chunk grids for perimeter planning, turn Lunar's Minimap off and drop in Xaero's Minimap + Xaero's World Map.",
+      "available_for_version": true,
+      "version_checked": "Lunar Client v2.23.7-2643 built-in (alternatives on Modrinth: xaerominimap-fabric-26.3-26.6.1.jar, xaeroworldmap-fabric-26.3-1.47.1.jar, journeymap-fabric-26.3-6.0.10.jar)",
+      "requires": [],
+      "url": "https://www.lunarclient.com/news/how-to-get-the-minimap-mod-on-minecraft",
+      "priority": "must",
+      "used_for_farms": [
+        "witch-farm",
+        "slime-farm",
+        "raid-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "do-a-barrel-roll",
+      "name": "Do a Barrel Roll",
+      "category": "movement",
+      "what": "Adds pitch, yaw, and roll flight physics (6-DOF banking and barrel rolls) when flying with an elytra between farms.",
+      "features": [
+        "360-degree pitch, yaw, and roll camera/elytra banking",
+        "Mouse and keyboard roll/thrust controls",
+        "Momentum-based flight camera smoothing",
+        "Client-side thrust/roll toggles via Mod Menu"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add do_a_barrel_roll-fabric-3.8.5+26.3.jar and its required dependency cicada-lib-0.15.3+26.3.jar to Lunar's Mods tab.",
+      "available_for_version": true,
+      "version_checked": "do_a_barrel_roll-fabric-3.8.5+26.3.jar (3.8.5+26.3-fabric) on Modrinth",
+      "requires": [
+        "cicada",
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/do-a-barrel-roll",
+      "priority": "nice",
+      "used_for_farms": [
+        "enderman-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "litematica",
+      "name": "Litematica",
+      "category": "building",
+      "what": "Loads .litematic/.schematic files as a 3D hologram with layer-by-layer rendering, wrong-block verifier, material list, and Easy Place.",
+      "features": [
+        "3D schematic hologram overlay with single-layer / layer-range slicing",
+        "Material List HUD and CSV export (counts missing vs available chests/inventory items)",
+        "Schematic Verifier (highlights wrong blocks, wrong block states/orientations, and missing blocks)",
+        "Easy Place Mode (click and hold to place correct block states directly onto the schematic ghost)",
+        "Pick-block from schematic ghost (automatically swaps matching block from inventory to hand)"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add litematica-fabric-26.3-0.29.1.jar and malilib-fabric-26.3-0.30.2.jar in Lunar's Mods tab; disable Iris shaders (press K) while viewing schematics on 26.3.",
+      "available_for_version": true,
+      "version_checked": "litematica-fabric-26.3-0.29.1.jar (0.29.1) on Modrinth",
+      "requires": [
+        "malilib"
+      ],
+      "url": "https://modrinth.com/mod/litematica",
+      "priority": "must",
+      "used_for_farms": [
+        "villager-breeder",
+        "cobblestone-farm",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "wool-farm",
+        "moss-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "honey-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "minihud",
+      "name": "MiniHUD",
+      "category": "info",
+      "what": "Renders technical world overlays (light levels, slime chunks, structure bounding boxes, random tick range, beacon range) and 24/32/128-block mob spawn/despawn spheres.",
+      "features": [
+        "Light Level overlay with configurable numbers and spawnable-spot markers",
+        "Slime Chunks overlay with mouse-wheel adjustable top Y-level",
+        "Shape Renderer with Despawn Sphere ( > 128), Can Despawn Sphere ( > 32), Can Spawn Sphere ( > 24), and Adjustable Spawn Sphere",
+        "Random Ticked Chunks (player-following) overlay and Random Ticked Chunks (fixed) overlay",
+        "Beacon Range overlay for levels 1-4 plus Conduit Range overlay and Lightning Rod Range overlay",
+        "Structure Bounding Boxes main for witch huts, nether fortresses, and pillager outposts",
+        "Spawnable column heights overlay, Biome Border overlay, and Spawn Chunks (real) overlay",
+        "Villager Info Overlay showing zombie conversion timers and enchanted book trades, plus customizable mini-F3 HUD lines (toggle with H, config menu H + C)"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add minihud-fabric-26.3-0.41.2.jar and malilib-fabric-26.3-0.30.2.jar in Lunar's Mods tab; press H + C in-game to configure overlays and shapes.",
+      "available_for_version": true,
+      "version_checked": "minihud-fabric-26.3-0.41.2.jar (0.41.2) on Modrinth",
+      "requires": [
+        "malilib"
+      ],
+      "url": "https://modrinth.com/mod/minihud",
+      "priority": "must",
+      "used_for_farms": [
+        "villager-breeder",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "tweakeroo",
+      "name": "Tweakeroo",
+      "category": "redstone",
+      "what": "Client-side technical building tweaks including Free Camera (spectator-like camera for inspecting farm redstone), Accurate/Flexible Block Placement, Hand Restock, and Periodic Hold/Click for AFK farms.",
+      "features": [
+        "Free Camera to fly the camera through redstone wiring and mob chutes without moving the player",
+        "Flexible Block Placement (rotation/offset placement) and Accurate Block Placement (place observers/pistons facing any direction)",
+        "Hand Restock (automatically refills the held stack from inventory before it runs out during farm building)",
+        "Fast Block Placement (places blocks cleanly across a plane or line without misclicks)",
+        "Periodic Attack / Periodic Use (built-in client auto-clicker for raid, gold, enderman, and cobble farms; config menu X + C)"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add tweakeroo-fabric-26.3-0.30.1.jar and malilib-fabric-26.3-0.30.2.jar to Lunar's Mods tab.",
+      "available_for_version": true,
+      "version_checked": "tweakeroo-fabric-26.3-0.30.1.jar (0.30.1) on Modrinth",
+      "requires": [
+        "malilib"
+      ],
+      "url": "https://modrinth.com/mod/tweakeroo",
+      "priority": "must",
+      "used_for_farms": [
+        "villager-breeder",
+        "cobblestone-farm",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "wool-farm",
+        "moss-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "honey-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "item-scroller",
+      "name": "Item Scroller",
+      "category": "qol",
+      "what": "Moves item stacks across chests/shulkers with the scroll wheel or drag-clicking, mass-crafts items from a 18-slot recipe memory, and one-click trades with villagers.",
+      "features": [
+        "Scroll wheel and modifier-drag transfers (single items, full stacks, all matching items, or entire inventory)",
+        "Mass crafting table memory (18 saved recipes; scroll or hold key to craft and drop stacks of pistons, hoppers, or gold blocks)",
+        "One-click villager trade favorites and fast restock trading",
+        "Drop all matching items from open storage containers with a modifier click (config menu I + C)"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add itemscroller-fabric-26.3-0.33.1.jar and malilib-fabric-26.3-0.30.2.jar to Lunar's Mods tab.",
+      "available_for_version": true,
+      "version_checked": "itemscroller-fabric-26.3-0.33.1.jar (0.33.1) on Modrinth",
+      "requires": [
+        "malilib"
+      ],
+      "url": "https://modrinth.com/mod/item-scroller",
+      "priority": "must",
+      "used_for_farms": [
+        "villager-breeder",
+        "cobblestone-farm",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "wool-farm",
+        "moss-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "honey-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "malilib",
+      "name": "MaLiLib",
+      "category": "qol",
+      "what": "Required shared configuration, keybind, and rendering library for Litematica, MiniHUD, Tweakeroo, and Item Scroller.",
+      "features": [
+        "Multi-key chord hotkey engine (press/release/both, in-game vs GUI context)",
+        "Unified in-game configuration screens for all Masa mods",
+        "Shared overlay and HUD rendering utilities"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Required in Lunar's Mods tab whenever Litematica, MiniHUD, Tweakeroo, or Item Scroller is installed.",
+      "available_for_version": true,
+      "version_checked": "malilib-fabric-26.3-0.30.2.jar (0.30.2) on Modrinth",
+      "requires": [],
+      "url": "https://modrinth.com/mod/malilib",
+      "priority": "must",
+      "used_for_farms": [
+        "villager-breeder",
+        "cobblestone-farm",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "wool-farm",
+        "moss-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "honey-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "modmenu",
+      "name": "Mod Menu",
+      "category": "qol",
+      "what": "Adds a 'Mods' button to the pause and title screens so you can open config screens for Do a Barrel Roll, Jade, AppleSkin, and Masa's mods.",
+      "features": [
+        "In-game Mods list accessible from ESC pause screen and title screen",
+        "Direct button to open each Fabric mod's configuration GUI",
+        "Search and filter installed client and library mods"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add modmenu-21.0.0.jar to Lunar's Mods tab (Fabric API is already bundled by Lunar).",
+      "available_for_version": true,
+      "version_checked": "modmenu-21.0.0.jar (21.0.0) on Modrinth",
+      "requires": [
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/modmenu",
+      "priority": "must",
+      "used_for_farms": []
+    },
+    {
+      "id": "sodium",
+      "name": "Sodium",
+      "category": "performance",
+      "what": "High-performance chunk and entity rendering engine that prevents FPS drops around high-entity farms, hoppers, and storage halls.",
+      "features": [
+        "Modernized OpenGL chunk renderer for high frame rates and low micro-stutter",
+        "Optimized block entity and particle rendering around large farms",
+        "Built-in video settings integration"
+      ],
+      "lunar": "built-in",
+      "lunar_note": "Automatically pre-bundled and updated inside Lunar Client's Fabric add-on (no manual jar download needed; Lunar v2.23.6-2643 includes Sodium 26.3 FPS optimizations).",
+      "available_for_version": true,
+      "version_checked": "sodium-fabric-0.9.3-beta.1+mc26.3.jar (mc26.3-0.9.3-beta.1-fabric) on Modrinth (also pre-bundled in Lunar Client)",
+      "requires": [],
+      "url": "https://modrinth.com/mod/sodium",
+      "priority": "must",
+      "used_for_farms": [
+        "enderman-farm",
+        "iron-farm",
+        "slime-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "moss-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "jade",
+      "name": "Jade",
+      "category": "info",
+      "what": "Technical block and entity look-at HUD tooltip showing redstone dust power, comparator output, hopper lock state, beehive honey level, and villager restock timers.",
+      "features": [
+        "Redstone wire power level, repeater delay, and comparator output value inspection",
+        "Beehive honey level (0-5) and bee count readout",
+        "Villager profession, level, and breeding/zombie curing timers",
+        "Container item preview and mob health/armor readout (note: WTHIT only supports up to 26.2 via wthit-26.2-fabric-20.0.0.jar, whereas Jade supports 26.3)"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Lunar has a basic built-in WAILA mod (Right Shift -> Mods -> WAILA), but adding Jade-mc26.3-Fabric-26.3.5.jar gives full redstone, beehive, and villager technical readouts (disable Lunar's built-in WAILA to avoid duplicate tooltips).",
+      "available_for_version": true,
+      "version_checked": "Jade-mc26.3-Fabric-26.3.5.jar (26.3.5+fabric) on Modrinth",
+      "requires": [
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/jade",
+      "priority": "nice",
+      "used_for_farms": [
+        "villager-breeder",
+        "iron-farm",
+        "raid-farm",
+        "wool-farm",
+        "moss-farm",
+        "honey-farm",
+        "shulker-farm"
+      ]
+    },
+    {
+      "id": "appleskin",
+      "name": "AppleSkin",
+      "category": "info",
+      "what": "Shows food saturation, exhaustion progress bar, and exact health/hunger restoration on the HUD so you know when golden carrots or beacons sustain AFK damage.",
+      "features": [
+        "Golden saturation outline on the hunger bar",
+        "Exhaustion progress underlay behind the hunger bar",
+        "Food tooltip showing exact hunger shanks and saturation points restored",
+        "Estimated health regeneration overlay while holding food"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Add appleskin-fabric-mc26.3-3.0.10.jar to Lunar's Mods tab (Lunar also has a simpler built-in Saturation HUD mod under Right Shift -> Mods).",
+      "available_for_version": true,
+      "version_checked": "appleskin-fabric-mc26.3-3.0.10.jar (3.0.10+mc26.3) on Modrinth",
+      "requires": [
+        "fabric-api"
+      ],
+      "url": "https://modrinth.com/mod/appleskin",
+      "priority": "nice",
+      "used_for_farms": [
+        "raid-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    },
+    {
+      "id": "carpet",
+      "name": "Carpet",
+      "category": "redstone",
+      "what": "Server-side (and singleplayer integrated server) technical Minecraft mod by gnembon for hopper wool counters, /tick rate control, AI trackers, and /player fake AFK bots.",
+      "features": [
+        "Spawns fake players (/player <name> spawn, /player <name> attack interval 10) to AFK farms or load chunks",
+        "Hopper Counters (hoppers pointing into colored wool blocks measure exact items/hour farm rates)",
+        "Tick control (/tick warp, /tick freeze, /tick step) and MSPT/TPS profiler (/log tps, /log mobcaps) for creative/singleplayer farm testing",
+        "Accurate Block Placement protocol server support so Tweakeroo/Litematica Easy Place can orient pistons and observers cleanly"
+      ],
+      "lunar": "addable",
+      "lunar_note": "Server-side mod: works in Lunar singleplayer worlds (integrated server) or when installed on the dedicated server; on a vanilla multiplayer server where you are only a client, Carpet commands will not run.",
+      "available_for_version": true,
+      "version_checked": "fabric-carpet-26.3+v260915.jar (26.3) on Modrinth",
+      "requires": [],
+      "url": "https://modrinth.com/mod/carpet",
+      "priority": "nice",
+      "used_for_farms": [
+        "villager-breeder",
+        "cobblestone-farm",
+        "enderman-farm",
+        "iron-farm",
+        "witch-farm",
+        "slime-farm",
+        "creeper-farm",
+        "sugarcane-farm",
+        "raid-farm",
+        "bamboo-farm",
+        "wool-farm",
+        "moss-farm",
+        "sand-duper",
+        "concrete-powder-duper",
+        "honey-farm",
+        "shulker-farm",
+        "wither-skeleton-farm",
+        "hoglin-farm",
+        "gold-farm"
+      ]
+    }
+  ],
+  "sources": [
+    "https://www.minecraft.net/en-us/article/minecraft-java-edition-26-3",
+    "https://www.minecraft.net/en-us/article/minecraft-new-version-numbering-system",
+    "https://piston-meta.mojang.com/mc/game/version_manifest_v2.json",
+    "https://www.lunarclient.com/news/how-to-add-your-own-mods-to-lunar-client",
+    "https://www.lunarclient.com/news/how-lunar-client-simplifies-minecraft-modding",
+    "https://www.lunarclient.com/news/troubleshooting-mod-loading-guide",
+    "https://www.lunarclient.com/news/how-to-use-modrinth-modpacks-on-lunar-client",
+    "https://www.lunarclient.com/news/how-to-get-the-minimap-mod-on-minecraft",
+    "https://www.lunarclient.com/news/everything-you-need-to-know-about-lunar-clients-waypoints-mod",
+    "https://www.lunarclient.com/changelog",
+    "https://modrinth.com/mod/xaeros-minimap",
+    "https://modrinth.com/mod/xaeros-minimap/versions",
+    "https://modrinth.com/mod/xaeros-world-map",
+    "https://modrinth.com/mod/xaeros-world-map/versions",
+    "https://modrinth.com/mod/journeymap",
+    "https://modrinth.com/mod/journeymap/versions",
+    "https://modrinth.com/mod/do-a-barrel-roll",
+    "https://modrinth.com/mod/do-a-barrel-roll/versions",
+    "https://modrinth.com/mod/cicada",
+    "https://modrinth.com/mod/cicada/versions",
+    "https://modrinth.com/mod/litematica",
+    "https://modrinth.com/mod/litematica/versions",
+    "https://modrinth.com/mod/malilib",
+    "https://modrinth.com/mod/malilib/versions",
+    "https://modrinth.com/mod/minihud",
+    "https://modrinth.com/mod/minihud/versions",
+    "https://raw.githubusercontent.com/sakura-ryoko/minihud/26.3/src/main/resources/assets/minihud/lang/en_us.json",
+    "https://modrinth.com/mod/servux",
+    "https://modrinth.com/mod/servux/versions",
+    "https://modrinth.com/mod/tweakeroo",
+    "https://modrinth.com/mod/tweakeroo/versions",
+    "https://modrinth.com/mod/item-scroller",
+    "https://modrinth.com/mod/item-scroller/versions",
+    "https://modrinth.com/mod/modmenu",
+    "https://modrinth.com/mod/modmenu/versions",
+    "https://modrinth.com/mod/sodium",
+    "https://modrinth.com/mod/sodium/versions",
+    "https://modrinth.com/mod/iris",
+    "https://modrinth.com/mod/iris/versions",
+    "https://modrinth.com/mod/jade",
+    "https://modrinth.com/mod/jade/versions",
+    "https://modrinth.com/mod/wthit",
+    "https://modrinth.com/mod/wthit/versions",
+    "https://modrinth.com/mod/appleskin",
+    "https://modrinth.com/mod/appleskin/versions",
+    "https://modrinth.com/mod/carpet",
+    "https://modrinth.com/mod/carpet/versions",
+    "https://modrinth.com/mod/fabric-api",
+    "https://modrinth.com/mod/fabric-api/versions"
+  ]
+}

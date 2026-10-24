@@ -1,0 +1,1202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Farm Plan</title>
+<meta name="description" content="Thomas's Minecraft survival farm plan: which farms to build, the video and design for each, and the raw materials to gather.">
+<meta name="theme-color" content="#f6f7f5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111413" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 2 27 9v14l-11 7-11-7V9z' fill='%2317a86b'/%3E%3Cpath d='M16 2 27 9 16 16 5 9z' fill='%2346d596'/%3E%3Cpath d='M16 16v14l11-7V9z' fill='%230b7a4c'/%3E%3C/svg%3E">
+<style>
+  /* ---------- Tokens ---------- */
+  :root {
+    color-scheme: light dark;
+    --bg:#f6f7f5; --surface:#ffffff; --surface-2:#eef1ee; --fg:#16191a; --muted:#59625d; --faint:#7d8681;
+    --line:#dfe3df; --line-strong:#c2c9c4; --press-bg:rgba(20,30,25,.06);
+    --accent:#0b8457; --accent-fg:#ffffff; --accent-soft:#dcf1e6; --accent-ink:#07673f;
+    --danger:#b3392b; --danger-soft:#f8e3df; --warn-soft:#f6eccf; --warn-ink:#7a5a06;
+    --over:#3e8e3a; --nether:#b53a2c; --end:#7b66b3;
+    --sk-base:#e8ebe8; --sk-hi:rgba(255,255,255,.7);
+    --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
+    --header-h:60px; --tab-h:60px; --bar-h:64px; --safe-b: env(safe-area-inset-bottom, 0px);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-move: cubic-bezier(0.77, 0, 0.175, 1);
+    --ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+    --dur-press:120ms; --dur:200ms; --dur-sheet:300ms;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg:#111413; --surface:#181c1a; --surface-2:#1f2422; --fg:#e4e8e5; --muted:#9ba59f; --faint:#79837d;
+      --line:#29302c; --line-strong:#3b4540; --press-bg:rgba(255,255,255,.06);
+      --accent:#36c587; --accent-fg:#05261a; --accent-soft:#173a2a; --accent-ink:#79dfb0;
+      --danger:#ec7a6a; --danger-soft:#3a1f1b; --warn-soft:#3a3117; --warn-ink:#e6c46a;
+      --over:#6cc163; --nether:#ec7a6a; --end:#b5a2ea;
+      --sk-base:#1f2422; --sk-hi:rgba(255,255,255,.06);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --dur-press:0ms; --dur:1ms; --dur-sheet:1ms; } }
+
+  /* ---------- web-polish baseline ---------- */
+  :root { scrollbar-gutter: stable; scrollbar-width: thin; scrollbar-color: var(--line-strong) transparent; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: no-preference) { :root { scroll-behavior: smooth; } }
+  * { box-sizing: border-box; min-width: 0; }
+  body {
+    margin:0; background:var(--bg); color:var(--fg); font:16px/1.5 var(--font);
+    -webkit-tap-highlight-color: transparent; text-rendering: optimizeLegibility; overscroll-behavior-y: none;
+  }
+  img, svg, video, canvas, iframe { display:block; max-width:100%; }
+  img, svg, button, label, nav, [role="button"], .chip, .seg { user-select:none; -webkit-user-drag:none; }
+  :focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  :focus:not(:focus-visible) { outline:none; }
+  ::selection { background:var(--accent); color:var(--accent-fg); }
+  [id] { scroll-margin-top: calc(var(--header-h) + 12px); }
+  h1, h2, h3, h4 { text-wrap:balance; margin:0; }
+  p { text-wrap:pretty; margin:0; }
+  a { color:inherit; }
+  button { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; touch-action:manipulation; }
+  button:disabled { cursor:not-allowed; opacity:.5; }
+  ul, ol { margin:0; padding:0; }
+  .sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  .num { font-variant-numeric: tabular-nums; }
+  .skip { position:absolute; left:8px; top:-60px; z-index:100; background:var(--surface); padding:10px 14px; border-radius:8px; }
+  .skip:focus { top:8px; }
+
+  /* ---------- motion kit ---------- */
+  .press { transition: transform var(--dur-press) var(--ease-out), background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
+  .press:active { transform: scale(.97); }
+  @keyframes view-in { from { opacity:0; transform: translateY(6px); } }
+  .enter { animation: view-in var(--dur) var(--ease-out) backwards; }
+  @keyframes item-in { from { opacity:0; transform: translateY(4px); } }
+  .stagger > * { animation: item-in var(--dur) var(--ease-out) backwards; animation-delay: calc(min(var(--i, 0), 6) * 30ms); }
+  @keyframes fade-in { from { opacity:0; } }
+  .swap { animation: fade-in 160ms var(--ease-out) backwards; }
+
+  /* headline reveal (template signature move) */
+  .reveal { display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }
+  .reveal > span { display:block; animation: rise .7s var(--ease-out) backwards; }
+  @keyframes rise { from { transform: translateY(105%); } }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display:flex; align-items:center; gap:16px; height:var(--header-h); padding:0 16px;
+    border-bottom:1px solid var(--line); background:var(--bg);
+  }
+  .brand { display:flex; align-items:center; gap:10px; text-decoration:none; min-height:44px; }
+  .brand svg { width:24px; height:24px; flex:none; }
+  .brand h1 { font-size:18px; font-weight:650; letter-spacing:-.01em; }
+  .top-progress { margin-left:auto; font-size:13px; color:var(--muted); display:flex; align-items:center; gap:10px; white-space:nowrap; }
+  .top-progress .bar { width:72px; }
+
+  /* nav: one component, two placements */
+  .tabs { position:relative; display:grid; grid-template-columns: repeat(var(--n), 1fr); }
+  .tabs a { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; text-decoration:none; color:var(--muted); transition: color var(--dur) var(--ease-out), transform var(--dur-press) var(--ease-out); }
+  .tabs a:active { transform: scale(.96); }
+  .tabs a[aria-current="page"] { color:var(--accent-ink); }
+  .tab-pill { position:absolute; top:0; bottom:0; left:0; width:calc(100% / var(--n)); transform: translateX(calc(var(--i) * 100%)); pointer-events:none; }
+  .tab-pill::before { content:""; position:absolute; inset:6px 8px; border-radius:12px; background:var(--accent-soft); }
+  .tabs.ready .tab-pill { transition: transform var(--dur) var(--ease-move); }
+  .top-tabs { display:none; height:44px; grid-template-columns: repeat(var(--n), 116px); font-size:15px; font-weight:550; }
+  .top-tabs .tab-pill::before { inset:2px 4px; border-radius:10px; }
+  .top-tabs svg { width:18px; height:18px; margin-right:8px; }
+
+  .tabbar {
+    position:fixed; left:0; right:0; bottom:0; z-index:30; background:var(--surface);
+    border-top:1px solid var(--line); padding:0 8px var(--safe-b);
+  }
+  .tabbar .tabs { height:var(--tab-h); }
+  .tabbar a { flex-direction:column; gap:2px; font-size:12px; font-weight:600; }
+  .tabbar svg { width:22px; height:22px; }
+
+  .actionbar {
+    position:fixed; left:0; right:0; bottom:calc(var(--tab-h) + var(--safe-b)); z-index:29;
+    height:var(--bar-h); padding:10px 16px; background:var(--surface); border-top:1px solid var(--line);
+    display:grid; grid-template-columns: 1fr auto; gap:10px;
+  }
+  .actionbar[hidden] { display:none; }
+
+  /* ---------- layout ---------- */
+  main { padding: 0 16px calc(var(--tab-h) + var(--safe-b) + 32px); max-width: 720px; margin: 0 auto; }
+  body.has-bar main { padding-bottom: calc(var(--tab-h) + var(--bar-h) + var(--safe-b) + 32px); }
+  .foot { color:var(--faint); font-size:13px; padding:28px 0 0; border-top:1px solid var(--line); margin-top:36px; }
+
+  /* ---------- shared bits ---------- */
+  .eyebrow { font:600 12px/1.2 var(--mono); letter-spacing:.08em; text-transform:uppercase; color:var(--faint); }
+  .muted { color:var(--muted); }
+  .h2 { font-size:28px; font-weight:700; letter-spacing:-.02em; line-height:1.15; }
+  .h3 { font-size:17px; font-weight:650; }
+  .btn {
+    display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; padding:0 16px;
+    border-radius:12px; border:1px solid var(--line-strong); background:var(--surface); font-weight:600; font-size:15px;
+    text-decoration:none; white-space:nowrap;
+  }
+  .btn svg { width:18px; height:18px; flex:none; }
+  .btn-primary { background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+  .btn-quiet { border-color:transparent; background:transparent; color:var(--muted); padding:0 10px; }
+  .icon-btn { width:44px; height:44px; display:inline-grid; place-items:center; border-radius:12px; }
+  .icon-btn svg { width:22px; height:22px; }
+
+  .bar { display:flex; height:6px; border-radius:99px; overflow:hidden; background:var(--surface-2); }
+  .bar i { display:block; height:100%; }
+  .bar .b-built { background:var(--accent); }
+  .bar .b-building { background:color-mix(in oklab, var(--accent) 45%, transparent); }
+  .bar .b-planned { background:var(--line-strong); }
+
+  .dim { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); white-space:nowrap; }
+  .dim::before { content:""; width:8px; height:8px; border-radius:2px; background:currentColor; }
+  .dim-overworld::before { background:var(--over); }
+  .dim-nether::before { background:var(--nether); }
+  .dim-end::before { background:var(--end); }
+  .diff { display:inline-flex; align-items:center; gap:6px; font-size:13px; color:var(--muted); white-space:nowrap; }
+  .diff b { display:inline-flex; gap:2px; }
+  .diff b i { width:4px; height:10px; border-radius:1px; background:var(--line-strong); }
+  .diff b i.on { background:var(--fg); }
+  .sep { color:var(--line-strong); }
+
+  .pill { display:inline-flex; align-items:center; gap:6px; height:26px; padding:0 10px; border-radius:99px; font-size:13px; font-weight:600; white-space:nowrap; border:1px solid var(--line-strong); color:var(--muted); }
+  .pill.s-built { background:var(--accent); border-color:var(--accent); color:var(--accent-fg); }
+  .pill.s-building { background:var(--accent-soft); border-color:transparent; color:var(--accent-ink); }
+  .pill.s-planned { color:var(--fg); }
+  .pill.s-skip { color:var(--faint); text-decoration:line-through; border-style:dashed; }
+  .dot { width:8px; height:8px; border-radius:99px; background:var(--line-strong); flex:none; }
+  .dot.s-built, .dot.s-building { background:var(--accent); }
+  .dot.s-planned { background:var(--fg); }
+
+  .chips { display:flex; flex-wrap:wrap; gap:8px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; min-height:36px; padding:0 14px; border-radius:99px; border:1px solid var(--line-strong); background:var(--surface); font-size:14px; font-weight:550; }
+  .chip[aria-pressed="true"] { background:var(--fg); border-color:var(--fg); color:var(--bg); }
+  .tag { display:inline-flex; align-items:center; min-height:26px; padding:2px 10px; border-radius:8px; background:var(--surface-2); font-size:13px; color:var(--muted); }
+
+  /* segmented control with sliding pill */
+  .seg { position:relative; display:grid; grid-template-columns:repeat(var(--n), minmax(0,1fr)); padding:3px; border-radius:12px; background:var(--surface-2); }
+  .seg-pill { position:absolute; top:3px; bottom:3px; left:3px; width:calc((100% - 6px) / var(--n)); border-radius:9px; background:var(--surface); box-shadow:0 1px 2px rgba(0,0,0,.08), 0 0 0 1px var(--line); transform:translateX(calc(var(--i) * 100%)); transition:transform var(--dur) var(--ease-move), opacity var(--dur) var(--ease-out); pointer-events:none; }
+  .seg[data-empty] .seg-pill { opacity:0; }
+  .seg button { position:relative; z-index:1; min-height:44px; padding:4px 6px; border-radius:9px; font-size:14px; font-weight:600; color:var(--muted); transition:color var(--dur) var(--ease-out), transform var(--dur-press) var(--ease-out); display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.2; }
+  .seg button:active { transform:scale(.96); }
+  .seg button[aria-pressed="true"] { color:var(--fg); }
+  .seg button small { font-size:12px; font-weight:500; color:var(--faint); max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .empty { padding:28px 20px; border:1px dashed var(--line-strong); border-radius:14px; text-align:center; color:var(--muted); display:grid; gap:12px; justify-items:center; }
+  .empty b { color:var(--fg); }
+
+  .skeleton { position:relative; overflow:hidden; background:var(--sk-base); border-radius:10px; }
+  .skeleton::after { content:""; position:absolute; inset:0; transform:translateX(-100%); background:linear-gradient(90deg, transparent, var(--sk-hi), transparent); animation: shimmer 1.4s var(--ease-move) infinite; }
+  @keyframes shimmer { to { transform:translateX(100%); } }
+  @media (prefers-reduced-motion: reduce) { .skeleton::after { animation:none; } }
+
+  /* ---------- farm list ---------- */
+  .list-head { padding:24px 0 16px; display:grid; gap:14px; }
+  .progress-line { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .progress-line strong { font-size:17px; }
+  .progress-line span { font-size:14px; color:var(--muted); }
+  .searchrow { display:grid; grid-template-columns: 1fr auto; gap:8px; }
+  .field { position:relative; }
+  .field svg { position:absolute; left:12px; top:50%; translate:0 -50%; width:18px; height:18px; color:var(--faint); pointer-events:none; }
+  .field input {
+    -webkit-appearance:none; appearance:none; width:100%; min-height:44px; padding:0 12px 0 38px; font:inherit; font-size:16px;
+    color:inherit; background:var(--surface); border:1px solid var(--line-strong); border-radius:12px;
+    transition:border-color var(--dur) var(--ease-out);
+  }
+  .field input:focus { border-color:var(--accent); outline:none; box-shadow:0 0 0 3px var(--accent-soft); }
+  .field input::-webkit-search-cancel-button { cursor:pointer; }
+  .badge-count { min-width:20px; height:20px; padding:0 6px; border-radius:99px; background:var(--accent); color:var(--accent-fg); font-size:12px; display:inline-grid; place-items:center; }
+  .active-filters { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
+
+  .farm-list { list-style:none; border-top:1px solid var(--line); }
+  .farm-list li { border-bottom:1px solid var(--line); }
+  .farm-row { display:flex; align-items:center; gap:12px; min-height:68px; padding:10px 8px; margin:0 -8px; border-radius:10px; text-decoration:none; transition: background-color var(--dur) var(--ease-out); }
+  .farm-row:active { background:var(--press-bg); }
+  .farm-row[aria-current="true"] { background:var(--accent-soft); }
+  .row-main { flex:1; display:grid; gap:4px; }
+  .row-name { font-size:16px; font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .row-sub { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13px; color:var(--muted); }
+  .row-sub .creator { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:14ch; }
+  .chev { width:18px; height:18px; color:var(--faint); flex:none; }
+
+  /* ---------- detail ---------- */
+  .detail-top { display:flex; align-items:center; padding:8px 0 0; margin-left:-10px; }
+  .back { display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 10px; border-radius:10px; color:var(--muted); font-weight:600; }
+  .back svg { width:20px; height:20px; }
+  .d-head { padding:8px 0 18px; display:grid; gap:10px; }
+  .d-meta { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .d-where { color:var(--muted); max-width:65ch; }
+  .d-actions { display:none; }
+  .design-switch { margin-bottom:16px; }
+  .design-switch .seg button { min-height:52px; }
+  .d-grid { display:grid; gap:28px; }
+  .block { display:grid; gap:12px; align-content:start; }
+  .block-head { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+
+  .video { position:relative; aspect-ratio:16/9; border-radius:14px; overflow:hidden; background:linear-gradient(135deg, var(--surface-2), var(--sk-base)); border:1px solid var(--line); }
+  .video img { width:100%; height:100%; object-fit:cover; }
+  .video iframe { width:100%; height:100%; border:0; }
+  .play { position:absolute; inset:0; display:grid; place-items:center; }
+  .play span { width:68px; height:48px; border-radius:14px; background:rgba(15,18,16,.82); display:grid; place-items:center; transition: transform var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out); }
+  .play svg { width:24px; height:24px; color:#fff; margin-left:3px; }
+  .play:active span { transform:scale(.94); }
+  .video-cap { display:flex; justify-content:space-between; gap:12px; align-items:center; flex-wrap:wrap; }
+  .video-cap p { font-weight:600; }
+  .video-empty { display:grid; place-items:center; text-align:center; padding:20px; color:var(--muted); gap:10px; height:100%; }
+
+  .facts { display:flex; flex-wrap:wrap; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden; margin:0; }
+  .facts div { flex:1 1 140px; background:var(--surface); padding:10px 14px; }
+  .facts dt { font:600 11px/1.3 var(--mono); letter-spacing:.07em; text-transform:uppercase; color:var(--faint); }
+  .facts dd { margin:2px 0 0; font-weight:600; overflow-wrap:anywhere; }
+  .req-list { display:flex; flex-wrap:wrap; gap:8px; list-style:none; }
+  .note { padding:12px 14px; border-radius:12px; background:var(--surface-2); color:var(--fg); }
+  .schem { display:grid; gap:10px; padding:14px; border-radius:14px; border:1px solid var(--line); background:var(--surface); }
+  .schem-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+  .schem.is-empty { border-style:dashed; background:transparent; color:var(--muted); }
+  .mods-line { display:flex; flex-wrap:wrap; align-items:center; gap:4px 10px; font-size:15px; }
+  .mods-line a { color:var(--accent-ink); font-weight:600; text-decoration:none; min-height:44px; display:inline-flex; align-items:center; }
+  .sources { list-style:none; display:grid; gap:2px; }
+  .sources a, .sources span { display:flex; align-items:center; min-height:44px; gap:8px; color:var(--muted); font-size:15px; overflow-wrap:anywhere; }
+  .sources a { text-decoration:none; }
+  .sources svg { width:16px; height:16px; flex:none; }
+
+  /* materials */
+  .mat-tools { display:grid; gap:10px; }
+  .gathered { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--muted); }
+  .gathered .bar { flex:1; }
+  .mat-list { list-style:none; border-top:1px solid var(--line); }
+  .mat-list li { border-bottom:1px solid var(--line); }
+  .check-row { display:grid; grid-template-columns: 24px 18px minmax(0,1fr) auto; align-items:center; gap:12px; min-height:52px; padding:6px 4px; cursor:pointer; border-radius:8px; transition: background-color var(--dur) var(--ease-out); }
+  .check-row:active { background:var(--press-bg); }
+  .box { width:24px; height:24px; border:2px solid var(--line-strong); border-radius:7px; display:grid; place-items:center; transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
+  .box svg { width:16px; height:16px; }
+  .box path { fill:none; stroke:var(--accent-fg); stroke-width:2.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:1; stroke-dashoffset:1; transition: stroke-dashoffset 180ms var(--ease-out); }
+  input:checked + .box { background:var(--accent); border-color:var(--accent); }
+  input:checked + .box path { stroke-dashoffset:0; }
+  input:focus-visible + .box { outline:2px solid var(--accent); outline-offset:2px; }
+  .sw { width:18px; height:18px; border-radius:4px; background:var(--c, #888); box-shadow: inset 2px 2px 0 rgba(255,255,255,.3), inset -2px -2px 0 rgba(0,0,0,.25); }
+  .mat-name { display:grid; transition: color var(--dur) var(--ease-out), opacity var(--dur) var(--ease-out); }
+  .mat-name small, .mat-count small { font-size:13px; color:var(--faint); font-weight:400; }
+  input:checked ~ .mat-name, input:checked ~ .mat-count { opacity:.5; }
+  input:checked ~ .mat-name > span { text-decoration:line-through; text-decoration-color:var(--faint); }
+  .mat-count { text-align:right; display:grid; font-variant-numeric:tabular-nums; transition: opacity var(--dur) var(--ease-out); }
+  .mat-count b { font-size:16px; }
+  .mat-notes { display:grid; gap:6px; font-size:14px; color:var(--muted); }
+  .mat-notes p { display:flex; gap:8px; }
+  .mat-notes svg { width:16px; height:16px; flex:none; margin-top:3px; }
+
+  /* materials tab */
+  .page-head { padding:24px 0 16px; display:grid; gap:10px; }
+  .used-in { list-style:none; display:grid; gap:0; }
+  .used-in a { display:flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; justify-content:space-between; border-bottom:1px solid var(--line); }
+
+  /* mods */
+  .howto { border:1px solid var(--line); border-radius:14px; background:var(--surface); }
+  .howto > button { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:52px; padding:0 16px; font-weight:650; text-align:left; border-radius:14px; }
+  .chevron { width:20px; height:20px; transition: transform var(--dur) var(--ease-out); flex:none; }
+  [aria-expanded="true"] .chevron { transform: rotate(180deg); }
+  .acc { display:grid; grid-template-rows:0fr; transition: grid-template-rows var(--dur) var(--ease-out); }
+  .acc[data-open] { grid-template-rows:1fr; }
+  .acc > .acc-inner { overflow:hidden; min-height:0; }
+  .howto ol { padding:0 16px 0 36px; display:grid; gap:8px; }
+  .howto .caveats { padding:12px 16px 16px; display:grid; gap:6px; font-size:14px; color:var(--muted); }
+  .mod-group { display:grid; gap:12px; margin-top:28px; }
+  .mod-cards { display:grid; gap:12px; }
+  .mod { padding:16px; border:1px solid var(--line); border-radius:14px; background:var(--surface); display:grid; gap:10px; align-content:start; transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+  .mod.flash { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .mod-top { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .mod-top h4 { font-size:17px; font-weight:650; }
+  .mod .badges { display:flex; flex-wrap:wrap; gap:6px; }
+  .b { display:inline-flex; align-items:center; gap:6px; min-height:26px; padding:2px 10px; border-radius:8px; font-size:13px; font-weight:600; background:var(--surface-2); color:var(--muted); }
+  .b-good { background:var(--accent-soft); color:var(--accent-ink); }
+  .b-bad { background:var(--danger-soft); color:var(--danger); }
+  .b-warn { background:var(--warn-soft); color:var(--warn-ink); }
+  .b-must { background:var(--fg); color:var(--bg); }
+  .mod small { font-size:13px; color:var(--faint); }
+  .mod .needs a { color:var(--accent-ink); font-weight:600; }
+  .mod-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid var(--line); padding-top:6px; margin-top:2px; }
+  .mod-foot .check-row { grid-template-columns: 24px auto; padding-right:8px; }
+  .link-out { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 4px; color:var(--accent-ink); font-weight:600; text-decoration:none; font-size:15px; }
+  .link-out svg { width:16px; height:16px; }
+
+  /* ---------- sheet ---------- */
+  .sheet-wrap { position:fixed; inset:0; z-index:50; }
+  .scrim { position:absolute; inset:0; background:rgb(0 0 0 / .42); opacity:0; transition: opacity var(--dur-sheet) var(--ease-out); }
+  .sheet {
+    position:absolute; left:0; right:0; bottom:0; max-height:85dvh; display:flex; flex-direction:column;
+    margin:0 auto; max-width:560px; background:var(--surface); border-radius:18px 18px 0 0;
+    padding-bottom: var(--safe-b); transform: translateY(100%); transition: transform var(--dur-sheet) var(--ease-sheet);
+  }
+  .sheet-wrap[data-open] .scrim { opacity:1; }
+  .sheet-wrap[data-open] .sheet { transform: translateY(0); }
+  .sheet-grab { touch-action:none; padding:8px 16px 4px; cursor:grab; }
+  .sheet-grab::before { content:""; display:block; width:40px; height:5px; border-radius:99px; background:var(--line-strong); margin:0 auto 8px; }
+  .sheet-head { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .sheet-head h2 { font-size:18px; }
+  .sheet-body { overflow-y:auto; overscroll-behavior:contain; padding:8px 16px 16px; display:grid; gap:18px; }
+  .sheet-foot { padding:12px 16px 16px; display:grid; grid-template-columns:auto 1fr; gap:10px; border-top:1px solid var(--line); }
+  .opt-list { list-style:none; display:grid; }
+  .opt { width:100%; display:flex; align-items:center; gap:12px; min-height:52px; padding:0 8px; border-radius:10px; text-align:left; font-weight:600; }
+  .opt:active { background:var(--press-bg); }
+  .opt .radio { width:22px; height:22px; border-radius:99px; border:2px solid var(--line-strong); display:grid; place-items:center; transition:border-color var(--dur) var(--ease-out); }
+  .opt .radio::after { content:""; width:10px; height:10px; border-radius:99px; background:var(--accent); transform:scale(0); transition:transform var(--dur) var(--ease-out); }
+  .opt[aria-checked="true"] .radio { border-color:var(--accent); }
+  .opt[aria-checked="true"] .radio::after { transform:scale(1); }
+  .opt small { display:block; font-weight:400; color:var(--muted); font-size:13px; }
+
+  /* ---------- toast ---------- */
+  .toast {
+    position:fixed; left:50%; bottom:calc(var(--tab-h) + var(--safe-b) + 14px); translate:-50% 0; z-index:60;
+    background:var(--fg); color:var(--bg); padding:12px 16px; border-radius:12px; font-size:15px; font-weight:600;
+    max-width:calc(100vw - 32px); box-shadow:0 8px 24px rgba(0,0,0,.18); display:flex; align-items:center; gap:10px;
+    transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out);
+  }
+  body.has-bar .toast { bottom:calc(var(--tab-h) + var(--bar-h) + var(--safe-b) + 14px); }
+  @starting-style { .toast { opacity:0; transform: translateY(8px); } }
+  .toast.leaving { opacity:0; transform: translateY(4px); }
+  .toast svg { width:18px; height:18px; color:var(--accent); }
+
+  /* ---------- hover, pointer devices only ---------- */
+  @media (hover: hover) {
+    .farm-row:hover { background:var(--press-bg); }
+    .farm-row[aria-current="true"]:hover { background:var(--accent-soft); }
+    .btn:hover { border-color:var(--fg); }
+    .btn-primary:hover { border-color:var(--accent); filter:brightness(1.06); }
+    .btn-quiet:hover { color:var(--fg); }
+    .chip:hover { border-color:var(--fg); }
+    .tabs a:hover, .seg button:hover { color:var(--fg); }
+    .check-row:hover { background:var(--press-bg); }
+    .play:hover span { background:#c4302b; transform:scale(1.05); }
+    .link-out:hover, .mods-line a:hover { text-decoration:underline; }
+    .sources a:hover { color:var(--fg); }
+    .howto > button:hover { background:var(--press-bg); }
+    .mod:hover { border-color:var(--line-strong); }
+    .used-in a:hover { color:var(--accent-ink); }
+  }
+
+  /* ---------- desktop: its own layout ---------- */
+  @media (min-width: 900px) {
+    .topbar { position:sticky; top:0; z-index:30; padding:0 24px; gap:28px; }
+    .top-tabs { display:grid; }
+    .tabbar, .actionbar { display:none !important; }
+    body.has-bar main, main { padding:0 24px 40px; max-width:1440px; }
+    .toast, body.has-bar .toast { bottom:24px; }
+    .sheet-wrap .sheet { bottom:24px; border-radius:18px; }
+
+    .split { display:grid; grid-template-columns: 360px minmax(0,1fr); gap:32px; align-items:start; }
+    .rail { position:sticky; top:var(--header-h); max-height:calc(100dvh - var(--header-h)); overflow-y:auto; overscroll-behavior:contain; padding:20px 12px 24px 0; scrollbar-gutter:stable; }
+    .rail .list-head { padding-top:0; }
+    .rail .h2 { font-size:22px; }
+    .rail .farm-row { margin:0; padding:10px 12px; }
+    .pane { padding:24px 0 0; min-height:calc(100dvh - var(--header-h) - 40px); }
+    .detail-top { display:none; }
+    .d-head { grid-template-columns: minmax(0,1fr) auto; align-items:start; column-gap:24px; padding-top:0; }
+    .d-head > :not(.d-actions) { grid-column:1; }
+    .d-actions { display:flex; grid-column:2; grid-row:1 / span 3; flex-direction:column; align-items:stretch; gap:10px; width:380px; }
+    .d-actions .links { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .d-actions .links .btn { min-width:0; overflow:hidden; text-overflow:ellipsis; }
+    .d-head .h2 { font-size:34px; }
+    .d-grid { grid-template-columns: minmax(0, 1.15fr) minmax(360px, 1fr); grid-template-areas: "a b" "c b"; gap:28px 36px; align-items:start; }
+    .col-a { grid-area:a; } .col-b { grid-area:b; } .col-c { grid-area:c; }
+    .col-b { padding:18px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+    .facts div { flex-basis:170px; }
+    .overview { display:grid; gap:24px; max-width:720px; padding-top:8px; }
+    .stat-row { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    .stat-row div { padding:16px; border-left:1px solid var(--line); }
+    .stat-row div:first-child { border-left:0; }
+    .stat-row b { display:block; font-size:28px; font-variant-numeric:tabular-nums; }
+    .stat-row span { color:var(--muted); font-size:14px; }
+
+    .two-col { display:grid; grid-template-columns: 340px minmax(0,1fr); gap:40px; align-items:start; }
+    .two-col > aside { position:sticky; top:var(--header-h); padding-top:24px; display:grid; gap:16px; }
+    .two-col > section { padding-top:24px; }
+    .page-head { padding-top:0; }
+    .mat-list.with-used .check-row { grid-template-columns: 24px 18px minmax(0,1fr) minmax(120px, 220px) 110px; }
+    .mat-list .used { display:block !important; font-size:13px; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    [data-mod-groups] { columns:2; column-gap:20px; }
+    .mod-group { break-inside:avoid; margin:0 0 28px; }
+    .foot { margin-top:48px; }
+  }
+  .mat-list .used { display:none; }
+  @media (max-width: 899px) { .desk-only { display:none !important; } .chip { min-height:44px; padding:0 16px; } }
+  @media (min-width: 900px) { .phone-only { display:none !important; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <a class="brand" href="#/" aria-label="Farm Plan, all farms">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 27 9v14l-11 7-11-7V9z" fill="#17a86b"/><path d="M16 2 27 9 16 16 5 9z" fill="#46d596"/><path d="M16 16v14l11-7V9z" fill="#0b7a4c"/></svg>
+    <h1><span class="reveal"><span>Farm Plan</span></span></h1>
+  </a>
+  <nav class="tabs top-tabs" aria-label="Sections" style="--n:3; --i:0" data-nav>
+    <span class="tab-pill" aria-hidden="true"></span>
+    <a href="#/" data-tab="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Farms</a>
+    <a href="#/materials" data-tab="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 12h18M10 12v3h4v-3M7 7V4h10v3"/></svg>Materials</a>
+    <a href="#/mods" data-tab="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg>Mods</a>
+  </nav>
+  <div class="top-progress desk-only" data-top-progress></div>
+</header>
+
+<main id="main" tabindex="-1">
+  <div id="view" aria-live="polite"></div>
+</main>
+
+<div class="actionbar" id="actionbar" hidden></div>
+
+<nav class="tabbar" aria-label="Sections">
+  <div class="tabs" style="--n:3; --i:0" data-nav>
+    <span class="tab-pill" aria-hidden="true"></span>
+    <a href="#/" data-tab="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Farms</a>
+    <a href="#/materials" data-tab="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 12h18M10 12v3h4v-3M7 7V4h10v3"/></svg>Materials</a>
+    <a href="#/mods" data-tab="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg>Mods</a>
+  </div>
+</nav>
+
+<script src="recipes.js"></script>
+<script>
+(function () {
+  'use strict';
+  const FR = window.FarmRecipes;
+
+  /* ---------- helpers ---------- */
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const esc = (v) => String(v == null ? '' : v).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const txt = (v) => (v == null || typeof v === 'object' || String(v).trim() === '' || String(v).trim().toLowerCase() === 'null') ? '' : String(v).trim();
+  const arr = (v) => Array.isArray(v) ? v : [];
+  const safeUrl = (u) => { if (!txt(u)) return ''; try { const x = new URL(String(u)); return /^https?:$/.test(x.protocol) ? x.href : ''; } catch (e) { return ''; } };
+  const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return ''; } };
+  const fmt = (n) => Number(n).toLocaleString('en-US');
+  const desktop = window.matchMedia('(min-width: 900px)');
+
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem('farmplan:' + k); return v == null ? d : JSON.parse(v); } catch (e) { return d; } },
+    set(k, v) { try { localStorage.setItem('farmplan:' + k, JSON.stringify(v)); } catch (e) { /* private mode: keep it in memory */ } },
+  };
+
+  const I = {
+    chevR: '<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg>',
+    back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>',
+    search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+    filter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>',
+    play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l13-7.5z"/></svg>',
+    ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>',
+    yt: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10 9.5v5l4.5-2.5z" fill="currentColor"/></svg>',
+    down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+    copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+    info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
+    check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>',
+    chevD: '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+    tick: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" pathLength="1"/></svg>',
+  };
+
+  /* ---------- state ---------- */
+  const S = {
+    loaded: false, error: null, meta: {}, farms: [], mods: null, modsError: null,
+    q: '', dim: 'all', st: 'all',
+    status: store.get('status', {}), design: store.get('design', {}), got: store.get('got', {}),
+    installed: store.get('installed', {}),
+    depthFarm: store.get('depthFarm', 'placed'), depthMats: store.get('depthMats', 'raw'),
+    modFilter: store.get('modFilter', 'all'), howto: false,
+    navCount: 0, listScroll: 0, prevRoute: null,
+  };
+
+  const STATUSES = [
+    { v: 'planned', l: 'Planned', d: 'On the list, not started' },
+    { v: 'building', l: 'Building', d: 'Gathering or under construction' },
+    { v: 'built', l: 'Built', d: 'Done and running' },
+    { v: 'skip', l: 'Skip', d: 'Not building this one' },
+  ];
+  const statusLabel = (v) => (STATUSES.find((s) => s.v === v) || {}).l || '';
+  const statusOf = (id) => STATUSES.some((s) => s.v === S.status[id]) ? S.status[id] : '';
+  const DEPTHS = [
+    { value: 'placed', label: 'As placed' },
+    { value: 'ingredients', label: 'Ingredients' },
+    { value: 'raw', label: 'Raw' },
+  ];
+  const DIMS = { overworld: 'Overworld', nether: 'Nether', end: 'The End' };
+  const dimOf = (f) => { const d = txt(f.dimension).toLowerCase(); return DIMS[d] ? d : ''; };
+  const DIFF = { easy: 1, medium: 2, hard: 3 };
+
+  const designsOf = (f) => [f.primary, ...arr(f.alternatives)].filter((d) => d && typeof d === 'object');
+  const designIdx = (f) => { const n = designsOf(f).length; const i = Number(S.design[f.id]) || 0; return i >= 0 && i < n ? i : 0; };
+  const designOf = (f) => designsOf(f)[designIdx(f)] || null;
+  const farmById = (id) => S.farms.find((f) => f.id === id);
+
+  /* ---------- small renderers ---------- */
+  function dimBadge(f) { const d = dimOf(f); return d ? `<span class="dim dim-${d}">${DIMS[d]}</span>` : ''; }
+  function diffBadge(d) {
+    const k = txt(d && d.difficulty).toLowerCase(); const n = DIFF[k];
+    if (!n) return '';
+    return `<span class="diff" title="Difficulty"><b aria-hidden="true">${[1, 2, 3].map((i) => `<i class="${i <= n ? 'on' : ''}"></i>`).join('')}</b>${k[0].toUpperCase() + k.slice(1)}</span>`;
+  }
+  function statusPill(id) { const s = statusOf(id); return s ? `<span class="pill s-${s}">${statusLabel(s)}</span>` : ''; }
+  function seg(name, opts, current, label) {
+    const i = opts.findIndex((o) => o.value === current);
+    return `<div class="seg" role="group" aria-label="${esc(label)}" data-seg="${name}" style="--n:${opts.length}; --i:${Math.max(i, 0)}"${i < 0 ? ' data-empty' : ''}>
+      <span class="seg-pill" aria-hidden="true"></span>
+      ${opts.map((o) => `<button type="button" data-value="${esc(o.value)}" aria-pressed="${o.value === current}">${esc(o.label)}${o.sub ? `<small>${esc(o.sub)}</small>` : ''}</button>`).join('')}
+    </div>`;
+  }
+
+  function counts() {
+    const c = { planned: 0, building: 0, built: 0, skip: 0 };
+    S.farms.forEach((f) => { const s = statusOf(f.id); if (s) c[s]++; });
+    c.total = S.farms.length - c.skip;
+    return c;
+  }
+  function progressBar(c) {
+    const t = Math.max(c.total, 1);
+    return `<div class="bar" role="img" aria-label="${c.built} built, ${c.building} building, ${c.planned} planned of ${c.total}">
+      <i class="b-built" style="width:${c.built / t * 100}%"></i><i class="b-building" style="width:${c.building / t * 100}%"></i><i class="b-planned" style="width:${c.planned / t * 100}%"></i></div>`;
+  }
+  function progressText(c) {
+    const rest = [c.building && `${c.building} building`, c.planned && `${c.planned} planned`, c.skip && `${c.skip} skipped`].filter(Boolean).join(' · ');
+    return `<div class="progress-line"><strong class="num">${c.built} of ${c.total} built</strong>${rest ? `<span class="num">${rest}</span>` : ''}</div>`;
+  }
+  function refreshProgress() {
+    const c = counts();
+    $$('[data-progress]').forEach((el) => { el.innerHTML = progressText(c) + progressBar(c); });
+    const top = $('[data-top-progress]');
+    if (top) top.innerHTML = S.loaded && S.farms.length ? `<span class="num">${c.built}/${c.total} built</span>${progressBar(c)}` : '';
+  }
+
+  /* item swatch colour, by keyword */
+  const DYE = { white: '#e9ecec', orange: '#f07613', magenta: '#bd44b3', light_blue: '#3aafd9', yellow: '#f8c527', lime: '#70b919', pink: '#ed8dac', gray: '#3e4447', light_gray: '#8e8e86', cyan: '#158991', purple: '#792aac', blue: '#35399d', brown: '#724728', green: '#546d1b', red: '#a12722', black: '#141519' };
+  const SWATCH = [
+    [/redstone|repeater|comparator|target/, '#c22b23'], [/gold/, '#e8c13a'], [/quartz|observer/, '#e9e3d8'],
+    [/slime/, '#79c05a'], [/honey/, '#e9a23b'], [/copper|lightning/, '#c66d47'], [/magma|lava/, '#e0632b'],
+    [/water|ice/, '#3f76e4'], [/glass/, '#bfe0e6'], [/^sand$|sandstone/, '#ded09c'], [/gravel/, '#8a817b'],
+    [/obsidian/, '#2c2240'], [/string|wool|bed|cobweb/, '#e3e3e3'], [/bamboo|scaffold/, '#b5ae4a'], [/kelp/, '#56722d'],
+    [/spruce/, '#6f5030'], [/dark_oak/, '#4a3220'], [/birch/, '#cdb878'], [/crimson/, '#7b3a52'], [/warped/, '#2d7a73'],
+    [/cherry/, '#e3b2ad'], [/mangrove/, '#7a3a31'],
+    [/hopper|rail|minecart|bucket|cauldron|anvil|chain|lantern|iron/, '#c9ccd0'],
+    [/log|planks|stick|chest|barrel|wood|sign|fence|trapdoor|door|ladder|composter|lectern|note_block|bookshelf|crafting|boat|bow|oak|jungle|acacia|button|pressure/, '#a97d48'],
+    [/cobble|stone|dropper|dispenser|piston|furnace|lever|deepslate|blackstone/, '#8c8e90'],
+    [/turtle|egg/, '#e8e2c4'], [/name_tag|leather|book|paper/, '#c7a26b'], [/soul/, '#5a4436'], [/dirt|mud/, '#866043'],
+    [/grass|moss|leaves|vine|sapling/, '#5c9a3a'], [/ender|shulker|end_/, '#8c6fae'], [/coal|charcoal/, '#2d2d2d'],
+    [/diamond/, '#5ee3d9'], [/emerald/, '#17b56b'], [/netherrack|nether_brick|wart/, '#7a2e2e'],
+  ];
+  function swatch(id) {
+    const dye = Object.keys(DYE).sort((a, b) => b.length - a.length).find((c) => id.startsWith(c + '_'));
+    if (dye) return DYE[dye];
+    for (const [re, c] of SWATCH) if (re.test(id)) return c;
+    let h = 0; for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) % 360;
+    return `hsl(${h} 18% 55%)`;
+  }
+
+  /* ---------- material list ---------- */
+  function matBlock(res, keyPrefix, opts) {
+    opts = opts || {};
+    if (!res.items.length) return '';
+    const rows = res.items.map((it) => {
+      const key = keyPrefix + it.id;
+      const used = opts.usedBy && opts.usedBy.get(it.id);
+      return `<li><label class="check-row">
+        <input type="checkbox" class="sr-only" data-got="${esc(key)}"${S.got[key] ? ' checked' : ''}>
+        <span class="box">${I.tick}</span>
+        <span class="sw" style="--c:${swatch(it.id)}" aria-hidden="true"></span>
+        <span class="mat-name"><span>${esc(it.name)}</span>${it.count == null ? '<small>Count unknown</small>' : ''}</span>
+        ${opts.usedBy ? `<span class="used">${used ? esc(used.join(', ')) : ''}</span>` : ''}
+        <span class="mat-count"><b>${it.count == null ? '?' : fmt(it.count)}</b>${it.stack ? `<small>${esc(it.stack)}</small>` : ''}</span>
+      </label></li>`;
+    }).join('');
+    return `<ul class="mat-list${opts.usedBy ? ' with-used' : ''}">${rows}</ul>`;
+  }
+  function matNotes(res, extra) {
+    const notes = [];
+    if (res.smelted.length) {
+      const from = res.smelted.map((id) => `${FR.prettyName(id)} from ${FR.prettyName(Object.keys(FR.RECIPES[id].in)[0])}`);
+      notes.push(`Smelt: ${from.join(', ')}. Fuel is not counted.`);
+    }
+    if (res.filled.length) notes.push(`Fill buckets with ${res.filled.map((id) => FR.RECIPES[id].fill).join(', ')}.`);
+    if (res.leftovers.length) notes.push(`Left over after whole crafts: ${res.leftovers.map((l) => `${fmt(l.count)} ${l.name}`).join(', ')}.`);
+    if (extra) notes.push(extra);
+    return notes.length ? `<div class="mat-notes">${notes.map((n) => `<p>${I.info}<span>${esc(n)}</span></p>`).join('')}</div>` : '';
+  }
+  function gatheredLine(res, keyPrefix) {
+    const n = res.items.length;
+    const got = res.items.filter((it) => S.got[keyPrefix + it.id]).length;
+    return `<div class="gathered" data-gathered><span class="num">${got} of ${n} gathered</span><div class="bar"><i class="b-built" style="width:${n ? got / n * 100 : 0}%"></i></div></div>`;
+  }
+  function listText(res) { return res.items.map((it) => `${it.count == null ? '?' : it.count} x ${it.name}${it.stack ? ` (${it.stack})` : ''}`).join('\n'); }
+
+  const SOURCE_LABEL = { description: 'Video description', schematic: 'Schematic', 'counted-from-video': 'Counted from the video', estimate: 'Estimate' };
+
+  /* ---------- views: farm list ---------- */
+  function visibleFarms() {
+    const q = S.q.trim().toLowerCase();
+    return S.farms.filter((f) => {
+      if (S.dim !== 'all' && dimOf(f) !== S.dim) return false;
+      const s = statusOf(f.id);
+      if (S.st === 'none' ? s : (S.st !== 'all' && s !== S.st)) return false;
+      if (!q) return true;
+      const d = designOf(f) || {};
+      return [f.name, f.id, f.where, d.creator, d.title, ...arr(f.requirements)].map(txt).join(' ').toLowerCase().includes(q);
+    });
+  }
+  function farmRows(activeId, animate) {
+    const list = visibleFarms();
+    if (!list.length) {
+      return `<div class="empty"><p><b>No farms match.</b></p><button type="button" class="btn press" data-action="clear-filters">Clear search and filters</button></div>`;
+    }
+    return `<ul class="farm-list${animate ? ' stagger' : ''}" id="farm-list">${list.map((f, i) => {
+      const d = designOf(f) || {};
+      const creator = txt(d.creator);
+      const name = txt(f.name) || FR.prettyName(f.id);
+      return `<li style="--i:${i}"><a class="farm-row" href="#/farm/${encodeURIComponent(f.id)}"${f.id === activeId ? ' aria-current="true"' : ''}>
+        <span class="row-main"><span class="row-name">${esc(name)}</span>
+          <span class="row-sub">${dimBadge(f)}${diffBadge(d)}${creator ? `<span class="creator">${esc(creator)}</span>` : ''}</span></span>
+        ${statusPill(f.id) || I.chevR}
+      </a></li>`;
+    }).join('')}</ul>`;
+  }
+  const FILTER_DIMS = [['all', 'All'], ['overworld', 'Overworld'], ['nether', 'Nether'], ['end', 'The End']];
+  const FILTER_ST = [['all', 'Any status'], ['none', 'Not set'], ['planned', 'Planned'], ['building', 'Building'], ['built', 'Built'], ['skip', 'Skip']];
+  function filterChips() {
+    return `<div class="block"><span class="eyebrow">Dimension</span><div class="chips">${FILTER_DIMS.map(([v, l]) => `<button type="button" class="chip press" data-action="f-dim" data-value="${v}" aria-pressed="${S.dim === v}">${l}</button>`).join('')}</div></div>
+      <div class="block"><span class="eyebrow">Status</span><div class="chips">${FILTER_ST.map(([v, l]) => `<button type="button" class="chip press" data-action="f-st" data-value="${v}" aria-pressed="${S.st === v}">${l}</button>`).join('')}</div></div>`;
+  }
+  const activeFilterCount = () => (S.dim !== 'all') + (S.st !== 'all');
+  function activeFilterLine() {
+    if (!activeFilterCount()) return '';
+    const parts = [S.dim !== 'all' && DIMS[S.dim], S.st !== 'all' && FILTER_ST.find((x) => x[0] === S.st)[1]].filter(Boolean);
+    return `<div class="active-filters"><span>Showing: ${esc(parts.join(' · '))}</span><button type="button" class="btn btn-quiet press" data-action="clear-filters">Clear</button></div>`;
+  }
+  function listHead(compact) {
+    return `<div class="list-head">
+      ${compact ? '' : '<h2 class="h2">Farms</h2>'}
+      <div data-progress></div>
+      <div class="searchrow">
+        <label class="field"><span class="sr-only">Search farms</span>${I.search}<input type="search" data-search placeholder="Search farms" value="${esc(S.q)}" autocomplete="off" enterkeyhint="search"></label>
+        <button type="button" class="btn press phone-only" data-action="filter-open" aria-label="Filter farms">${I.filter}Filter${activeFilterCount() ? `<span class="badge-count">${activeFilterCount()}</span>` : ''}</button>
+      </div>
+      <div class="desk-only block">${filterChips()}</div>
+      <div class="phone-only" data-active-filters>${activeFilterLine()}</div>
+    </div>`;
+  }
+  function refreshList(animate) {
+    const r = parse();
+    const host = $('[data-list]');
+    if (host) host.innerHTML = farmRows(r.name === 'farm' ? r.id : null, animate !== false);
+    const af = $('[data-active-filters]'); if (af) af.innerHTML = activeFilterLine();
+    const fb = $('[data-action="filter-open"]');
+    if (fb) fb.innerHTML = `${I.filter}Filter${activeFilterCount() ? `<span class="badge-count">${activeFilterCount()}</span>` : ''}`;
+    $$('.desk-only [data-action="f-dim"], .desk-only [data-action="f-st"]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.action === 'f-dim' ? S.dim : S.st) === b.dataset.value)));
+  }
+
+  function overviewPane() {
+    const c = counts();
+    const next = S.farms.find((f) => statusOf(f.id) === 'building') || S.farms.find((f) => statusOf(f.id) === 'planned');
+    return `<div class="overview">
+      <div class="block"><span class="eyebrow">Overview</span><h2 class="h2">Pick a farm on the left</h2>
+      <p class="muted">Each farm has a video, the design to build and a material list you can break down to raw materials.</p></div>
+      <div class="stat-row">${[['built', 'Built'], ['building', 'Building'], ['planned', 'Planned'], ['skip', 'Skipped']].map(([k, l]) => `<div><b>${c[k]}</b><span>${l}</span></div>`).join('')}</div>
+      ${next ? `<div class="block"><span class="eyebrow">Up next</span><a class="btn press" href="#/farm/${encodeURIComponent(next.id)}" style="justify-self:start">${esc(txt(next.name))} · ${statusLabel(statusOf(next.id))}</a></div>` : `<p class="muted">Mark farms Planned or Building and the Materials tab sums up what to gather.</p>`}
+    </div>`;
+  }
+
+  /* ---------- views: farm detail ---------- */
+  function videoIdOf(d) {
+    const ok = (s) => /^[A-Za-z0-9_-]{6,20}$/.test(s || '');
+    if (ok(txt(d.video_id))) return txt(d.video_id);
+    const u = safeUrl(d.video_url); if (!u) return '';
+    try {
+      const x = new URL(u);
+      if (x.hostname.endsWith('youtu.be')) { const p = x.pathname.slice(1); return ok(p) ? p : ''; }
+      const v = x.searchParams.get('v'); if (ok(v)) return v;
+      const m = x.pathname.match(/\/(shorts|embed|live)\/([A-Za-z0-9_-]{6,20})/); return m ? m[2] : '';
+    } catch (e) { return ''; }
+  }
+  const ytUrl = (d) => safeUrl(d.video_url) || (videoIdOf(d) ? `https://www.youtube.com/watch?v=${videoIdOf(d)}` : '');
+
+  function videoBlock(d) {
+    const id = videoIdOf(d); const title = txt(d.title); const yt = ytUrl(d);
+    let inner;
+    if (id) {
+      inner = `<div class="video" data-vid="${esc(id)}" data-title="${esc(title || 'Farm video')}">
+        <img src="https://i.ytimg.com/vi/${encodeURIComponent(id)}/hqdefault.jpg" alt="" width="480" height="360" loading="lazy" decoding="async" draggable="false" onerror="this.remove()">
+        <button type="button" class="play" data-action="play" aria-label="Play video${title ? ': ' + esc(title) : ''}"><span>${I.play}</span></button></div>`;
+    } else if (yt) {
+      inner = `<div class="video"><div class="video-empty"><p>This video can't be embedded.</p><a class="btn press" href="${esc(yt)}" target="_blank" rel="noopener">${I.yt}Watch on ${esc(hostOf(yt))}</a></div></div>`;
+    } else {
+      inner = `<div class="video"><div class="video-empty"><p><b>No video linked yet.</b><br>Search YouTube for this farm and your version.</p></div></div>`;
+    }
+    const cap = (title || yt) ? `<div class="video-cap">${title ? `<p>${esc(title)}</p>` : '<span></span>'}${yt ? `<a class="link-out phone-only" href="${esc(yt)}" target="_blank" rel="noopener">${I.yt}YouTube</a>` : ''}</div>` : '';
+    return `<div class="block">${inner}${cap}</div>`;
+  }
+  function factsBlock(d) {
+    const pub = /^\d{4}-\d{2}-\d{2}$/.test(txt(d.published)) ? txt(d.published) : '';
+    const rows = [['Creator', txt(d.creator)], ['Works on', txt(d.works_on)], ['Rate', txt(d.rate)], ['Size', txt(d.size)], ['Published', pub], ['Materials from', SOURCE_LABEL[txt(d.materials_source)] || '']].filter((r) => r[1]);
+    if (!rows.length) return '';
+    return `<dl class="facts">${rows.map(([k, v], i) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
+  }
+  function schematicBlock(d) {
+    const s = d.schematic && typeof d.schematic === 'object' ? d.schematic : {};
+    const url = safeUrl(s.url); const format = txt(s.format); const found = txt(s.found_in);
+    if (!url) return `<div class="schem is-empty"><span class="eyebrow">Schematic</span><p>No schematic linked. Build from the video.</p></div>`;
+    return `<div class="schem"><span class="eyebrow">Schematic</span>
+      <div class="schem-row"><a class="btn btn-primary press" href="${esc(url)}" target="_blank" rel="noopener">${I.down}Download${format ? ' ' + esc(format) : ''}</a><span class="muted">${esc(hostOf(url))}</span></div>
+      ${found ? `<small class="muted">Found in: ${esc(found)}</small>` : ''}</div>`;
+  }
+  function usefulMods(f) {
+    if (!S.mods) return '';
+    const list = arr(S.mods.mods).filter((m) => m && txt(m.id) && arr(m.used_for_farms).includes(f.id));
+    if (!list.length) return '';
+    return `<div class="block"><span class="eyebrow">Useful mods</span><div class="mods-line">${list.map((m) => `<a href="#/mods/${encodeURIComponent(m.id)}">${esc(txt(m.name) || m.id)}</a>`).join('<span class="sep">·</span>')}</div></div>`;
+  }
+  function sourcesBlock(f) {
+    const src = arr(f.sources).map(txt).filter(Boolean);
+    if (!src.length) return '';
+    return `<div class="block"><span class="eyebrow">Sources</span><ul class="sources">${src.map((s) => {
+      const u = safeUrl(s);
+      return u ? `<li><a href="${esc(u)}" target="_blank" rel="noopener">${I.ext}<span>${esc(hostOf(u))}<span class="muted">${esc(new URL(u).pathname.length > 1 ? new URL(u).pathname : '')}</span></span></a></li>` : `<li><span>${esc(s)}</span></li>`;
+    }).join('')}</ul></div>`;
+  }
+  function farmMaterials(f) {
+    const d = designOf(f);
+    const head = `<div class="block-head"><h3 class="h3">Materials</h3><button type="button" class="btn btn-quiet press" data-action="copy-farm">${I.copy}Copy</button></div>`;
+    if (!d || !arr(d.materials).length) {
+      return `${head}<div class="empty"><p><b>No material list for this design yet.</b><br>Count from the video, or use Litematica's material list.</p></div>`;
+    }
+    const prefix = `${f.id}|${designIdx(f)}|${S.depthFarm}|`;
+    const res = FR.expand(d.materials, S.depthFarm);
+    const est = txt(d.materials_source) === 'estimate' ? 'Counts are an estimate, not from the creator.' : '';
+    return `${head}<div class="mat-tools">${seg('depthFarm', DEPTHS, S.depthFarm, 'Material depth')}${gatheredLine(res, prefix)}</div>
+      <div class="swap" data-mat-block>${matBlock(res, prefix)}${matNotes(res, est)}</div>`;
+  }
+  function designBody(f) {
+    const d = designOf(f);
+    if (!d) return `<div class="empty"><p><b>No design researched yet.</b></p></div>`;
+    const reqs = arr(f.requirements).map(txt).filter(Boolean);
+    const notes = txt(d.notes);
+    return `<div class="d-grid">
+      <div class="col-a block">${videoBlock(d)}${factsBlock(d)}
+        ${reqs.length ? `<div class="block"><span class="eyebrow">You need</span><ul class="req-list">${reqs.map((r) => `<li class="tag">${esc(r)}</li>`).join('')}</ul></div>` : ''}</div>
+      <div class="col-b block" data-farm-mats>${farmMaterials(f)}</div>
+      <div class="col-c block">${notes ? `<div class="block"><span class="eyebrow">Notes</span><p class="note">${esc(notes)}</p></div>` : ''}
+        <div class="phone-only">${schematicBlock(d)}</div>${usefulMods(f)}${sourcesBlock(f)}</div>
+    </div>`;
+  }
+  function deskActions(f) {
+    const d = designOf(f) || {};
+    const yt = ytUrl(d);
+    const s = d.schematic && typeof d.schematic === 'object' ? d.schematic : {};
+    const surl = safeUrl(s.url);
+    return `<div class="d-actions">
+      ${seg('status', STATUSES.map((x) => ({ value: x.v, label: x.l })), statusOf(f.id), 'Farm status')}
+      <div class="links">
+        ${yt ? `<a class="btn press" href="${esc(yt)}" target="_blank" rel="noopener">${I.yt}Open on YouTube</a>` : '<span class="btn" aria-disabled="true" style="opacity:.5">No video</span>'}
+        ${surl ? `<a class="btn btn-primary press" href="${esc(surl)}" target="_blank" rel="noopener">${I.down}Schematic${txt(s.format) && txt(s.format).length <= 10 ? ' · ' + esc(txt(s.format)) : ''}</a>` : '<span class="btn" title="No schematic linked. Build from the video." style="opacity:.55">No schematic</span>'}
+      </div></div>`;
+  }
+  function detailView(f) {
+    const ds = designsOf(f);
+    const where = txt(f.where);
+    const name = txt(f.name) || FR.prettyName(f.id);
+    const sw = ds.length > 1 ? `<div class="design-switch block"><span class="eyebrow">Design</span>${seg('design', ds.map((d, i) => ({ value: String(i), label: i === 0 ? 'Main' : `Alt ${i}`, sub: txt(d.creator) || txt(d.size) || '' })), String(designIdx(f)), 'Choose a design')}</div>` : '';
+    return `<article class="detail" data-farm="${esc(f.id)}">
+      <div class="detail-top"><button type="button" class="back press" data-action="back">${I.back}Farms</button></div>
+      <header class="d-head">
+        <div class="d-meta">${dimBadge(f)}${diffBadge(designOf(f))}<span data-status-pill>${statusPill(f.id)}</span></div>
+        <h2 class="h2">${esc(name)}</h2>
+        ${where ? `<p class="d-where">${esc(where)}</p>` : ''}
+        ${deskActions(f)}
+      </header>
+      ${sw}
+      <div data-design-body>${designBody(f)}</div>
+    </article>`;
+  }
+  function notFound(what) {
+    return `<div class="empty enter" style="margin-top:24px"><p><b>${esc(what)} not found.</b></p><a class="btn press" href="#/">All farms</a></div>`;
+  }
+
+  /* ---------- views: materials tab ---------- */
+  function shoppingData() {
+    const farms = S.farms.filter((f) => ['planned', 'building'].includes(statusOf(f.id)));
+    const all = []; const usedBy = new Map();
+    farms.forEach((f) => {
+      const d = designOf(f); const mats = d ? arr(d.materials) : [];
+      all.push(...mats);
+      FR.expand(mats, S.depthMats).items.forEach((it) => { if (!usedBy.has(it.id)) usedBy.set(it.id, []); usedBy.get(it.id).push(txt(f.name) || f.id); });
+    });
+    return { farms, res: FR.expand(all, S.depthMats), usedBy };
+  }
+  function materialsView() {
+    const { farms, res, usedBy } = shoppingData();
+    const prefix = `all|${S.depthMats}|`;
+    const head = `<div class="page-head"><h2 class="h2">Materials</h2>
+      <p class="muted">${farms.length ? `${res.items.length} item${res.items.length === 1 ? '' : 's'} for ${farms.length} farm${farms.length === 1 ? '' : 's'} in progress` : 'For farms marked Planned or Building'}</p></div>`;
+    if (!farms.length) {
+      return `<div class="enter">${head}<div class="empty"><p><b>Nothing to gather yet.</b><br>Mark a farm Planned or Building and its materials land here.</p><a class="btn btn-primary press" href="#/">Browse farms</a></div></div>`;
+    }
+    const included = `<div class="block"><span class="eyebrow">From these farms</span><ul class="used-in">${farms.map((f) => `<li><a href="#/farm/${encodeURIComponent(f.id)}"><span>${esc(txt(f.name) || f.id)}</span>${statusPill(f.id)}</a></li>`).join('')}</ul></div>`;
+    const tools = `<div class="mat-tools">${seg('depthMats', DEPTHS, S.depthMats, 'Material depth')}${gatheredLine(res, prefix)}
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="btn press" data-action="copy-all">${I.copy}Copy</button><button type="button" class="btn btn-quiet press" data-action="reset-got">Untick all</button></div></div>`;
+    const list = `<div class="swap" data-mat-block>${res.items.length ? matBlock(res, prefix, { usedBy }) + matNotes(res) : '<div class="empty"><p>These farms have no material lists yet.</p></div>'}</div>`;
+    if (desktop.matches) return `<div class="two-col enter"><aside>${head}${tools}${included}</aside><section>${list}</section></div>`;
+    return `<div class="enter">${head}<div class="block">${tools}${list}</div><div style="margin-top:28px">${included}</div></div>`;
+  }
+
+  /* ---------- views: mods tab ---------- */
+  const CATS = [['map', 'Map'], ['building', 'Building'], ['redstone', 'Redstone'], ['info', 'Info and HUD'], ['movement', 'Movement'], ['performance', 'Performance'], ['qol', 'Quality of life']];
+  function lunarBadge(m) {
+    const v = txt(m.lunar).toLowerCase();
+    if (v === 'built-in') return '<span class="b b-good">Built into Lunar</span>';
+    if (v === 'addable') return '<span class="b">Add as Fabric mod</span>';
+    if (v === 'not-allowed') return '<span class="b b-bad">Not allowed on Lunar</span>';
+    return '<span class="b b-warn">Lunar: unknown</span>';
+  }
+  function versionBadge(m) {
+    const ver = txt(S.mods.minecraft_version) || 'this version';
+    if (m.available_for_version === true) return `<span class="b b-good">${I.check.replace('<svg', '<svg width="14" height="14"')}Out for ${esc(ver)}</span>`;
+    if (m.available_for_version === false) return `<span class="b b-bad">Not out for ${esc(ver)}</span>`;
+    return '<span class="b">Version not checked</span>';
+  }
+  function modCard(m, byId) {
+    const url = safeUrl(m.url);
+    const feats = arr(m.features).map(txt).filter(Boolean);
+    const req = arr(m.requires).map(txt).filter(Boolean);
+    const id = txt(m.id);
+    return `<article class="mod" id="mod-${esc(id)}">
+      <div class="mod-top"><h4>${esc(txt(m.name) || FR.prettyName(id))}</h4>${txt(m.priority) === 'must' ? '<span class="b b-must">Must-have</span>' : ''}</div>
+      ${txt(m.what) ? `<p>${esc(txt(m.what))}</p>` : ''}
+      <div class="badges">${lunarBadge(m)}${versionBadge(m)}</div>
+      ${txt(m.lunar_note) ? `<small>${esc(txt(m.lunar_note))}</small>` : ''}
+      ${txt(m.version_checked) ? `<small>Checked: ${esc(txt(m.version_checked))}</small>` : ''}
+      ${feats.length ? `<ul class="req-list">${feats.map((x) => `<li class="tag">${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${req.length ? `<p class="needs muted">Needs ${req.map((r) => byId[r] ? `<a href="#/mods/${encodeURIComponent(r)}">${esc(txt(byId[r].name) || r)}</a>` : `<span>${esc(FR.prettyName(r))}</span>`).join(', ')}</p>` : ''}
+      <div class="mod-foot">
+        <label class="check-row"><input type="checkbox" class="sr-only" data-installed="${esc(id)}"${S.installed[id] ? ' checked' : ''}><span class="box">${I.tick}</span><span class="mat-name">Installed</span></label>
+        ${url ? `<a class="link-out" href="${esc(url)}" target="_blank" rel="noopener">${esc(hostOf(url))}${I.ext}</a>` : '<small>No link yet</small>'}
+      </div></article>`;
+  }
+  function modGroups() {
+    const mods = arr(S.mods.mods).filter((m) => m && txt(m.id));
+    const byId = Object.fromEntries(mods.map((m) => [m.id, m]));
+    const shown = mods.filter((m) => S.modFilter === 'all' || txt(m.priority) === 'must');
+    if (!shown.length) return `<div class="empty"><p><b>No mods in this filter.</b></p></div>`;
+    const known = CATS.map((c) => c[0]);
+    const cats = [...CATS, ...[...new Set(shown.map((m) => txt(m.category).toLowerCase()).filter((c) => !known.includes(c)))].map((c) => [c, c ? FR.prettyName(c) : 'Other'])];
+    return cats.map(([k, label]) => {
+      const list = shown.filter((m) => txt(m.category).toLowerCase() === k);
+      if (!list.length) return '';
+      return `<section class="mod-group"><span class="eyebrow">${esc(label)}</span><div class="mod-cards">${list.map((m) => modCard(m, byId)).join('')}</div></section>`;
+    }).join('');
+  }
+  function modsProgress() {
+    const mods = arr(S.mods && S.mods.mods).filter((m) => m && txt(m.id));
+    const n = mods.length; const got = mods.filter((m) => S.installed[m.id]).length;
+    return `<div class="gathered"><span class="num">${got} of ${n} installed</span><div class="bar"><i class="b-built" style="width:${n ? got / n * 100 : 0}%"></i></div></div>`;
+  }
+  function modsView() {
+    if (S.modsError) return `<div class="enter"><div class="page-head"><h2 class="h2">Mods</h2></div><div class="empty"><p><b>Couldn't load mods.json.</b></p><button type="button" class="btn press" data-action="retry">Try again</button></div></div>`;
+    const M = S.mods;
+    const meta = [txt(M.client), txt(M.loader), txt(M.minecraft_version)].filter(Boolean).join(' · ');
+    const steps = arr(M.how_to_add).map(txt).filter(Boolean);
+    const notes = arr(M.notes).map(txt).filter(Boolean);
+    const head = `<div class="page-head"><h2 class="h2">Mods</h2>
+      <p class="muted">${meta ? esc(meta) : 'Client mods'}${txt(M.researched) ? `. Checked ${esc(txt(M.researched))}.` : ''}</p></div>`;
+    const tools = `<div class="block"><div data-mods-progress>${modsProgress()}</div>${seg('modFilter', [{ value: 'must', label: 'Must-have' }, { value: 'all', label: 'All mods' }], S.modFilter, 'Which mods')}</div>`;
+    const howto = (steps.length || notes.length) ? `<div class="howto">
+      <button type="button" class="press" data-action="howto" aria-expanded="${S.howto}" aria-controls="howto-panel">How to add mods on ${esc(txt(M.client) || 'your client')}${I.chevD}</button>
+      <div class="acc" id="howto-panel"${S.howto ? ' data-open' : ' inert'}><div class="acc-inner">
+        ${steps.length ? `<ol>${steps.map((s) => `<li>${esc(s)}</li>`).join('')}</ol>` : ''}
+        ${notes.length ? `<div class="caveats">${notes.map((n) => `<p>${esc(n)}</p>`).join('')}</div>` : '<div style="height:14px"></div>'}
+      </div></div></div>` : '';
+    const groups = `<div data-mod-groups>${modGroups()}</div>`;
+    if (desktop.matches) return `<div class="two-col enter"><aside>${head}${tools}${howto}</aside><section>${groups}</section></div>`;
+    return `<div class="enter">${head}<div class="block">${howto}${tools}</div>${groups}</div>`;
+  }
+
+  /* ---------- routing and render ---------- */
+  function parse() {
+    const parts = location.hash.replace(/^#\/?/, '').split('/');
+    const dec = (s) => { try { return decodeURIComponent(s); } catch (e) { return s; } };
+    if (parts[0] === 'farm' && parts[1]) return { name: 'farm', id: dec(parts[1]) };
+    if (parts[0] === 'materials') return { name: 'materials' };
+    if (parts[0] === 'mods') return { name: 'mods', id: parts[1] ? dec(parts[1]) : null };
+    return { name: 'farms' };
+  }
+  const TAB = { farms: 0, farm: 0, materials: 1, mods: 2 };
+  function setNav(r) {
+    const i = TAB[r.name];
+    $$('[data-nav]').forEach((nav) => {
+      nav.style.setProperty('--i', i);
+      $$('a', nav).forEach((a) => { if (Number(a.dataset.tab) === i) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+    });
+  }
+  function footer() {
+    const parts = [txt(S.meta.researched) && `Data researched on ${esc(txt(S.meta.researched))}`, txt(S.meta.minecraft_version) && `for ${esc(txt(S.meta.minecraft_version))}`].filter(Boolean);
+    return parts.length ? `<footer class="foot">${parts.join(', ')}. Rates, materials and versions are the creators' own; try a big build in a creative copy first.</footer>` : '';
+  }
+  function skeleton() {
+    return `<div style="padding-top:24px;display:grid;gap:14px" aria-busy="true"><div class="skeleton" style="height:34px;width:40%"></div><div class="skeleton" style="height:44px"></div>${Array.from({ length: 7 }, () => '<div class="skeleton" style="height:56px"></div>').join('')}</div>`;
+  }
+
+  const view = $('#view');
+  function render(nav) {
+    const r = parse();
+    setNav(r);
+    const desk = desktop.matches;
+    const railScroll = $('.rail') ? $('.rail').scrollTop : 0;
+    let html = '';
+    if (S.error) {
+      html = `<div class="empty enter" style="margin-top:24px"><p><b>Couldn't load the farm list.</b><br>${esc(S.error)}</p><button type="button" class="btn btn-primary press" data-action="retry">Try again</button></div>`;
+    } else if (!S.loaded) {
+      html = '';
+    } else if (r.name === 'materials') {
+      html = materialsView() + footer();
+    } else if (r.name === 'mods') {
+      html = (S.mods || S.modsError ? modsView() : skeleton()) + footer();
+    } else if (r.name === 'farm' && !farmById(r.id)) {
+      html = notFound('That farm');
+    } else if (desk) {
+      const f = r.name === 'farm' ? farmById(r.id) : null;
+      const railKeep = nav && $('.rail') && (S.prevRoute === 'farm' || S.prevRoute === 'farms');
+      html = `<div class="split"><aside class="rail${railKeep ? '' : ' enter'}">${listHead(false)}<div data-list>${farmRows(f && f.id, !railKeep)}</div></aside>
+        <section class="pane enter">${f ? detailView(f) : overviewPane()}${footer()}</section></div>`;
+    } else if (r.name === 'farm') {
+      html = `<div class="enter">${detailView(farmById(r.id))}</div>${footer()}`;
+    } else {
+      html = `<div class="enter">${listHead(false)}<div data-list>${farmRows(null, nav !== false)}</div></div>${footer()}`;
+    }
+    view.innerHTML = html;
+    refreshProgress();
+    renderActionBar(r);
+    const f = r.name === 'farm' ? farmById(r.id) : null;
+    document.title = f ? `${txt(f.name) || f.id} · Farm Plan` : r.name === 'materials' ? 'Materials · Farm Plan' : r.name === 'mods' ? 'Mods · Farm Plan' : 'Farm Plan';
+
+    if (nav) {
+      const rail = $('.rail'); if (rail && desk) rail.scrollTop = railScroll;
+      if (r.name === 'farms' && !desk && S.prevRoute === 'farm') window.scrollTo({ top: S.listScroll, behavior: 'instant' });
+      else if (r.name === 'mods' && r.id) focusMod(r.id);
+      else if (S.prevRoute !== null) window.scrollTo({ top: 0, behavior: 'instant' });
+      S.prevRoute = r.name;
+    }
+  }
+  function focusMod(id) {
+    let card = document.getElementById('mod-' + id);
+    if (!card && S.modFilter !== 'all') { S.modFilter = 'all'; store.set('modFilter', 'all'); render(false); card = document.getElementById('mod-' + id); }
+    if (!card) return;
+    requestAnimationFrame(() => {
+      card.scrollIntoView({ block: 'center', behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
+      card.classList.add('flash'); setTimeout(() => card.classList.remove('flash'), 1600);
+    });
+  }
+
+  function renderActionBar(r) {
+    const bar = $('#actionbar');
+    const f = r.name === 'farm' && S.loaded ? farmById(r.id) : null;
+    if (!f || desktop.matches) { bar.hidden = true; document.body.classList.remove('has-bar'); return; }
+    const s = statusOf(f.id);
+    const d = designOf(f) || {};
+    const yt = ytUrl(d);
+    bar.innerHTML = `<button type="button" class="btn ${s ? '' : 'btn-primary '}press" data-action="status-open">${s ? `<span class="dot s-${s}"></span>${statusLabel(s)} · change` : 'Set status'}</button>
+      ${yt ? `<a class="btn press" href="${esc(yt)}" target="_blank" rel="noopener" aria-label="Open on YouTube">${I.yt}Open</a>` : ''}`;
+    bar.hidden = false; document.body.classList.add('has-bar');
+  }
+
+  /* ---------- sheets ---------- */
+  let openSheetEl = null;
+  function openSheet(title, body, foot, onMount) {
+    closeSheet(true);
+    const opener = document.activeElement;
+    const wrap = document.createElement('div');
+    wrap.className = 'sheet-wrap';
+    wrap.innerHTML = `<div class="scrim" data-action="sheet-close"></div>
+      <section class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+        <div class="sheet-grab"><div class="sheet-head"><h2 id="sheet-title">${esc(title)}</h2><button type="button" class="icon-btn press" data-action="sheet-close" aria-label="Close">${I.close}</button></div></div>
+        <div class="sheet-body">${body}</div>${foot ? `<div class="sheet-foot">${foot}</div>` : ''}
+      </section>`;
+    document.body.appendChild(wrap);
+    document.documentElement.style.overflow = 'hidden';
+    openSheetEl = { wrap, opener };
+    requestAnimationFrame(() => requestAnimationFrame(() => wrap.setAttribute('data-open', '')));
+    const sheet = $('.sheet', wrap); const grab = $('.sheet-grab', wrap);
+    let y0 = null, t0 = 0, dy = 0;
+    grab.addEventListener('pointerdown', (e) => { if (e.target.closest('button')) return; y0 = e.clientY; t0 = e.timeStamp; dy = 0; sheet.style.transition = 'none'; grab.setPointerCapture(e.pointerId); });
+    grab.addEventListener('pointermove', (e) => { if (y0 === null) return; dy = Math.max(0, e.clientY - y0); sheet.style.transform = `translateY(${dy}px)`; });
+    const end = (e) => {
+      if (y0 === null) return;
+      const v = dy / Math.max(1, e.timeStamp - t0);
+      sheet.style.transition = ''; sheet.style.transform = '';
+      if (dy > 120 || (dy > 24 && v > 0.5)) closeSheet();
+      y0 = null; dy = 0;
+    };
+    grab.addEventListener('pointerup', end); grab.addEventListener('pointercancel', end);
+    if (onMount) onMount(wrap);
+    setTimeout(() => { const first = $('[aria-checked="true"]', wrap) || $('.sheet-body button, .sheet-body a', wrap) || $('button', wrap); if (first) first.focus({ preventScroll: true }); }, 50);
+  }
+  function closeSheet(instant) {
+    if (!openSheetEl) return;
+    const { wrap, opener } = openSheetEl; openSheetEl = null;
+    document.documentElement.style.overflow = '';
+    const done = () => wrap.remove();
+    if (instant) done();
+    else { wrap.removeAttribute('data-open'); const sh = $('.sheet', wrap); sh.addEventListener('transitionend', done, { once: true }); setTimeout(done, 450); }
+    if (opener && document.body.contains(opener)) opener.focus({ preventScroll: true });
+  }
+  function statusSheet(f) {
+    const s = statusOf(f.id);
+    openSheet(`Status: ${txt(f.name) || f.id}`,
+      `<ul class="opt-list" role="radiogroup" aria-label="Status">${STATUSES.map((x) => `<li><button type="button" class="opt" role="radio" aria-checked="${s === x.v}" data-action="set-status" data-value="${x.v}"><span class="radio"></span><span>${x.l}<small>${x.d}</small></span></button></li>`).join('')}</ul>`,
+      s ? `<button type="button" class="btn btn-quiet press" data-action="set-status" data-value="">Clear status</button><button type="button" class="btn press" data-action="sheet-close">Done</button>` : '');
+  }
+  function filterSheet() {
+    openSheet('Filter farms', filterChips(),
+      `<button type="button" class="btn btn-quiet press" data-action="clear-filters">Reset</button><button type="button" class="btn btn-primary press" data-action="sheet-close" data-show-count>Show ${visibleFarms().length} farms</button>`);
+  }
+
+  /* ---------- toast ---------- */
+  let toastTimer = null;
+  function toast(msg) {
+    const old = $('.toast'); if (old) old.remove();
+    clearTimeout(toastTimer);
+    const t = document.createElement('div');
+    t.className = 'toast'; t.setAttribute('role', 'status');
+    t.innerHTML = `${I.check}<span>${esc(msg)}</span>`;
+    document.body.appendChild(t);
+    toastTimer = setTimeout(() => { t.classList.add('leaving'); t.addEventListener('transitionend', () => t.remove(), { once: true }); setTimeout(() => t.remove(), 400); }, 2600);
+  }
+  async function copy(text, n) {
+    try { await navigator.clipboard.writeText(text); }
+    catch (e) {
+      const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e2) { /* nothing more to try */ } ta.remove();
+    }
+    toast(`Copied ${n} item${n === 1 ? '' : 's'}`);
+  }
+
+  /* ---------- status change ---------- */
+  function setStatus(f, v) {
+    if (v) S.status[f.id] = v; else delete S.status[f.id];
+    store.set('status', S.status);
+    refreshProgress(); refreshList(false);
+    const pill = $('[data-status-pill]'); if (pill) pill.innerHTML = statusPill(f.id);
+    const segEl = $('[data-seg="status"]');
+    if (segEl) {
+      const i = STATUSES.findIndex((x) => x.v === v);
+      segEl.style.setProperty('--i', Math.max(i, 0)); segEl.toggleAttribute('data-empty', i < 0);
+      $$('button', segEl).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === v)));
+    }
+    renderActionBar(parse());
+    toast(v ? `${txt(f.name) || f.id}: ${statusLabel(v)}` : `${txt(f.name) || f.id}: status cleared`);
+  }
+
+  /* ---------- events ---------- */
+  document.addEventListener('click', (e) => {
+    const segBtn = e.target.closest('[data-seg] > button');
+    if (segBtn) {
+      const segEl = segBtn.parentElement; const name = segEl.dataset.seg; const v = segBtn.dataset.value;
+      const r = parse(); const f = r.name === 'farm' ? farmById(r.id) : null;
+      if (name === 'status' && f) { setStatus(f, statusOf(f.id) === v ? '' : v); return; }
+      const btns = $$('button', segEl);
+      segEl.style.setProperty('--i', btns.indexOf(segBtn)); segEl.removeAttribute('data-empty');
+      btns.forEach((b) => b.setAttribute('aria-pressed', String(b === segBtn)));
+      if (name === 'depthFarm' && f) { S.depthFarm = v; store.set('depthFarm', v); $('[data-farm-mats]').innerHTML = farmMaterials(f); }
+      else if (name === 'design' && f) { S.design[f.id] = Number(v); store.set('design', S.design); const body = $('[data-design-body]'); body.innerHTML = designBody(f); body.firstElementChild.classList.add('swap'); refreshList(false); renderActionBar(r); $('.d-actions').outerHTML = deskActions(f); const dm = $('.d-meta'); if (dm) dm.innerHTML = `${dimBadge(f)}${diffBadge(designOf(f))}<span data-status-pill>${statusPill(f.id)}</span>`; }
+      else if (name === 'depthMats') { S.depthMats = v; store.set('depthMats', v); render(false); }
+      else if (name === 'modFilter') { S.modFilter = v; store.set('modFilter', v); const g = $('[data-mod-groups]'); g.innerHTML = modGroups(); g.classList.remove('swap'); void g.offsetWidth; g.classList.add('swap'); }
+      return;
+    }
+    const a = e.target.closest('[data-action]');
+    if (!a) return;
+    const act = a.dataset.action; const r = parse(); const f = r.name === 'farm' ? farmById(r.id) : null;
+    if (act === 'back') { if (S.navCount > 0) history.back(); else location.hash = '#/'; }
+    else if (act === 'play') {
+      const box = a.closest('.video'); const id = box.dataset.vid;
+      box.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?autoplay=1&rel=0" title="${esc(box.dataset.title)}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      box.classList.add('swap');
+    }
+    else if (act === 'filter-open') filterSheet();
+    else if (act === 'status-open' && f) statusSheet(f);
+    else if (act === 'sheet-close') closeSheet();
+    else if (act === 'set-status' && f) {
+      $$('.opt', a.closest('.opt-list') || document).forEach((o) => o.setAttribute('aria-checked', String(o === a)));
+      setStatus(f, a.dataset.value); setTimeout(() => closeSheet(), 160);
+    }
+    else if (act === 'f-dim' || act === 'f-st') {
+      if (act === 'f-dim') S.dim = a.dataset.value; else S.st = a.dataset.value;
+      $$(`[data-action="${act}"]`).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === a.dataset.value)));
+      refreshList(); const sc = $('[data-show-count]'); if (sc) sc.textContent = `Show ${visibleFarms().length} farms`;
+    }
+    else if (act === 'clear-filters') {
+      S.dim = 'all'; S.st = 'all'; S.q = '';
+      const s = $('[data-search]'); if (s) s.value = '';
+      $$('[data-action="f-dim"], [data-action="f-st"]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === 'all')));
+      refreshList(); const sc = $('[data-show-count]'); if (sc) sc.textContent = `Show ${visibleFarms().length} farms`;
+    }
+    else if (act === 'copy-farm' && f) { const d = designOf(f); const res = FR.expand(d ? d.materials : [], S.depthFarm); if (res.items.length) copy(`${txt(f.name)} (${S.depthFarm})\n` + listText(res), res.items.length); else toast('No materials to copy'); }
+    else if (act === 'copy-all') { const { res } = shoppingData(); copy(`Farm Plan materials (${S.depthMats})\n` + listText(res), res.items.length); }
+    else if (act === 'reset-got') {
+      const prefix = `all|${S.depthMats}|`; Object.keys(S.got).forEach((k) => { if (k.startsWith(prefix)) delete S.got[k]; });
+      store.set('got', S.got); $$('[data-got]').forEach((c) => { c.checked = false; }); updateGathered(); toast('All unticked');
+    }
+    else if (act === 'howto') {
+      S.howto = !S.howto; a.setAttribute('aria-expanded', String(S.howto));
+      const p = $('#howto-panel'); p.toggleAttribute('data-open', S.howto); p.toggleAttribute('inert', !S.howto);
+    }
+    else if (act === 'retry') { boot(); }
+  });
+
+  function updateGathered() {
+    $$('[data-mat-block]').forEach((block) => {
+      const boxes = $$('[data-got]', block); const got = boxes.filter((b) => b.checked).length;
+      const line = block.parentElement.querySelector('[data-gathered]') || $('[data-gathered]');
+      if (line) line.innerHTML = `<span class="num">${got} of ${boxes.length} gathered</span><div class="bar"><i class="b-built" style="width:${boxes.length ? got / boxes.length * 100 : 0}%"></i></div>`;
+    });
+  }
+  document.addEventListener('change', (e) => {
+    const g = e.target.closest('[data-got]');
+    if (g) { if (g.checked) S.got[g.dataset.got] = true; else delete S.got[g.dataset.got]; store.set('got', S.got); updateGathered(); return; }
+    const m = e.target.closest('[data-installed]');
+    if (m) {
+      if (m.checked) S.installed[m.dataset.installed] = true; else delete S.installed[m.dataset.installed];
+      store.set('installed', S.installed);
+      const p = $('[data-mods-progress]'); if (p) p.innerHTML = modsProgress();
+    }
+  });
+  document.addEventListener('input', (e) => { if (e.target.matches('[data-search]')) { S.q = e.target.value; refreshList(); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openSheetEl) { e.preventDefault(); closeSheet(); } });
+  window.addEventListener('hashchange', () => {
+    if (!desktop.matches && S.prevRoute === 'farms') S.listScroll = window.scrollY;
+    closeSheet(true); S.navCount++; render(true);
+  });
+  desktop.addEventListener('change', () => { closeSheet(true); render(false); });
+
+  /* ---------- boot ---------- */
+  async function getJson(url) {
+    const res = await fetch(url, { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`${url} answered ${res.status}`);
+    return res.json();
+  }
+  async function boot() {
+    S.error = null; S.modsError = null;
+    const slow = setTimeout(() => { if (!S.loaded) view.innerHTML = skeleton(); }, 250);
+    const modsP = getJson('mods.json').then((m) => { S.mods = m && typeof m === 'object' ? m : { mods: [] }; }).catch(() => { S.modsError = true; });
+    try {
+      const data = await getJson('farms.json');
+      S.meta = { researched: data.researched, minecraft_version: data.minecraft_version };
+      const seen = new Set();
+      S.farms = arr(data.farms).filter((f) => f && typeof f === 'object' && txt(f.id) && !seen.has(f.id) && seen.add(f.id));
+      S.loaded = true;
+    } catch (e) {
+      S.error = e && e.message ? e.message : 'Unknown error';
+    }
+    clearTimeout(slow);
+    render(true);
+    await modsP;
+    const r = parse();
+    if (r.name === 'mods') render(true);
+    else if (r.name === 'farm' && S.mods) { const f = farmById(r.id); const c = $('.col-c'); if (f && c && !$('.mods-line', c)) c.insertAdjacentHTML('beforeend', usefulMods(f)); }
+  }
+  requestAnimationFrame(() => requestAnimationFrame(() => $$('[data-nav]').forEach((n) => n.classList.add('ready'))));
+  setNav(parse());
+  boot();
+})();
+</script>
+</body>
+</html>
