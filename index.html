@@ -307,6 +307,17 @@
   .b-bad { background:var(--danger-soft); color:var(--danger); }
   .b-warn { background:var(--warn-soft); color:var(--warn-ink); }
   .b-must { background:var(--fg); color:var(--bg); }
+  .hk { padding:4px 16px; border:1px solid var(--line); border-radius:14px; background:var(--surface); }
+  .hk h4 { font-size:17px; font-weight:650; padding:12px 0 6px; }
+  .hk-row { display:grid; grid-template-columns:minmax(0,11.5rem) minmax(0,1fr); gap:6px 14px; align-items:baseline; padding:10px 0; border-top:1px solid var(--line); font-size:15px; }
+  .hk h4 + .hk-row { border-top:0; }
+  .hk-keys { display:flex; flex-wrap:wrap; align-items:center; gap:4px; color:var(--faint); font-size:13px; }
+  kbd { display:inline-flex; align-items:center; min-height:26px; padding:1px 8px; border-radius:7px; border:1px solid var(--line-strong); border-bottom-width:2px; background:var(--surface-2); color:var(--fg); font:600 13px/1.2 var(--mono); white-space:nowrap; }
+  .hk-keys small { font-size:12px; }
+  .hk-notes { display:grid; gap:6px; font-size:14px; color:var(--muted); }
+  .hk-notes p:first-child { color:var(--fg); }
+  @media (max-width: 520px) { .hk-row { grid-template-columns:minmax(0,8.5rem) minmax(0,1fr); gap:4px 12px; } }
+  @media (min-width: 1100px) { .hk-cards { display:block; columns:2; column-gap:12px; } .hk-cards .hk { break-inside:avoid; margin-bottom:12px; } .hk-notes { max-width:760px; } }
   .mod small { font-size:13px; color:var(--faint); }
   .mod .needs a { color:var(--accent-ink); font-weight:600; }
   .mod-foot { display:flex; align-items:center; justify-content:space-between; gap:8px; border-top:1px solid var(--line); padding-top:6px; margin-top:2px; }
@@ -410,6 +421,7 @@
     .mat-list .used { display:block !important; font-size:13px; color:var(--faint); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
     [data-mod-groups] { columns:2; column-gap:20px; }
     .mod-group { break-inside:avoid; margin:0 0 28px; }
+    [data-mod-groups]:has(.hk-cards) { columns:auto; }
     .foot { margin-top:48px; }
   }
   .mat-list .used { display:none; }
@@ -873,8 +885,26 @@
         ${url ? `<a class="link-out" href="${esc(url)}" target="_blank" rel="noopener">${esc(hostOf(url))}${I.ext}</a>` : '<small>No link yet</small>'}
       </div></article>`;
   }
+  function keysHtml(s) {
+    return s.split(/(\s\+\s|\s\/\s|\s…\s)/).map((t) => {
+      if (/^\s(\+|\/|…)\s$/.test(t)) return `<span>${esc(t.trim())}</span>`;
+      const hold = /\s*\(hold\)$/.test(t);
+      return `<kbd>${esc(t.replace(/\s*\(hold\)$/, ''))}</kbd>${hold ? '<small>hold</small>' : ''}`;
+    }).join('');
+  }
+  function hotkeysView(mods) {
+    const notes = arr(S.mods.hotkeys_notes).map(txt).filter(Boolean);
+    const src = txt(S.mods.hotkeys_source);
+    const cards = mods.filter((m) => arr(m.hotkeys).length).map((m) => `<article class="hk" id="hk-${esc(txt(m.id))}">
+      <h4>${esc(txt(m.name) || FR.prettyName(m.id))}</h4>
+      ${arr(m.hotkeys).filter((h) => h && txt(h.keys)).map((h) => `<div class="hk-row"><span class="hk-keys">${keysHtml(txt(h.keys))}</span><span>${esc(txt(h.does))}</span></div>`).join('')}
+    </article>`).join('');
+    if (!cards) return `<div class="empty"><p><b>No hotkeys listed yet.</b></p></div>`;
+    return `<section class="mod-group">${notes.length ? `<div class="hk-notes">${notes.map((n) => `<p>${esc(n)}</p>`).join('')}</div>` : ''}<div class="mod-cards hk-cards">${cards}</div>${src ? `<small class="muted">${esc(src)}</small>` : ''}</section>`;
+  }
   function modGroups() {
     const mods = arr(S.mods.mods).filter((m) => m && txt(m.id));
+    if (S.modFilter === 'hotkeys') return hotkeysView(mods);
     const byId = Object.fromEntries(mods.map((m) => [m.id, m]));
     const shown = mods.filter((m) => S.modFilter === 'all' || txt(m.priority) === 'must');
     if (!shown.length) return `<div class="empty"><p><b>No mods in this filter.</b></p></div>`;
@@ -899,7 +929,7 @@
     const notes = arr(M.notes).map(txt).filter(Boolean);
     const head = `<div class="page-head"><h2 class="h2">Mods</h2>
       <p class="muted">${meta ? esc(meta) : 'Client mods'}${txt(M.researched) ? `. Checked ${esc(txt(M.researched))}.` : ''}</p></div>`;
-    const tools = `<div class="block"><div data-mods-progress>${modsProgress()}</div>${seg('modFilter', [{ value: 'must', label: 'Must-have' }, { value: 'all', label: 'All mods' }], S.modFilter, 'Which mods')}</div>`;
+    const tools = `<div class="block"><div data-mods-progress>${modsProgress()}</div>${seg('modFilter', [{ value: 'must', label: 'Must-have' }, { value: 'all', label: 'All mods' }, { value: 'hotkeys', label: 'Hotkeys' }], S.modFilter, 'Which mods')}</div>`;
     const howto = (steps.length || notes.length) ? `<div class="howto">
       <button type="button" class="press" data-action="howto" aria-expanded="${S.howto}" aria-controls="howto-panel">How to add mods on ${esc(txt(M.client) || 'your client')}${I.chevD}</button>
       <div class="acc" id="howto-panel"${S.howto ? ' data-open' : ' inert'}><div class="acc-inner">

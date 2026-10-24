@@ -49,6 +49,24 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "I",
+          "does": "Barrel roll flight on/off"
+        },
+        {
+          "keys": "Mouse",
+          "does": "Roll and pitch while flying"
+        },
+        {
+          "keys": "A / D",
+          "does": "Yaw left / right while flying"
+        },
+        {
+          "keys": "W",
+          "does": "Thrust, once thrust is switched on in the config (no default key for that)"
+        }
       ]
     },
     {
@@ -92,6 +110,88 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "M",
+          "does": "Main menu"
+        },
+        {
+          "keys": "M + C",
+          "does": "Settings"
+        },
+        {
+          "keys": "M + L",
+          "does": "Material list of the loaded schematic"
+        },
+        {
+          "keys": "M + P",
+          "does": "Schematic placements"
+        },
+        {
+          "keys": "M + V",
+          "does": "Schematic verifier (finds wrong and missing blocks)"
+        },
+        {
+          "keys": "M + S",
+          "does": "Area selections"
+        },
+        {
+          "keys": "M + G",
+          "does": "Schematic on/off"
+        },
+        {
+          "keys": "M + R",
+          "does": "All Litematica rendering on/off"
+        },
+        {
+          "keys": "M + T",
+          "does": "Tool item (stick) on/off"
+        },
+        {
+          "keys": "Page Up / Page Down",
+          "does": "Show the layer above / below"
+        },
+        {
+          "keys": "M + Page Up / Page Down",
+          "does": "Change layer mode (all, single layer, …)"
+        },
+        {
+          "keys": "Ctrl + scroll",
+          "does": "With the stick: change tool mode"
+        },
+        {
+          "keys": "Alt + scroll",
+          "does": "Nudge the selection or placement"
+        },
+        {
+          "keys": "Left / right click",
+          "does": "With the stick: set corner 1 / corner 2"
+        },
+        {
+          "keys": "Middle click",
+          "does": "Pick the schematic block you look at"
+        },
+        {
+          "keys": "I",
+          "does": "Block info overlay"
+        },
+        {
+          "keys": "Right Ctrl (hold)",
+          "does": "Show the overlay through blocks"
+        },
+        {
+          "keys": "F3 + M",
+          "does": "Redraw the schematic"
+        },
+        {
+          "keys": "Ctrl + Alt + S",
+          "does": "Save the selection as a schematic"
+        },
+        {
+          "keys": "M + A",
+          "does": "Add a selection box here"
+        }
       ]
     },
     {
@@ -132,6 +232,20 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "H",
+          "does": "Info lines on/off"
+        },
+        {
+          "keys": "H + C",
+          "does": "Settings: light levels, slime chunks, spawn spheres and the other overlays are switched on here (no default keys)"
+        },
+        {
+          "keys": "Left Alt (hold)",
+          "does": "Look at a chest or shulker: preview its inventory"
+        }
       ]
     },
     {
@@ -175,6 +289,28 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "X + C",
+          "does": "Settings: every tweak (Easy Place, free camera, …) gets its key here; none have one by default"
+        },
+        {
+          "keys": "X + P",
+          "does": "Free camera presets"
+        },
+        {
+          "keys": "Z + 1 … Z + 6",
+          "does": "Placement restriction: plane, face, column, line, diagonal, layer"
+        },
+        {
+          "keys": "Left Ctrl (hold)",
+          "does": "While placing: flexible placement, offset"
+        },
+        {
+          "keys": "Left Alt (hold)",
+          "does": "While placing: flexible placement, rotation; or inventory preview"
+        }
       ]
     },
     {
@@ -217,6 +353,64 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "I + C",
+          "does": "Settings"
+        },
+        {
+          "keys": "Shift + drag",
+          "does": "Move whole stacks"
+        },
+        {
+          "keys": "Ctrl + drag",
+          "does": "Move one item from each stack"
+        },
+        {
+          "keys": "Alt + drag",
+          "does": "Move all matching items"
+        },
+        {
+          "keys": "Alt + Shift + click",
+          "does": "Move everything to the other inventory"
+        },
+        {
+          "keys": "W / S + click",
+          "does": "Move items up / down between inventories"
+        },
+        {
+          "keys": "Q + drag",
+          "does": "Drop one item from each stack"
+        },
+        {
+          "keys": "Shift + Q + drag",
+          "does": "Drop whole stacks"
+        },
+        {
+          "keys": "Ctrl + Shift + Q",
+          "does": "Drop every stack like the one under the cursor"
+        },
+        {
+          "keys": "Ctrl + R",
+          "does": "Sort the inventory under the cursor"
+        },
+        {
+          "keys": "Middle click",
+          "does": "On a crafting result: store the recipe"
+        },
+        {
+          "keys": "A (hold)",
+          "does": "Show stored recipes"
+        },
+        {
+          "keys": "Ctrl + C",
+          "does": "Craft everything with the selected recipe"
+        },
+        {
+          "keys": "Ctrl + Alt + C",
+          "does": "Mass craft and throw the results"
+        }
       ]
     },
     {
@@ -256,6 +450,12 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "A + C",
+          "does": "Settings for every Masa mod (Litematica, MiniHUD, Tweakeroo, Item Scroller)"
+        }
       ]
     },
     {
@@ -277,7 +477,13 @@
       ],
       "url": "https://modrinth.com/mod/modmenu",
       "priority": "must",
-      "used_for_farms": []
+      "used_for_farms": [],
+      "hotkeys": [
+        {
+          "keys": "Mods button",
+          "does": "On the title and pause screen; no hotkey"
+        }
+      ]
     },
     {
       "id": "carpet",
@@ -317,6 +523,12 @@
         "wither-skeleton-farm",
         "hoglin-farm",
         "gold-farm"
+      ],
+      "hotkeys": [
+        {
+          "keys": "/carpet",
+          "does": "Chat command, no hotkeys: /carpet list shows every rule"
+        }
       ]
     }
   ],
@@ -370,5 +582,11 @@
     "https://modrinth.com/mod/carpet/versions",
     "https://modrinth.com/mod/fabric-api",
     "https://modrinth.com/mod/fabric-api/versions"
+  ],
+  "hotkeys_source": "Defaults read from each mod’s 26.3 source on GitHub (sakura-ryoko/litematica, minihud, tweakeroo, itemscroller, malilib; enjarai/do-a-barrel-roll at 1.21.11), 2026-10-24.",
+  "hotkeys_notes": [
+    "“M + C” means hold M, then press C.",
+    "Clash: Lunar’s waypoint menu and Litematica’s menu both use M. Rebind one: Litematica under M + C → Hotkeys, or Lunar’s under Esc → Options → Controls.",
+    "Lunar: Right Shift opens Lunar’s mod menu, N makes a waypoint, M opens the waypoint list."
   ]
 }
