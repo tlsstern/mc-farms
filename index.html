@@ -319,11 +319,17 @@
   @media (max-width: 520px) { .hk-row { grid-template-columns:minmax(0,8.5rem) minmax(0,1fr); gap:4px 12px; } }
   @media (min-width: 1100px) { .hk-cards { display:block; columns:2; column-gap:12px; } .hk-cards .hk { break-inside:avoid; margin-bottom:12px; } .hk-notes { max-width:760px; } }
   .mod small { font-size:13px; color:var(--faint); }
+  .mod-video { display:flex; align-items:center; gap:12px; min-height:56px; padding:8px 12px; border:1px solid var(--line); border-radius:10px; background:var(--surface-2); text-decoration:none; color:var(--fg); }
+  .mod-video > svg { width:22px; height:22px; flex:none; }
+  .mod-video > svg:last-child { width:16px; height:16px; color:var(--faint); }
+  .mod-video span { flex:1; min-width:0; display:grid; gap:2px; font-size:15px; }
   .guide { border-top:1px solid var(--line); }
   .guide-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:48px; font-weight:650; text-align:left; border-radius:10px; }
   .guide-toggle small { font-weight:500; margin-left:4px; }
-  .steps { display:grid; gap:12px; padding:4px 0 8px 22px; font-size:15px; }
-  .steps li { display:grid; gap:6px; }
+  .steps { display:grid; gap:12px; padding:4px 0 8px 22px; font-size:15px; list-style:decimal; }
+  .steps li::marker { color:var(--faint); font-variant-numeric:tabular-nums; }
+  .steps li { display:list-item; padding-left:4px; }
+  .steps li > * + * { margin-top:6px; }
   .cmd { display:flex; align-items:center; gap:4px; border:1px solid var(--line); border-radius:10px; background:var(--surface-2); padding-left:10px; }
   .cmd code { flex:1; min-width:0; font:500 13px/1.45 var(--mono); overflow-wrap:anywhere; padding:8px 0; user-select:all; }
   .cmd-copy { flex:none; display:grid; place-items:center; width:44px; height:44px; border-radius:10px; color:var(--muted); }
@@ -385,6 +391,7 @@
     .link-out:hover, .mods-line a:hover { text-decoration:underline; }
     .sources a:hover { color:var(--fg); }
     .howto > button:hover { background:var(--press-bg); }
+    .mod-video:hover { border-color:var(--line-strong); }
     .cmd-copy:hover, .guide-toggle:hover { background:var(--press-bg); color:var(--fg); }
     .mod:hover { border-color:var(--line-strong); }
     .used-in a:hover { color:var(--accent-ink); }
@@ -887,8 +894,9 @@
       ${txt(m.what) ? `<p>${esc(txt(m.what))}</p>` : ''}
       <div class="badges">${lunarBadge(m)}${versionBadge(m)}</div>
       ${txt(m.lunar_note) ? `<small>${esc(txt(m.lunar_note))}</small>` : ''}
-      ${txt(m.version_checked) ? `<small class="desk-only">Checked:${esc(txt(m.version_checked))}</small>` : ''}
+      ${txt(m.version_checked) ? `<small class="desk-only">Checked: ${esc(txt(m.version_checked))}</small>` : ''}
       ${feats.length ? `<ul class="req-list desk-only">${feats.map((x) => `<li class="tag">${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${m.video && safeUrl(m.video.url) ? `<a class="mod-video press" href="${esc(safeUrl(m.video.url))}" target="_blank" rel="noopener">${I.yt}<span><b>${esc(txt(m.video.title) || 'Watch the video')}</b><small>${esc([txt(m.video.channel), txt(m.video.note)].filter(Boolean).join(' · '))}</small></span>${I.ext}</a>` : ''}
       ${guideHtml(m)}
       ${req.length ? `<p class="needs muted">Needs ${req.map((r) => byId[r] ? `<a href="#/mods/${encodeURIComponent(r)}">${esc(txt(byId[r].name) || r)}</a>` : `<span>${esc(FR.prettyName(r))}</span>`).join(', ')}</p>` : ''}
       <div class="mod-foot">
@@ -900,7 +908,7 @@
     const g = m.guide; const steps = arr(g && g.steps).filter((s) => s && (txt(s.do) || txt(s.cmd)));
     if (!steps.length) return '';
     const pid = `guide-${esc(txt(m.id))}`;
-    return `<div class="guide"><button type="button" class="guide-toggle press" data-action="guide" aria-expanded="false" aria-controls="${pid}"><span>${esc(txt(g.title) || 'How to use it')} <small>${steps.length} steps</small></span>${I.chevD}</button>
+    return `<div class="guide"><button type="button" class="guide-toggle press" data-action="guide" aria-expanded="false" aria-controls="${pid}"><span>${esc(txt(g.title) || 'How to use it')} <small>${steps.length} ${esc(txt(g.unit) || 'steps')}</small></span>${I.chevD}</button>
       <div class="acc" id="${pid}" inert><div class="acc-inner"><ol class="steps">${steps.map((s) => `<li>${txt(s.do) ? `<p>${esc(txt(s.do))}</p>` : ''}${txt(s.cmd) ? `<div class="cmd"><code>${esc(txt(s.cmd))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(txt(s.cmd))}" aria-label="Copy command">${I.copy}</button></div>` : ''}</li>`).join('')}</ol></div></div></div>`;
   }
   function keysHtml(s) {

@@ -551,49 +551,25 @@
       "priority": "nice",
       "used_for_farms": [],
       "guide": {
-        "title": "Crack the enchanting table",
+        "title": "Librarian books still worth it",
         "steps": [
           {
-            "do": "Turn on enchanting prediction. It switches off on every restart, so run this each session.",
-            "cmd": "/cconfig clientcommands enchantingPrediction set true"
+            "do": "Mending: the table never gives it. Put it on everything."
           },
           {
-            "do": "Stand at a table with your bookshelves. Put an item you can enchant in the table. The screen now shows how many seeds are left. Swap items and add or remove bookshelves until it says Cracked."
+            "do": "Unbreaking III: for elytra, shields and shears, which can’t go in the table."
           },
           {
-            "do": "Enchant something with the cheapest option, then crack again like in step 2. Do that twice in total, so the mod also knows your player seed. Check it:",
-            "cmd": "/cconfig clientcommands playerCrackState get"
+            "do": "Frost Walker II, optional: the table never gives it either."
           },
           {
-            "do": "When it says Cracked, keep a stack of junk in your inventory, like cobblestone. The mod throws items for you."
+            "do": "Skip the rest (Efficiency, Silk Touch, Fortune, Sharpness, Protection …). You still want them, but crack them straight onto the item."
           },
           {
-            "do": "Ask for what you want. Tab completes the names. Examples:",
-            "cmd": "/cenchant minecraft:diamond_sword with minecraft:sharpness 5 with minecraft:looting 3"
-          },
-          {
-            "do": "Pickaxe:",
-            "cmd": "/cenchant minecraft:diamond_pickaxe with minecraft:efficiency 5 with minecraft:fortune 3 with minecraft:unbreaking 3"
-          },
-          {
-            "do": "Chestplate:",
-            "cmd": "/cenchant minecraft:diamond_chestplate with minecraft:protection 4 with minecraft:unbreaking 3"
-          },
-          {
-            "do": "Book:",
-            "cmd": "/cenchant minecraft:book with minecraft:efficiency 5"
-          },
-          {
-            "do": "Follow the chat. It throws the items, then says \"Do a dummy enchantment\" (enchant any junk item). At \"Your enchantment seed is ready\", set the bookshelves it names, put your item in and click the slot it names."
-          },
-          {
-            "do": "If it says \"impossible or would take too long\", ask for fewer or lower enchantments. Mending never comes from the table. Eating, getting hit or other random events reset it: crack again from step 2."
-          },
-          {
-            "do": "Status of the table seed:",
-            "cmd": "/cconfig clientcommands enchCrackState get"
+            "do": "Neither librarians nor the table: Swift Sneak (ancient cities), Soul Speed (piglin bartering), Wind Burst (ominous vaults)."
           }
-        ]
+        ],
+        "unit": "items"
       },
       "hotkeys": [
         {
@@ -602,9 +578,15 @@
         },
         {
           "keys": "/cenchant",
-          "does": "Get exact enchantments after cracking (steps on the clientcommands card)"
+          "does": "Get exact enchantments after cracking (see the video on the clientcommands card)"
         }
-      ]
+      ],
+      "video": {
+        "url": "https://www.youtube.com/watch?v=78y4xnYRG_g",
+        "title": "How to RNG Manipulate for Max Enchants in Minecraft Java",
+        "channel": "Acrylic",
+        "note": "Made on 1.21.1; the same steps work on 26.3."
+      }
     },
     {
       "id": "clumps",
