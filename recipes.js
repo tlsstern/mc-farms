@@ -291,6 +291,8 @@
   function expand(list, depth) {
     const { demand, unknown, order } = toDemand(list);
     const smelted = new Set(), filled = new Set(), leftovers = new Map();
+    /* Broken down, every wood's planks are just planks: a stick or chest takes any kind. */
+    const anyWood = (id) => depth !== 'placed' && /_planks$/.test(id) ? 'planks' : id;
     const craft = (id, need, into) => {
       const r = R[id];
       const crafts = Math.ceil(need / r.out);
@@ -298,21 +300,20 @@
       if (extra > 0) leftovers.set(id, (leftovers.get(id) || 0) + extra);
       if (r.smelt) smelted.add(id);
       if (r.fill) filled.add(id);
-      for (const [ing, n] of Object.entries(r.in)) into.set(ing, (into.get(ing) || 0) + crafts * n);
+      for (const [ing, n] of Object.entries(r.in)) into.set(anyWood(ing), (into.get(anyWood(ing)) || 0) + crafts * n);
     };
 
+    /* ingredients: what goes into a crafting table. Everything crafted is broken down, but it stops
+       at planks, smelted items and filled buckets. raw goes all the way down. */
+    const stop = depth === 'ingredients' ? (id) => id === 'planks' || R[id].smelt || R[id].fill : () => false;
     let result;
-    if (depth === 'ingredients') {
+    if (depth === 'ingredients' || depth === 'raw') {
       result = new Map();
-      for (const [id, n] of demand) {
-        if (R[id]) craft(id, n, result); else result.set(id, (result.get(id) || 0) + n);
-      }
-    } else if (depth === 'raw') {
-      result = new Map(demand);
+      for (const [id, n] of demand) result.set(anyWood(id), (result.get(anyWood(id)) || 0) + n);
       for (;;) {
         let pick = null, ph = 0;
         for (const id of result.keys()) {
-          if (!R[id]) continue;
+          if (!R[id] || stop(id)) continue;
           const h = height(id);
           if (h > ph) { ph = h; pick = id; }
         }
@@ -320,6 +321,10 @@
         const need = result.get(pick);
         result.delete(pick);
         craft(pick, need, result);
+      }
+      for (const id of result.keys()) {
+        if (R[id] && R[id].smelt) smelted.add(id);
+        if (R[id] && R[id].fill) filled.add(id);
       }
     } else {
       result = demand;
