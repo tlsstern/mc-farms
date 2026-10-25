@@ -213,6 +213,12 @@
   .row-sub { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:13px; color:var(--muted); }
   .row-sub .creator { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:14ch; }
   .chev { width:18px; height:18px; color:var(--faint); flex:none; }
+  .thumb { flex:none; width:72px; aspect-ratio:16/9; border-radius:8px; overflow:hidden; background:var(--surface-2); box-shadow:inset 0 0 0 1px var(--line); }
+  .thumb img { width:100%; height:100%; object-fit:cover; }
+  .start-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .start-card { display:grid; gap:10px; padding:10px; border:1px solid var(--line); border-radius:14px; background:var(--surface); text-decoration:none; }
+  .start-card .thumb { width:100%; border-radius:9px; }
+  .start-card > span:last-child { display:grid; gap:4px; padding:0 4px 4px; }
 
   /* ---------- detail ---------- */
   .detail-top { display:flex; align-items:center; padding:8px 0 0; margin-left:-10px; }
@@ -340,6 +346,46 @@
   .link-out { display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 4px; color:var(--accent-ink); font-weight:600; text-decoration:none; font-size:15px; }
   .link-out svg { width:16px; height:16px; }
 
+  /* commands */
+  .cmd-list { list-style:none; display:grid; gap:8px; }
+  .mycmd { display:flex; align-items:center; gap:2px; padding-right:4px; border:1px solid var(--line); border-radius:12px; background:var(--surface); transition: border-color var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); }
+  .mycmd.flash { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+  .mycmd-copy { flex:1; display:grid; grid-template-columns:minmax(0,1fr) 20px; align-items:center; gap:2px 12px; min-height:60px; padding:10px 8px 10px 14px; border-radius:11px; text-align:left; transition: background-color var(--dur) var(--ease-out); }
+  .mycmd-copy:active { background:var(--press-bg); }
+  .mycmd-copy b { font-size:15px; font-weight:650; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .mycmd-copy code { grid-column:1; font:500 13px/1.45 var(--mono); color:var(--muted); overflow-wrap:anywhere; }
+  .mycmd-copy .cue { grid-column:2; grid-row:1 / span 2; width:20px; height:20px; color:var(--faint); position:relative; }
+  .cue svg { position:absolute; inset:0; width:20px; height:20px; transition: opacity var(--dur) var(--ease-out), transform var(--dur) var(--ease-out); }
+  .cue .c-done { opacity:0; transform:scale(.6); color:var(--accent); }
+  .copied .cue .c-copy { opacity:0; transform:scale(.6); }
+  .copied .cue .c-done { opacity:1; transform:none; }
+  .mycmd-copy:not(:has(b)) .cue { grid-row:1; }
+  .mycmd .icon-btn { color:var(--muted); flex:none; }
+  @media (min-width: 1100px) { .preset-list { grid-template-columns:1fr 1fr; gap:14px 20px; } }
+  .preset-group { display:grid; gap:10px; }
+  .preset-group + .preset-group { margin-top:18px; }
+  .preset-list { list-style:none; display:grid; gap:14px; }
+  .preset { display:grid; gap:6px; }
+  .preset p { font-size:15px; }
+  .tip { display:flex; gap:10px; padding:12px 14px; border-radius:12px; background:var(--surface-2); font-size:14px; color:var(--muted); }
+  .tip svg { width:18px; height:18px; flex:none; margin-top:2px; }
+  .tip b { color:var(--fg); }
+  .ff { display:grid; gap:6px; }
+  .ff label { font-size:14px; font-weight:600; }
+  .ff input, .ff textarea {
+    -webkit-appearance:none; appearance:none; width:100%; min-height:44px; padding:10px 12px; font:inherit; font-size:16px;
+    color:inherit; background:var(--surface); border:1px solid var(--line-strong); border-radius:12px; transition:border-color var(--dur) var(--ease-out);
+  }
+  .ff textarea { font-family:var(--mono); font-size:16px; line-height:1.45; min-height:104px; resize:vertical; }
+  .ff input:focus, .ff textarea:focus { border-color:var(--accent); outline:none; box-shadow:0 0 0 3px var(--accent-soft); }
+  .ff [aria-invalid="true"] { border-color:var(--danger); }
+  .ff small { font-size:13px; color:var(--faint); }
+  .ff .err { color:var(--danger); font-size:14px; font-weight:600; }
+  @keyframes nudge { 25% { transform:translateX(-4px); } 75% { transform:translateX(4px); } }
+  .ff .err:not([hidden]) { animation: nudge 180ms var(--ease-out); }
+  .bot-here { justify-self:start; }
+  .toast .undo { margin-left:6px; min-height:36px; padding:0 10px; border-radius:8px; color:var(--accent); font-weight:700; }
+
   /* ---------- sheet ---------- */
   .sheet-wrap { position:fixed; inset:0; z-index:50; }
   .scrim { position:absolute; inset:0; background:rgb(0 0 0 / .42); opacity:0; transition: opacity var(--dur-sheet) var(--ease-out); }
@@ -393,7 +439,12 @@
     .howto > button:hover { background:var(--press-bg); }
     .mod-video:hover { border-color:var(--line-strong); }
     .cmd-copy:hover, .guide-toggle:hover { background:var(--press-bg); color:var(--fg); }
+    .mycmd-copy:hover { background:var(--press-bg); }
+    .mycmd-copy:hover .cue { color:var(--fg); }
+    .mycmd:hover { border-color:var(--line-strong); }
+    .mycmd .icon-btn:hover { background:var(--press-bg); color:var(--fg); }
     .mod:hover { border-color:var(--line-strong); }
+    .start-card:hover { border-color:var(--line-strong); }
     .used-in a:hover { color:var(--accent-ink); }
   }
 
@@ -411,6 +462,8 @@
     .rail .list-head { padding-top:0; }
     .rail .h2 { font-size:22px; }
     .rail .farm-row { margin:0; padding:10px 12px; }
+    .rail .thumb { width:60px; }
+    .rail .row-sub .creator { display:none; }
     .pane { padding:24px 0 0; min-height:calc(100dvh - var(--header-h) - 40px); }
     .detail-top { display:none; }
     .d-head { grid-template-columns: minmax(0,1fr) auto; align-items:start; column-gap:24px; padding-top:0; }
@@ -458,11 +511,12 @@
     <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 27 9v14l-11 7-11-7V9z" fill="#17a86b"/><path d="M16 2 27 9 16 16 5 9z" fill="#46d596"/><path d="M16 16v14l11-7V9z" fill="#0b7a4c"/></svg>
     <h1><span class="reveal"><span>Farm Plan</span></span></h1>
   </a>
-  <nav class="tabs top-tabs" aria-label="Sections" style="--n:3; --i:0" data-nav>
+  <nav class="tabs top-tabs" aria-label="Sections" style="--n:4; --i:0" data-nav>
     <span class="tab-pill" aria-hidden="true"></span>
     <a href="#/" data-tab="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Farms</a>
     <a href="#/materials" data-tab="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 12h18M10 12v3h4v-3M7 7V4h10v3"/></svg>Materials</a>
     <a href="#/mods" data-tab="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg>Mods</a>
+    <a href="#/commands" data-tab="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="m7.5 10 3 2.5-3 2.5M12.5 15.5h4"/></svg>Commands</a>
   </nav>
   <div class="top-progress desk-only" data-top-progress></div>
 </header>
@@ -474,11 +528,12 @@
 <div class="actionbar" id="actionbar" hidden></div>
 
 <nav class="tabbar" aria-label="Sections">
-  <div class="tabs" style="--n:3; --i:0" data-nav>
+  <div class="tabs" style="--n:4; --i:0" data-nav>
     <span class="tab-pill" aria-hidden="true"></span>
     <a href="#/" data-tab="0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Farms</a>
     <a href="#/materials" data-tab="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M3 12h18M10 12v3h4v-3M7 7V4h10v3"/></svg>Materials</a>
     <a href="#/mods" data-tab="2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><path d="M16.5 13.5v6M13.5 16.5h6"/></svg>Mods</a>
+    <a href="#/commands" data-tab="3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="m7.5 10 3 2.5-3 2.5M12.5 15.5h4"/></svg>Commands</a>
   </div>
 </nav>
 
@@ -518,6 +573,9 @@
     info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>',
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg>',
     chevD: '<svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+    plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>',
+    edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/></svg>',
+    bot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="14" height="11" rx="2"/><path d="M12 4v4M9.5 13h.01M14.5 13h.01M3 13v2M21 13v2"/></svg>',
     tick: '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3.5 8.5l3 3 6-7" pathLength="1"/></svg>',
   };
 
@@ -526,7 +584,7 @@
     loaded: false, error: null, meta: {}, farms: [], mods: null, modsError: null,
     q: '', dim: 'all', st: 'all',
     status: store.get('status', {}), design: store.get('design', {}), got: store.get('got', {}),
-    installed: store.get('installed', {}),
+    installed: store.get('installed', {}), cmds: [].concat(store.get('cmds', [])).filter((c) => c && c.id && c.cmd),
     depthFarm: store.get('depthFarm', 'placed'), depthMats: store.get('depthMats', 'raw'),
     modFilter: store.get('modFilter', 'all'), howto: false,
     navCount: 0, listScroll: 0, prevRoute: null,
@@ -666,6 +724,10 @@
       return [f.name, f.id, f.where, d.creator, d.title, ...arr(f.requirements)].map(txt).join(' ').toLowerCase().includes(q);
     });
   }
+  function thumb(d) {
+    const id = videoIdOf(d || {});
+    return `<span class="thumb" aria-hidden="true">${id ? `<img src="https://i.ytimg.com/vi/${encodeURIComponent(id)}/mqdefault.jpg" width="320" height="180" alt="" loading="lazy" decoding="async" draggable="false">` : ''}</span>`;
+  }
   function farmRows(activeId, animate) {
     const list = visibleFarms();
     if (!list.length) {
@@ -676,7 +738,7 @@
       const creator = txt(d.creator);
       const name = txt(f.name) || FR.prettyName(f.id);
       return `<li style="--i:${i}"><a class="farm-row" href="#/farm/${encodeURIComponent(f.id)}"${f.id === activeId ? ' aria-current="true"' : ''}>
-        <span class="row-main"><span class="row-name">${esc(name)}</span>
+        ${thumb(d)}<span class="row-main"><span class="row-name">${esc(name)}</span>
           <span class="row-sub">${dimBadge(f)}${diffBadge(d)}${creator ? `<span class="creator">${esc(creator)}</span>` : ''}</span></span>
         ${statusPill(f.id) || I.chevR}
       </a></li>`;
@@ -716,13 +778,21 @@
     $$('.desk-only [data-action="f-dim"], .desk-only [data-action="f-st"]').forEach((b) => b.setAttribute('aria-pressed', String((b.dataset.action === 'f-dim' ? S.dim : S.st) === b.dataset.value)));
   }
 
+  function startHere() {
+    const open = S.farms.filter((f) => !['built', 'skip', 'building'].includes(statusOf(f.id)));
+    const rank = (f) => DIFF[txt((designOf(f) || {}).difficulty).toLowerCase()] || 2;
+    const pick = open.map((f, i) => [f, i]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).slice(0, 4).map((x) => x[0]);
+    if (!pick.length) return '';
+    return `<div class="block"><span class="eyebrow">Easiest ones you haven't built</span><div class="start-grid">${pick.map((f) => { const d = designOf(f) || {}; return `<a class="start-card press" href="#/farm/${encodeURIComponent(f.id)}">${thumb(d)}<span><b>${esc(txt(f.name) || f.id)}</b><span class="row-sub">${dimBadge(f)}${diffBadge(d)}</span></span></a>`; }).join('')}</div></div>`;
+  }
   function overviewPane() {
     const c = counts();
     const next = S.farms.find((f) => statusOf(f.id) === 'building') || S.farms.find((f) => statusOf(f.id) === 'planned');
     return `<div class="overview">
-      <div class="block"><span class="eyebrow">Overview</span><h2 class="h2">Pick a farm on the left</h2>
+      <div class="block"><span class="eyebrow">Overview</span><h2 class="h2">${c.built ? `${c.built} of ${S.farms.length} farms running` : 'Pick a farm to start'}</h2>
       <p class="muted">Each farm has a video, the design to build and a material list you can break down to raw materials.</p></div>
       <div class="stat-row">${[['built', 'Built'], ['building', 'Building'], ['planned', 'Planned'], ['skip', 'Skipped']].map(([k, l]) => `<div><b>${c[k]}</b><span>${l}</span></div>`).join('')}</div>
+      ${startHere()}
       ${next ? `<div class="block"><span class="eyebrow">Up next</span><a class="btn press" href="#/farm/${encodeURIComponent(next.id)}" style="justify-self:start">${esc(txt(next.name))} · ${statusLabel(statusOf(next.id))}</a></div>` : `<p class="muted">Mark farms Planned or Building and the Materials tab sums up what to gather.</p>`}
     </div>`;
   }
@@ -967,16 +1037,101 @@
     return `<div class="enter">${head}<div class="block">${howto}${tools}</div>${groups}</div>`;
   }
 
+  /* ---------- commands ---------- */
+  const PRESETS = [
+    { group: 'Bots (Carpet)', items: [
+      ['Spawn a bot where you stand', '/player Bob spawn'],
+      ['Spawn a bot at a spot', '/player Bob spawn at 176 64 -208'],
+      ['Swing a sword every 13 ticks', '/player Bob attack interval 13'],
+      ['Hold right-click', '/player Bob use continuous'],
+      ['Stop what it is doing', '/player Bob stop'],
+      ['Remove the bot', '/player Bob kill'],
+    ] },
+    { group: 'Enchanting (clientcommands)', items: [
+      ['Turn on prediction (after every restart)', '/cconfig clientcommands enchantingPrediction set true'],
+      ['Ask for exact enchantments', '/cenchant minecraft:diamond_sword with minecraft:sharpness 5'],
+    ] },
+    { group: 'World (needs cheats)', items: [
+      ['Show the seed, for slime chunks on Chunkbase', '/seed'],
+      ['Teleport to a spot', '/tp @s 176 64 -208'],
+      ['Make it day', '/time set day'],
+      ['Clear the weather', '/weather clear'],
+    ] },
+  ];
+  const cmdById = (id) => S.cmds.find((c) => c.id === id);
+  const saveCmds = () => store.set('cmds', S.cmds);
+  const cue = `<span class="cue" aria-hidden="true"><svg class="c-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg><svg class="c-done" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>`;
+
+  function myCmds(stagger) {
+    if (!S.cmds.length) return `<div class="empty"><p><b>No saved commands yet.</b><br>Save one of the presets below, or add your own.</p><button type="button" class="btn btn-primary press" data-action="cmd-new">${I.plus}New command</button></div>`;
+    return `<ul class="cmd-list${stagger ? ' stagger' : ''}">${S.cmds.map((c, i) => `<li class="mycmd" id="cmd-${esc(c.id)}" style="--i:${i}">
+      <button type="button" class="mycmd-copy" data-action="cmd-copy" data-id="${esc(c.id)}" aria-label="Copy ${esc(c.label || c.cmd)}">${c.label ? `<b>${esc(c.label)}</b>` : ''}<code>${esc(c.cmd)}</code>${cue}</button>
+      <button type="button" class="icon-btn press" data-action="cmd-edit" data-id="${esc(c.id)}" aria-label="Edit ${esc(c.label || 'command')}">${I.edit}</button>
+    </li>`).join('')}</ul>`;
+  }
+  function presetList() {
+    return PRESETS.map((g) => `<section class="preset-group"><span class="eyebrow">${esc(g.group)}</span><ul class="preset-list">${g.items.map(([l, c]) => `<li class="preset"><p>${esc(l)}</p>
+      <div class="cmd"><code>${esc(c)}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(c)}" aria-label="Copy ${esc(c)}">${I.copy}</button><button type="button" class="cmd-copy press" data-action="cmd-from" data-label="${esc(l)}" data-cmd="${esc(c)}" aria-label="Save a copy to your commands">${I.plus}</button></div>
+    </li>`).join('')}</ul></section>`).join('');
+  }
+  const cmdTip = `<p class="tip">${I.info}<span><b>F3 + C</b> in game copies where you stand. Paste it into a new command and tap <b>Bot here</b> to get a <code>/player … spawn at</code> command for that spot.</span></p>`;
+  function commandsView(nav) {
+    const head = `<div class="page-head"><h2 class="h2">Commands</h2><p class="muted">Tap one to copy it, then paste it into chat with Ctrl&nbsp;+&nbsp;V.</p></div>`;
+    const mine = `<div class="block"><div class="block-head"><span class="eyebrow">Yours</span>${S.cmds.length ? `<span class="muted num" style="font-size:14px">${S.cmds.length} saved</span>` : ''}</div><div data-mycmds>${myCmds(nav)}</div></div>`;
+    const presets = `<div class="block" style="margin-top:32px"><span class="eyebrow" style="color:var(--fg)">Presets</span><p class="muted" style="font-size:14px;margin-top:-6px">Change Bob and the numbers with + before you save.</p>${presetList()}</div>`;
+    if (desktop.matches) return `<div class="two-col enter"><aside>${head}<button type="button" class="btn btn-primary press" data-action="cmd-new">${I.plus}New command</button>${cmdTip}</aside><section>${mine}${presets}</section></div>`;
+    return `<div class="enter">${head}${mine}<div style="margin-top:16px">${cmdTip}</div>${presets}</div>`;
+  }
+  function refreshCmds(flashId) {
+    const box = $('[data-mycmds]'); if (!box) return;
+    box.innerHTML = myCmds(false);
+    const n = $('.block-head .num'); if (n) n.textContent = `${S.cmds.length} saved`;
+    if (flashId) { const el = document.getElementById('cmd-' + flashId); if (el) { el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1400); } }
+  }
+  // F3+C copies "/execute in minecraft:overworld run tp @s 176.50 64.00 -208.30 12.34 5.67"
+  const F3C = /\/execute in (\S+) run tp @s (-?[\d.]+) (-?[\d.]+) (-?[\d.]+) (-?[\d.]+) (-?[\d.]+)/;
+  const botName = (label) => { const n = String(label || '').replace(/[^A-Za-z0-9_]/g, '').slice(0, 16); return n.length >= 3 ? n : 'Bot'; };
+  function cmdSheet(c) {
+    const isNew = !c || !c.id;
+    openSheet(isNew ? 'New command' : 'Edit command', `<form data-cmd-form style="display:grid;gap:16px" novalidate>
+        <div class="ff"><label for="cmd-label">Name</label><input id="cmd-label" name="label" maxlength="60" autocomplete="off" placeholder="Hoglin bot" value="${esc(c && c.label)}"></div>
+        <div class="ff"><label for="cmd-text">Command</label><textarea id="cmd-text" name="cmd" maxlength="256" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="/player Hoglin spawn at 176 64 -208">${esc(c && c.cmd)}</textarea>
+          <p class="err" data-cmd-err hidden>Type or paste a command first.</p>
+          <button type="button" class="btn press bot-here" data-action="bot-here" hidden>${I.bot}Bot here</button>
+          <small>Chat takes up to 256 characters.</small></div>
+      </form>`,
+      `${isNew ? '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>' : `<button type="button" class="btn btn-quiet press" data-action="cmd-delete" data-id="${esc(c.id)}" style="color:var(--danger)">Delete</button>`}<button type="button" class="btn btn-primary press" data-action="cmd-save" data-id="${esc(c && c.id || '')}">Save</button>`,
+      (wrap) => { const t = $('#cmd-text', wrap); const sync = () => { $('[data-action="bot-here"]', wrap).hidden = !F3C.test(t.value); }; t.addEventListener('input', sync); sync(); });
+  }
+  function saveCmd(id) {
+    const form = $('[data-cmd-form]'); if (!form) return;
+    const t = $('#cmd-text', form); const err = $('[data-cmd-err]', form);
+    let cmd = t.value.trim().replace(/\s*\n\s*/g, ' ');
+    if (!cmd) { err.hidden = true; void err.offsetWidth; err.hidden = false; t.setAttribute('aria-invalid', 'true'); t.focus(); return; }
+    if (!cmd.startsWith('/')) cmd = '/' + cmd;
+    const label = $('#cmd-label', form).value.trim();
+    const old = id && cmdById(id);
+    if (old) { old.label = label; old.cmd = cmd; }
+    else { id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6); S.cmds.unshift({ id, label, cmd }); }
+    saveCmds(); closeSheet(); refreshCmds(id); toast(old ? 'Command saved' : 'Command added');
+  }
+  function deleteCmd(id) {
+    const i = S.cmds.findIndex((c) => c.id === id); if (i < 0) return;
+    const [gone] = S.cmds.splice(i, 1); saveCmds(); closeSheet(); refreshCmds();
+    toast(`Deleted ${gone.label || 'command'}`, () => { S.cmds.splice(Math.min(i, S.cmds.length), 0, gone); saveCmds(); refreshCmds(gone.id); });
+  }
+
   /* ---------- routing and render ---------- */
   function parse() {
     const parts = location.hash.replace(/^#\/?/, '').split('/');
     const dec = (s) => { try { return decodeURIComponent(s); } catch (e) { return s; } };
     if (parts[0] === 'farm' && parts[1]) return { name: 'farm', id: dec(parts[1]) };
     if (parts[0] === 'materials') return { name: 'materials' };
+    if (parts[0] === 'commands') return { name: 'commands' };
     if (parts[0] === 'mods') return { name: 'mods', id: parts[1] ? dec(parts[1]) : null };
     return { name: 'farms' };
   }
-  const TAB = { farms: 0, farm: 0, materials: 1, mods: 2 };
+  const TAB = { farms: 0, farm: 0, materials: 1, mods: 2, commands: 3 };
   function setNav(r) {
     const i = TAB[r.name];
     $$('[data-nav]').forEach((nav) => {
@@ -1005,6 +1160,8 @@
       html = '';
     } else if (r.name === 'materials') {
       html = materialsView() + footer();
+    } else if (r.name === 'commands') {
+      html = commandsView(nav) + footer();
     } else if (r.name === 'mods') {
       html = (S.mods || S.modsError ? modsView() : skeleton()) + footer();
     } else if (r.name === 'farm' && !farmById(r.id)) {
@@ -1023,7 +1180,7 @@
     refreshProgress();
     renderActionBar(r);
     const f = r.name === 'farm' ? farmById(r.id) : null;
-    document.title = f ? `${txt(f.name) || f.id} · Farm Plan` : r.name === 'materials' ? 'Materials · Farm Plan' : r.name === 'mods' ? 'Mods · Farm Plan' : 'Farm Plan';
+    document.title = f ? `${txt(f.name) || f.id} · Farm Plan` : r.name === 'materials' ? 'Materials · Farm Plan' : r.name === 'mods' ? 'Mods · Farm Plan' : r.name === 'commands' ? 'Commands · Farm Plan' : 'Farm Plan';
 
     if (nav) {
       const rail = $('.rail'); if (rail && desk) rail.scrollTop = railScroll;
@@ -1045,6 +1202,10 @@
 
   function renderActionBar(r) {
     const bar = $('#actionbar');
+    if (r.name === 'commands' && S.loaded && !desktop.matches) {
+      bar.innerHTML = `<button type="button" class="btn btn-primary press" data-action="cmd-new" style="grid-column:1 / -1">${I.plus}New command</button>`;
+      bar.hidden = false; document.body.classList.add('has-bar'); return;
+    }
     const f = r.name === 'farm' && S.loaded ? farmById(r.id) : null;
     if (!f || desktop.matches) { bar.hidden = true; document.body.classList.remove('has-bar'); return; }
     const s = statusOf(f.id);
@@ -1108,14 +1269,15 @@
 
   /* ---------- toast ---------- */
   let toastTimer = null;
-  function toast(msg) {
+  function toast(msg, undo) {
     const old = $('.toast'); if (old) old.remove();
     clearTimeout(toastTimer);
     const t = document.createElement('div');
     t.className = 'toast'; t.setAttribute('role', 'status');
-    t.innerHTML = `${I.check}<span>${esc(msg)}</span>`;
+    t.innerHTML = `${I.check}<span>${esc(msg)}</span>${undo ? '<button type="button" class="undo press">Undo</button>' : ''}`;
+    if (undo) $('.undo', t).addEventListener('click', () => { t.remove(); clearTimeout(toastTimer); undo(); toast('Restored'); }, { once: true });
     document.body.appendChild(t);
-    toastTimer = setTimeout(() => { t.classList.add('leaving'); t.addEventListener('transitionend', () => t.remove(), { once: true }); setTimeout(() => t.remove(), 400); }, 2600);
+    toastTimer = setTimeout(() => { t.classList.add('leaving'); t.addEventListener('transitionend', () => t.remove(), { once: true }); setTimeout(() => t.remove(), 400); }, undo ? 5000 : 2600);
   }
   async function copy(text, n, msg) {
     try { await navigator.clipboard.writeText(text); }
@@ -1191,6 +1353,22 @@
       const p = document.getElementById(a.getAttribute('aria-controls')); if (p) { p.toggleAttribute('data-open', open); p.toggleAttribute('inert', !open); }
     }
     else if (act === 'copy-cmd') { copy(a.dataset.cmd, 1, 'Command copied'); }
+    else if (act === 'cmd-copy') {
+      const c = cmdById(a.dataset.id); if (!c) return;
+      copy(c.cmd, 1, c.label ? `Copied: ${c.label}` : 'Command copied');
+      a.classList.add('copied'); clearTimeout(a._t); a._t = setTimeout(() => a.classList.remove('copied'), 1400);
+    }
+    else if (act === 'cmd-new') cmdSheet(null);
+    else if (act === 'cmd-edit') { const c = cmdById(a.dataset.id); if (c) cmdSheet(c); }
+    else if (act === 'cmd-from') cmdSheet({ label: a.dataset.label, cmd: a.dataset.cmd });
+    else if (act === 'cmd-save') saveCmd(a.dataset.id);
+    else if (act === 'cmd-delete') deleteCmd(a.dataset.id);
+    else if (act === 'bot-here') {
+      const t = $('#cmd-text'); const m = t && t.value.match(F3C); if (!m) return;
+      const [, dim, x, y, z, yaw, pitch] = m;
+      t.value = `/player ${botName($('#cmd-label').value)} spawn at ${x} ${y} ${z} facing ${yaw} ${pitch} in ${dim}`;
+      a.hidden = true; t.removeAttribute('aria-invalid'); t.focus();
+    }
     else if (act === 'copy-all') { const { res } = shoppingData(); copy(`Farm Plan materials (${S.depthMats})\n` + listText(res), res.items.length); }
     else if (act === 'reset-got') {
       const prefix = `all|${S.depthMats}|`; Object.keys(S.got).forEach((k) => { if (k.startsWith(prefix)) delete S.got[k]; });
@@ -1220,6 +1398,8 @@
       const p = $('[data-mods-progress]'); if (p) p.innerHTML = modsProgress();
     }
   });
+  document.addEventListener('submit', (e) => { if (e.target.matches('[data-cmd-form]')) { e.preventDefault(); const b = $('[data-action="cmd-save"]'); saveCmd(b && b.dataset.id); } });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target.matches('#cmd-text')) { e.preventDefault(); e.target.form.requestSubmit(); } });
   document.addEventListener('input', (e) => { if (e.target.matches('[data-search]')) { S.q = e.target.value; refreshList(); } });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openSheetEl) { e.preventDefault(); closeSheet(); } });
   window.addEventListener('hashchange', () => {
