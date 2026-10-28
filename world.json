@@ -12,7 +12,7 @@
     { "id": "enderman-farm", "farm": "enderman-farm", "name": "Enderman Farm", "status": "built", "dim": "end", "x": 288, "y": 0, "z": -24,
       "seen": "26 boats, a named endermite as bait, hopper minecart collection; an enchanting room above at y 33" },
     { "id": "shulker-farm", "farm": "shulker-farm", "name": "Shulker Farm", "status": "building", "dim": "end", "x": 1712, "y": 75, "z": 16,
-      "seen": "2,800 scaffolding still up, 66 hoppers into chests, 17 shulkers" },
+      "seen": "The Shulkercraft design in stone bricks: all 2,826 scaffolding and 66 hoppers are in; 172 slabs, 20 oak trapdoors and 4 soul sand short of the list; 17 shulkers" },
     { "id": "base", "farm": null, "name": "Base", "dim": "overworld", "x": 960, "y": 69, "z": -1024,
       "seen": "22 chests, shulker boxes, furnaces and the nether portal" },
     { "id": "cactus-farm", "farm": null, "name": "Cactus Farm", "dim": "overworld", "x": 872, "y": 91, "z": -1208,
