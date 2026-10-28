@@ -239,6 +239,18 @@
   .start-card b { font-size:17px; font-weight:600; letter-spacing:-.01em; }
   .start-card > span:last-child { display:grid; gap:4px; }
 
+  /* ---------- world scan ---------- */
+  .coords { font:400 16px/1.2 var(--pixel); letter-spacing:.02em; color:var(--fg); white-space:nowrap; }
+  .faint { color:var(--faint); font-size:13px; }
+  .world-card { padding:16px; border-radius:var(--r); background:var(--surface); margin-bottom:24px; }
+  .world-where { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+  .world-extras { margin-top:36px; max-width:820px; }
+  .wb-list { list-style:none; border-top:1px solid var(--line); }
+  .wb { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid var(--line); }
+  .wb-main { flex:1; display:grid; gap:4px; }
+  .wb-main b { font-size:17px; font-weight:600; letter-spacing:-.01em; }
+  .wb-main small { font-size:14px; color:var(--muted); }
+
   /* ---------- detail ---------- */
   .detail-top { display:flex; align-items:center; padding:8px 0 0; margin-left:-10px; }
   .back { display:inline-flex; align-items:center; gap:4px; min-height:44px; padding:0 10px; border-radius:999px; color:var(--muted); font-weight:600; }
@@ -604,7 +616,7 @@
 
   /* ---------- state ---------- */
   const S = {
-    loaded: false, error: null, meta: {}, farms: [], mods: null, modsError: null,
+    loaded: false, error: null, meta: {}, farms: [], mods: null, modsError: null, world: null,
     q: '', dim: 'all', st: 'all',
     status: store.get('status', {}), design: store.get('design', {}), got: store.get('got', {}),
     installed: store.get('installed', {}), cmds: [].concat(store.get('cmds', [])).filter((c) => c && c.id && c.cmd),
@@ -620,7 +632,10 @@
     { v: 'skip', l: 'Skip', d: 'Not building this one' },
   ];
   const statusLabel = (v) => (STATUSES.find((s) => s.v === v) || {}).l || '';
-  const statusOf = (id) => STATUSES.some((s) => s.v === S.status[id]) ? S.status[id] : '';
+  /* what the world scan found (world.json); a status set by hand wins over it */
+  const worldOf = (id) => S.world ? S.world.builds.find((b) => b.farm === id) || null : null;
+  const valid = (v) => STATUSES.some((s) => s.v === v);
+  const statusOf = (id) => valid(S.status[id]) ? S.status[id] : (worldOf(id) && valid(worldOf(id).status) ? worldOf(id).status : '');
   const DEPTHS = [
     { value: 'placed', label: 'As placed' },
     { value: 'ingredients', label: 'Ingredients' },
@@ -929,10 +944,32 @@
         ${where ? `<p class="d-where">${esc(where)}</p>` : ''}
         ${deskActions(f)}
       </header>
+      ${worldBlock(worldOf(f.id))}
       ${sw}
       <div data-design-body>${designBody(f)}</div>
     </article>`;
   }
+  /* ---------- the world scan ---------- */
+  const DIM_ID = { overworld: 'minecraft:overworld', nether: 'minecraft:the_nether', end: 'minecraft:the_end' };
+  function tpCmd(b) { const tp = `tp @s ${b.x} ${b.y} ${b.z}`; return b.dim === 'overworld' ? '/' + tp : `/execute in ${DIM_ID[b.dim]} run ${tp}`; }
+  const coords = (b) => `<span class="coords num">${b.x} ${b.y} ${b.z}</span>`;
+  function worldBlock(b) {
+    if (!b) return '';
+    return `<section class="world-card block"><span class="eyebrow">In your world</span>
+      <p class="world-where">${dimBadge({ dimension: b.dim })}${coords(b)}</p>
+      <p class="muted">${esc(txt(b.seen))}</p>
+      <div class="cmd"><code>${esc(tpCmd(b))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command">${I.copy}</button></div>
+      <small class="faint">Found by a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}${S.status[b.farm] ? '' : `; status set to ${statusLabel(b.status)} from the scan`}.</small></section>`;
+  }
+  function worldExtras() {
+    const list = S.world ? S.world.builds.filter((b) => !b.farm) : [];
+    if (!list.length) return '';
+    return `<section class="block world-extras"><span class="eyebrow">Also in your world</span>
+      <ul class="wb-list">${list.map((b) => `<li class="wb"><span class="wb-main"><b>${esc(txt(b.name))}</b><span class="row-sub">${dimBadge({ dimension: b.dim })}${coords(b)}</span><small>${esc(txt(b.seen))}</small></span>
+        <button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command to ${esc(txt(b.name))}">${I.copy}</button></li>`).join('')}</ul>
+      <small class="faint">From a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}. The copy button copies a /tp command.</small></section>`;
+  }
+
   function notFound(what) {
     return `<div class="empty enter" style="margin-top:24px"><p><b>${esc(what)} not found.</b></p><a class="btn press" href="#/">All farms</a></div>`;
   }
@@ -1195,11 +1232,11 @@
       const f = r.name === 'farm' ? farmById(r.id) : null;
       const railKeep = nav && $('.rail') && (S.prevRoute === 'farm' || S.prevRoute === 'farms');
       html = `<div class="split"><aside class="rail${railKeep ? '' : ' enter'}">${listHead(false)}<div data-list>${farmRows(f && f.id, !railKeep)}</div></aside>
-        <section class="pane enter">${f ? detailView(f) : overviewPane()}${footer()}</section></div>`;
+        <section class="pane enter">${f ? detailView(f) : overviewPane() + worldExtras()}${footer()}</section></div>`;
     } else if (r.name === 'farm') {
       html = `<div class="enter">${detailView(farmById(r.id))}</div>${footer()}`;
     } else {
-      html = `<div class="enter">${listHead(false)}<div data-list>${farmRows(null, nav !== false)}</div></div>${footer()}`;
+      html = `<div class="enter">${listHead(false)}<div data-list>${farmRows(null, nav !== false)}</div>${worldExtras()}</div>${footer()}`;
     }
     view.innerHTML = html;
     refreshProgress();
@@ -1442,12 +1479,14 @@
   async function boot() {
     S.error = null; S.modsError = null;
     const slow = setTimeout(() => { if (!S.loaded) view.innerHTML = skeleton(); }, 250);
+    const worldP = getJson('world.json').then((w) => { S.world = w && Array.isArray(w.builds) ? w : null; }).catch(() => { S.world = null; });
     const modsP = getJson('mods.json').then((m) => { S.mods = m && typeof m === 'object' ? m : { mods: [] }; }).catch(() => { S.modsError = true; });
     try {
       const data = await getJson('farms.json');
       S.meta = { researched: data.researched, minecraft_version: data.minecraft_version };
       const seen = new Set();
       S.farms = arr(data.farms).filter((f) => f && typeof f === 'object' && txt(f.id) && !seen.has(f.id) && seen.add(f.id));
+      await worldP;
       S.loaded = true;
     } catch (e) {
       S.error = e && e.message ? e.message : 'Unknown error';

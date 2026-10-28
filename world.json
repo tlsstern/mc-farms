@@ -1,0 +1,31 @@
+{
+  "scanned": "2026-10-28",
+  "world": "200509",
+  "note": "Read from the save files by a block and entity scan, not seen in game. Matches are a best guess from what each place contains.",
+  "builds": [
+    { "id": "iron-farm", "farm": "iron-farm", "name": "Iron Farm", "status": "built", "dim": "overworld", "x": 776, "y": 83, "z": -1168,
+      "seen": "12 beds, 6 villagers, a zombie and iron golems, collection chests at y 67 to 70" },
+    { "id": "villager-breeder", "farm": "villager-breeder", "name": "Villager Breeder", "status": "built", "dim": "overworld", "x": 944, "y": 67, "z": -1024,
+      "seen": "41 beds and 18 villagers; next to it 4 lecterns and a named zombie for curing" },
+    { "id": "witch-farm", "farm": "witch-farm", "name": "Witch Farm", "status": "built", "dim": "overworld", "x": -176, "y": 180, "z": -9920,
+      "seen": "8 witches, 190 spruce trapdoors, a bubble lift up to hoppers and chests at y 178 to 182" },
+    { "id": "enderman-farm", "farm": "enderman-farm", "name": "Enderman Farm", "status": "built", "dim": "end", "x": 288, "y": 0, "z": -24,
+      "seen": "26 boats, a named endermite as bait, hopper minecart collection; an enchanting room above at y 33" },
+    { "id": "shulker-farm", "farm": "shulker-farm", "name": "Shulker Farm", "status": "building", "dim": "end", "x": 1712, "y": 75, "z": 16,
+      "seen": "2,800 scaffolding still up, 66 hoppers into chests, 17 shulkers" },
+    { "id": "base", "farm": null, "name": "Base", "dim": "overworld", "x": 960, "y": 69, "z": -1024,
+      "seen": "22 chests, shulker boxes, furnaces and the nether portal" },
+    { "id": "cactus-farm", "farm": null, "name": "Cactus Farm", "dim": "overworld", "x": 872, "y": 91, "z": -1208,
+      "seen": "96 cactus in 790 glass from y 91 to 112, hoppers into chests" },
+    { "id": "crop-farm", "farm": null, "name": "Crop Farm", "dim": "overworld", "x": 976, "y": 69, "z": -1016,
+      "seen": "132 farmland with carrots and potatoes, nether wart on soul sand" },
+    { "id": "smelter", "farm": null, "name": "Furnace Smelter", "dim": "overworld", "x": 936, "y": 65, "z": -1168,
+      "seen": "50 furnaces fed by hopper minecarts on 102 powered rails" },
+    { "id": "crafter", "farm": null, "name": "Auto-crafter", "dim": "overworld", "x": 896, "y": 70, "z": -1152,
+      "seen": "4 crafters, 82 white stained glass, hoppers and a snow golem; purpose a guess" },
+    { "id": "nether-roof", "farm": null, "name": "Nether roof build", "dim": "nether", "x": 168, "y": 130, "z": -216,
+      "seen": "scaffolding and glass above the roof, warped trapdoors, hoppers and chests; maybe the start of a gold farm" },
+    { "id": "east-build", "farm": null, "name": "Build at 1568 144", "dim": "overworld", "x": 1568, "y": 100, "z": 144,
+      "seen": "scaffolding up to y 190, dispensers and observers at y 102 to 133, a hopper sorter at y 67, a nether portal; purpose unclear" }
+  ]
+}
