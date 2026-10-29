@@ -250,6 +250,45 @@
   .wb-main { flex:1; display:grid; gap:4px; }
   .wb-main b { font-size:17px; font-weight:600; letter-spacing:-.01em; }
   .wb-main small { font-size:14px; color:var(--muted); }
+  .farm-list li { display:flex; align-items:center; gap:4px; }
+  .farm-list li > .farm-row { flex:1; }
+  .row-sub .coords { font-size:13px; }
+  .portal { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
+  .portal .coords { font-size:14px; }
+  .where-row { display:flex; align-items:center; gap:4px 12px; flex-wrap:wrap; }
+  .where-row .cmd-copy { margin-left:-8px; }
+  .card-actions { display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* build this next */
+  .next-card { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:4px 8px; padding:12px; margin:0 -4px; border-radius:var(--r); background:var(--accent-soft); }
+  .next-main { display:flex; align-items:center; gap:12px; text-decoration:none; min-height:56px; border-radius:var(--r); }
+  .next-main .thumb { width:96px; }
+  .next-main > span:last-child { display:grid; gap:2px; }
+  .next-main .eyebrow { color:var(--accent-ink); }
+  .next-main b { font-size:17px; font-weight:650; letter-spacing:-.01em; }
+  .next-main small { font-size:14px; color:var(--muted); }
+  .next-card .btn-quiet { padding:0 12px; }
+  @media (max-width: 420px) { .next-card { grid-template-columns:1fr; } .next-card .btn-quiet { justify-self:end; min-height:44px; margin:-4px -4px -8px 0; } .next-main .thumb { width:80px; } }
+
+  /* AFK check and plan link */
+  .side-block { margin-top:36px; display:grid; gap:12px; }
+  .afk-from { display:flex; align-items:center; gap:6px 12px; flex-wrap:wrap; font-size:14px; color:var(--muted); }
+  .afk-list { list-style:none; border-top:1px solid var(--line); }
+  .afk-list li { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 12px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); }
+  .afk-list b { font-weight:600; }
+  .afk-list small { grid-column:1 / -1; font-size:13px; color:var(--muted); }
+  .field-row { display:grid; grid-template-columns:minmax(0,1fr) 96px; gap:12px; }
+  .ff select {
+    -webkit-appearance:none; appearance:none; width:100%; min-height:44px; padding:0 40px 0 12px; font:inherit; font-size:16px; color:inherit;
+    background:var(--surface-2); border:0; border-bottom:1px solid var(--line-strong); border-radius:var(--r) var(--r) 0 0;
+  }
+  .select { position:relative; }
+  .select::after { content:""; position:absolute; right:16px; top:50%; width:8px; height:8px; border:solid currentColor; border-width:0 2px 2px 0; transform:translateY(-70%) rotate(45deg); pointer-events:none; opacity:.6; }
+  .sheet .ff input, .sheet .ff textarea { background:var(--surface-2); }
+  .found { font-size:14px; font-weight:600; color:var(--accent-ink); }
+  .found.none { color:var(--faint); font-weight:500; }
+  .made-by { color:var(--accent-ink) !important; }
+  .supplied-head { padding:18px 0 6px; }
 
   /* ---------- detail ---------- */
   .detail-top { display:flex; align-items:center; padding:8px 0 0; margin-left:-10px; }
@@ -573,10 +612,12 @@
 </nav>
 
 <script src="recipes.js"></script>
+<script src="plan.js"></script>
 <script>
 (function () {
   'use strict';
   const FR = window.FarmRecipes;
+  const FP = window.FarmPlan;
 
   /* ---------- helpers ---------- */
   const $ = (s, el = document) => el.querySelector(s);
@@ -622,6 +663,8 @@
     installed: store.get('installed', {}), cmds: [].concat(store.get('cmds', [])).filter((c) => c && c.id && c.cmd),
     depthFarm: store.get('depthFarm', 'placed'), depthMats: store.get('depthMats', 'raw'),
     modFilter: store.get('modFilter', 'all'), howto: false,
+    coords: store.get('coords', {}), afk: store.get('afk', null), rates: store.get('rates', {}),
+    mats: store.get('mats', {}), notNow: [].concat(store.get('notNow', [])),
     navCount: 0, listScroll: 0, prevRoute: null,
   };
 
@@ -649,6 +692,29 @@
   const designIdx = (f) => { const n = designsOf(f).length; const i = Number(S.design[f.id]) || 0; return i >= 0 && i < n ? i : 0; };
   const designOf = (f) => designsOf(f)[designIdx(f)] || null;
   const farmById = (id) => S.farms.find((f) => f.id === id);
+  const today = () => new Date().toISOString().slice(0, 10);
+
+  /* where a farm is: his own coordinates win over the world scan */
+  const DIM_OK = (d) => (['overworld', 'nether', 'end'].includes(d) ? d : '');
+  function placeOf(id) {
+    const c = S.coords[id];
+    if (c && Number.isFinite(c.x) && Number.isFinite(c.y) && Number.isFinite(c.z)) return { x: c.x, y: c.y, z: c.z, dim: DIM_OK(c.dim) || 'overworld', mine: true };
+    const b = worldOf(id);
+    return b && Number.isFinite(b.x) ? { x: b.x, y: b.y, z: b.z, dim: DIM_OK(b.dim) || 'overworld' } : null;
+  }
+  const xyz = (p) => `${p.x} ${p.y} ${p.z}`;
+
+  /* the material list in use: a pasted Litematica list wins over the researched one */
+  const dkey = (f) => `${f.id}|${designIdx(f)}`;
+  const pasted = (f) => { const o = S.mats[dkey(f)]; return o && arr(o.list).length ? o : null; };
+  function matsOf(f) { const o = pasted(f); if (o) return o.list; const d = designOf(f); return d ? arr(d.materials) : []; }
+
+  /* what the builds he has already make (built farms plus the extra builds from the scan) */
+  function producers() {
+    const list = S.farms.filter((f) => statusOf(f.id) === 'built').map((f) => ({ id: f.id, name: txt(f.name) || f.id }));
+    if (S.world) S.world.builds.filter((b) => !b.farm && FP.PRODUCES[b.id]).forEach((b) => list.push({ id: b.id, name: txt(b.name) || b.id }));
+    return list;
+  }
 
   /* ---------- small renderers ---------- */
   function dimBadge(f) { const d = dimOf(f); return d ? `<span class="dim dim-${d}">${DIMS[d]}</span>` : ''; }
@@ -717,19 +783,27 @@
   function matBlock(res, keyPrefix, opts) {
     opts = opts || {};
     if (!res.items.length) return '';
-    const rows = res.items.map((it) => {
+    /* items a built farm already makes go to the bottom, under their own heading */
+    const have = producers();
+    const from = new Map(res.items.map((it) => [it.id, FP.suppliersOf(it.id, have)]));
+    const row = (it) => {
       const key = keyPrefix + it.id;
       const used = opts.usedBy && opts.usedBy.get(it.id);
+      const src = from.get(it.id);
       return `<li><label class="check-row">
         <input type="checkbox" class="sr-only" data-got="${esc(key)}"${S.got[key] ? ' checked' : ''}>
         <span class="box">${I.tick}</span>
         <span class="sw" style="--c:${swatch(it.id)}" aria-hidden="true"></span>
-        <span class="mat-name"><span>${esc(it.name)}</span>${it.count == null ? '<small>Count unknown</small>' : ''}</span>
+        <span class="mat-name"><span>${esc(it.name)}</span>${it.count == null ? '<small>Count unknown</small>' : ''}${src.length ? `<small class="made-by">From your ${esc(src.join(', '))}</small>` : ''}</span>
         ${opts.usedBy ? `<span class="used">${used ? esc(used.join(', ')) : ''}</span>` : ''}
         <span class="mat-count"><b>${it.count == null ? '?' : fmt(it.count)}</b>${it.stack ? `<small>${esc(it.stack)}</small>` : ''}</span>
       </label></li>`;
-    }).join('');
-    return `<ul class="mat-list${opts.usedBy ? ' with-used' : ''}">${rows}</ul>`;
+    };
+    const cls = `mat-list${opts.usedBy ? ' with-used' : ''}`;
+    const need = res.items.filter((it) => !from.get(it.id).length);
+    const made = res.items.filter((it) => from.get(it.id).length);
+    return (need.length ? `<ul class="${cls}">${need.map(row).join('')}</ul>` : '')
+      + (made.length ? `<p class="eyebrow supplied-head">Your farms make these</p><ul class="${cls}">${made.map(row).join('')}</ul>` : '');
   }
   function matNotes(res, extra) {
     const notes = [];
@@ -776,11 +850,13 @@
       const d = designOf(f) || {};
       const creator = txt(d.creator);
       const name = txt(f.name) || FR.prettyName(f.id);
+      const p = statusOf(f.id) === 'built' ? placeOf(f.id) : null;
+      const sub = p ? `<span class="dim dim-${p.dim}" title="${DIMS[p.dim]}"><span class="sr-only">${DIMS[p.dim]}</span></span><span class="coords num">${xyz(p)}</span>` : `${dimBadge(f)}${diffBadge(d)}${creator ? `<span class="creator">${esc(creator)}</span>` : ''}`;
       return `<li style="--i:${i}"><a class="farm-row" href="#/farm/${encodeURIComponent(f.id)}"${f.id === activeId ? ' aria-current="true"' : ''}>
         ${thumb(d)}<span class="row-main"><span class="row-name">${esc(name)}</span>
-          <span class="row-sub">${dimBadge(f)}${diffBadge(d)}${creator ? `<span class="creator">${esc(creator)}</span>` : ''}</span></span>
-        ${statusPill(f.id) || I.chevR}
-      </a></li>`;
+          <span class="row-sub">${sub}</span></span>
+        ${p ? '' : statusPill(f.id) || I.chevR}
+      </a>${p ? `<button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${xyz(p)}" data-msg="Coordinates copied" aria-label="Copy coordinates of ${esc(name)}">${I.copy}</button>` : ''}</li>`;
     }).join('')}</ul>`;
   }
   const FILTER_DIMS = [['all', 'All'], ['overworld', 'Overworld'], ['nether', 'Nether'], ['end', 'The End']];
@@ -799,6 +875,7 @@
     return `<div class="list-head">
       ${compact ? '' : '<h2 class="h2">Farms</h2>'}
       <div data-progress></div>
+      ${compact ? '' : `<div class="phone-only" data-next>${nextCard()}</div>`}
       <div class="searchrow">
         <label class="field"><span class="sr-only">Search farms</span>${I.search}<input type="search" data-search placeholder="Search farms" value="${esc(S.q)}" autocomplete="off" enterkeyhint="search"></label>
         <button type="button" class="btn press phone-only" data-action="filter-open" aria-label="Filter farms">${I.filter}Filter${activeFilterCount() ? `<span class="badge-count">${activeFilterCount()}</span>` : ''}</button>
@@ -826,15 +903,107 @@
   }
   function overviewPane() {
     const c = counts();
-    const next = S.farms.find((f) => statusOf(f.id) === 'building') || S.farms.find((f) => statusOf(f.id) === 'planned');
     return `<div class="overview">
       <div class="block"><span class="eyebrow">Survival · Java 26.3</span><h2 class="h2">${c.built ? `${c.built} of ${c.total} farms running` : 'Pick a farm to start'}</h2>
       <p class="muted lead">Each farm has a video, the design to build and a material list you can break down to raw materials.</p></div>
       <div class="block">${progressBar(c)}
       <div class="tally">${[['built', 'Built'], ['building', 'Building'], ['planned', 'Planned'], ['skip', 'Skipped']].map(([k, l]) => `<div><b class="num${c[k] && k !== 'skip' ? ' on' : ''}">${c[k]}</b><span>${l}</span></div>`).join('')}</div></div>
+      <div data-next>${nextCard()}</div>
       ${startHere()}
-      ${next ? `<div class="block"><span class="eyebrow">Up next</span><a class="btn press" href="#/farm/${encodeURIComponent(next.id)}" style="justify-self:start">${esc(txt(next.name))} · ${statusLabel(statusOf(next.id))}</a></div>` : `<p class="muted">Mark farms Planned or Building and the Materials tab sums up what to gather.</p>`}
+      ${afkBlock()}
+      ${planBlock()}
     </div>`;
+  }
+
+  /* ---------- build this next ---------- */
+  function openDims() {
+    const open = { nether: false, end: false };
+    S.farms.forEach((f) => { const s = statusOf(f.id); if (s === 'built' || s === 'building') { const d = dimOf(f); if (d in open) open[d] = true; } });
+    if (S.world) S.world.builds.forEach((b) => { if (b.dim in open) open[b.dim] = true; });
+    return open;
+  }
+  function nextCard() {
+    const pick = FP.nextFarm({ status: statusOf, skip: S.notNow, open: openDims(), known: new Set(S.farms.map((f) => f.id)) });
+    if (!pick) {
+      return S.notNow.length ? `<div class="next-card swap"><p class="muted">You passed on every farm left.</p><button type="button" class="btn btn-quiet press" data-action="next-reset">Start over</button></div>` : '';
+    }
+    const f = farmById(pick.id);
+    return `<div class="next-card swap"><a class="next-main press" href="#/farm/${encodeURIComponent(f.id)}">${thumb(designOf(f))}<span><span class="eyebrow">Build this next</span><b>${esc(txt(f.name) || f.id)}</b><small>${esc(pick.why)}</small></span></a>
+      <button type="button" class="btn btn-quiet press" data-action="not-now" data-id="${esc(f.id)}">Not now</button></div>`;
+  }
+  const refreshNext = () => $$('[data-next]').forEach((el) => { el.innerHTML = nextCard(); });
+
+  /* ---------- AFK check ---------- */
+  const VERDICT = { runs: ['b-good', 'Runs'], edge: ['b-warn', 'Edge'], stops: ['b-bad', 'Stops'] };
+  function afkBlock() {
+    const built = S.farms.filter((f) => statusOf(f.id) === 'built');
+    if (!built.length) return '';
+    const head = `<div class="block-head"><span class="eyebrow">AFK check</span>${S.afk ? `<button type="button" class="btn btn-quiet press" data-action="afk-open">Change</button>` : ''}</div>`;
+    if (!S.afk) {
+      return `<section class="block side-block" data-afk>${head}<p class="muted">Where do you stand while you AFK? See which built farms keep running from there.</p>
+        <button type="button" class="btn press" data-action="afk-open" style="justify-self:start">Set AFK spot</button></section>`;
+    }
+    const placed = built.map((f) => ({ f, p: placeOf(f.id) })).filter((x) => x.p);
+    const rows = placed.map(({ f, p }) => ({ f, v: FP.afkCheck(f.id, p, S.afk, S.afk.sim) }))
+      .sort((a, b) => ['runs', 'edge', 'stops'].indexOf(a.v.state) - ['runs', 'edge', 'stops'].indexOf(b.v.state));
+    const missing = built.length - placed.length;
+    return `<section class="block side-block" data-afk>${head}
+      <p class="afk-from">${dimBadge({ dimension: S.afk.dim })}<span class="coords num">${xyz(S.afk)}</span><span>Simulation distance ${S.afk.sim || 12}</span></p>
+      ${rows.length ? `<ul class="afk-list">${rows.map(({ f, v }) => `<li><b>${esc(txt(f.name) || f.id)}</b><span class="b ${VERDICT[v.state][0]}">${VERDICT[v.state][1]}</span><small>${esc(v.why)}</small></li>`).join('')}</ul>` : ''}
+      ${missing ? `<small class="faint">${missing} built farm${missing === 1 ? ' has' : 's have'} no coordinates yet. Add them on the farm's page.</small>` : ''}
+      <small class="faint">Mob farms need you within 128 blocks; the rest only need their chunks loaded.</small></section>`;
+  }
+  function afkSheet() {
+    const a = S.afk;
+    openSheet('AFK spot', `<form data-afk-form style="display:grid;gap:16px" novalidate>
+        <div class="ff"><label for="afk-at">Where you stand</label><input id="afk-at" autocomplete="off" spellcheck="false" placeholder="Paste F3 + C, or x y z" value="${a ? esc(xyz(a)) : ''}">
+          <p class="err" data-err hidden>Paste F3 + C or type three numbers.</p></div>
+        <div class="ff"><label for="afk-dim">Dimension</label><div class="select"><select id="afk-dim">${Object.entries(DIMS).map(([k, l]) => `<option value="${k}"${(a ? a.dim : 'overworld') === k ? ' selected' : ''}>${l}</option>`).join('')}</select></div></div>
+        <div class="ff"><label for="afk-sim">Simulation distance (chunks)</label><input id="afk-sim" type="number" inputmode="numeric" min="5" max="32" value="${a ? a.sim : 12}"><small>Options → Video Settings. 12 unless you changed it.</small></div>
+      </form>`,
+      `${a ? '<button type="button" class="btn btn-quiet press" data-action="afk-clear">Clear</button>' : '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>'}<button type="button" class="btn btn-primary press" data-action="afk-save">Check farms</button>`,
+      (wrap) => { const at = $('#afk-at', wrap); at.addEventListener('input', () => { const p = FP.parseCoords(at.value); if (p && p.dim) $('#afk-dim', wrap).value = p.dim; }); });
+  }
+  function saveAfk() {
+    const at = $('#afk-at'); if (!at) return;
+    const p = FP.parseCoords(at.value);
+    if (!p) { const err = $('[data-afk-form] [data-err]'); err.hidden = true; void err.offsetWidth; err.hidden = false; at.setAttribute('aria-invalid', 'true'); at.focus(); return; }
+    const sim = Math.max(5, Math.min(32, Math.round(Number($('#afk-sim').value) || 12)));
+    S.afk = { x: p.x, y: p.y, z: p.z, dim: p.dim || $('#afk-dim').value, sim };
+    store.set('afk', S.afk); closeSheet(); refreshSide(); toast('AFK spot saved');
+  }
+  const refreshSide = () => { $$('[data-afk]').forEach((el) => { el.outerHTML = afkBlock(); }); };
+
+  /* ---------- the plan link ---------- */
+  function planBlock() {
+    return `<section class="block side-block"><span class="eyebrow">Your plan</span>
+      <p class="muted">Saved in this browser only. A link carries it to your phone or laptop.</p>
+      <button type="button" class="btn press" data-action="plan-copy" style="justify-self:start">${I.copy}Copy my plan link</button></section>`;
+  }
+  async function copyPlan() {
+    const code = await FP.packPlan(Object.fromEntries(FP.PLAN_KEYS.map((k) => [k, S[k]])));
+    copy(`${location.href.split('#')[0]}#/plan/${code}`, 1, 'Plan link copied');
+  }
+  async function offerPlan(code) {
+    const plan = await FP.unpackPlan(code);
+    if (!plan) { toast("That plan link is broken"); return; }
+    const n = (o) => (o && typeof o === 'object' ? Object.keys(o).length : 0);
+    const parts = [n(plan.status) && `${n(plan.status)} farm statuses`, n(plan.got) && `${n(plan.got)} ticked materials`, n(plan.installed) && `${n(plan.installed)} installed mods`, arr(plan.cmds).length && `${plan.cmds.length} commands`, n(plan.coords) && `${n(plan.coords)} coordinates`].filter(Boolean);
+    openSheet('Load this plan?', `<p>${esc(parts.join(', ') || 'An empty plan')}.</p><p class="muted">It replaces the plan saved in this browser.</p>`,
+      `<button type="button" class="btn btn-quiet press" data-action="sheet-close">Keep mine</button><button type="button" class="btn btn-primary press" data-action="plan-load">Load plan</button>`);
+    S.pendingPlan = plan;
+  }
+  function loadPlan() {
+    const plan = S.pendingPlan; if (!plan) return;
+    FP.PLAN_KEYS.forEach((k) => {
+      const v = plan[k];
+      if (k === 'cmds') S.cmds = arr(v).filter((c) => c && c.id && c.cmd);
+      else if (k === 'notNow') S.notNow = arr(v).filter((x) => typeof x === 'string');
+      else if (k === 'afk') S.afk = v && Number.isFinite(v.x) ? v : null;
+      else S[k] = v && typeof v === 'object' ? v : {};
+      store.set(k, S[k]);
+    });
+    S.pendingPlan = null; closeSheet(); render(false); toast('Plan loaded');
   }
 
   /* ---------- views: farm detail ---------- */
@@ -866,9 +1035,12 @@
     const cap = (title || yt) ? `<div class="video-cap">${title ? `<p>${esc(title)}</p>` : '<span></span>'}${yt ? `<a class="link-out phone-only" href="${esc(yt)}" target="_blank" rel="noopener">${I.yt}YouTube</a>` : ''}</div>` : '';
     return `<div class="block">${inner}${cap}</div>`;
   }
-  function factsBlock(d) {
+  function factsBlock(d, f) {
     const pub = /^\d{4}-\d{2}-\d{2}$/.test(txt(d.published)) ? txt(d.published) : '';
-    const rows = [['Creator', txt(d.creator)], ['Works on', txt(d.works_on)], ['Rate', txt(d.rate)], ['Size', txt(d.size)], ['Published', pub], ['Materials from', SOURCE_LABEL[txt(d.materials_source)] || '']].filter((r) => r[1]);
+    const m = S.rates[dkey(f)];
+    const measured = m ? `${fmt(m.n)}${m.what ? ' ' + m.what : ' items'}/h, ${m.date}` : '';
+    const from = pasted(f) ? `Your Litematica list, ${pasted(f).date}` : SOURCE_LABEL[txt(d.materials_source)] || '';
+    const rows = [['Creator', txt(d.creator)], ['Works on', txt(d.works_on)], [measured ? 'Rate claimed' : 'Rate', txt(d.rate)], ['Rate measured', measured], ['Size', txt(d.size)], ['Published', pub], ['Materials from', from]].filter((r) => r[1]);
     if (!rows.length) return '';
     return `<dl class="facts">${rows.map(([k, v], i) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>`;
   }
@@ -896,13 +1068,17 @@
   }
   function farmMaterials(f) {
     const d = designOf(f);
-    const head = `<div class="block-head"><h3 class="h3">Materials</h3><button type="button" class="btn btn-quiet press" data-action="copy-farm">${I.copy}Copy</button></div>`;
-    if (!d || !arr(d.materials).length) {
-      return `${head}<div class="empty"><p><b>No material list for this design yet.</b><br>Count from the video, or use Litematica's material list.</p></div>`;
+    const head = `<div class="block-head"><h3 class="h3">Materials</h3><span style="display:flex;gap:4px"><button type="button" class="btn btn-quiet press" data-action="list-open">Paste list</button><button type="button" class="btn btn-quiet press" data-action="copy-farm">${I.copy}Copy</button></span></div>`;
+    const mats = matsOf(f);
+    if (!mats.length) {
+      return `${head}<div class="empty"><p><b>No material list for this design yet.</b><br>Count from the video, or paste Litematica's material list.</p></div>`;
     }
-    const prefix = `${f.id}|${designIdx(f)}|${S.depthFarm}|`;
-    const res = FR.expand(d.materials, S.depthFarm);
-    const est = txt(d.materials_source) === 'estimate' ? 'Counts are an estimate, not from the creator.' : '';
+    const prefix = `${f.id}|${designIdx(f)}${pasted(f) ? 'L' : ''}|${S.depthFarm}|`;
+    const res = FR.expand(mats, S.depthFarm);
+    const src = d ? txt(d.materials_source) : '';
+    const est = pasted(f) ? `Counts from your Litematica list, pasted ${pasted(f).date}.`
+      : src === 'estimate' ? 'Counts are an estimate, not from the creator.'
+      : src === 'counted-from-video' ? "Counts read off the video. Paste Litematica's list to get exact ones." : '';
     return `${head}<div class="mat-tools">${seg('depthFarm', DEPTHS, S.depthFarm, 'Material depth')}${gatheredLine(res, prefix)}</div>
       <div class="swap" data-mat-block>${matBlock(res, prefix)}${matNotes(res, est)}</div>`;
   }
@@ -912,7 +1088,7 @@
     const reqs = arr(f.requirements).map(txt).filter(Boolean);
     const notes = txt(d.notes);
     return `<div class="d-grid">
-      <div class="col-a block">${videoBlock(d)}${factsBlock(d)}
+      <div class="col-a block">${videoBlock(d)}${factsBlock(d, f)}
         ${reqs.length ? `<div class="block"><span class="eyebrow">You need</span><ul class="req-list">${reqs.map((r) => `<li class="tag">${esc(r)}</li>`).join('')}</ul></div>` : ''}</div>
       <div class="col-b block" data-farm-mats>${farmMaterials(f)}</div>
       <div class="col-c block">${notes ? `<div class="block"><span class="eyebrow">Notes</span><p class="note">${esc(notes)}</p></div>` : ''}
@@ -944,7 +1120,7 @@
         ${where ? `<p class="d-where">${esc(where)}</p>` : ''}
         ${deskActions(f)}
       </header>
-      ${worldBlock(worldOf(f.id))}
+      <div data-where>${whereBlock(f)}</div>
       ${sw}
       <div data-design-body>${designBody(f)}</div>
     </article>`;
@@ -953,13 +1129,92 @@
   const DIM_ID = { overworld: 'minecraft:overworld', nether: 'minecraft:the_nether', end: 'minecraft:the_end' };
   function tpCmd(b) { const tp = `tp @s ${b.x} ${b.y} ${b.z}`; return b.dim === 'overworld' ? '/' + tp : `/execute in ${DIM_ID[b.dim]} run ${tp}`; }
   const coords = (b) => `<span class="coords num">${b.x} ${b.y} ${b.z}</span>`;
-  function worldBlock(b) {
-    if (!b) return '';
+  /* "In your world": where the farm is, the portal spot, the scan, and measuring its rate */
+  function whereBlock(f) {
+    const b = worldOf(f.id); const p = placeOf(f.id); const built = statusOf(f.id) === 'built';
+    if (!b && !p && !built) return '';
+    const o = p && FP.otherSide(p);
+    const fromScan = b && Number.isFinite(b.x) && !(p && p.mine);
+    const source = p && p.mine ? 'Coordinates you entered.'
+      : fromScan ? `Found by a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}${S.status[b.farm] ? '' : `; status set to ${statusLabel(b.status)} from the scan`}.`
+      : b ? 'Marked from what you told me, not from the scan.' : '';
     return `<section class="world-card block"><span class="eyebrow">In your world</span>
-      ${b.x == null ? '' : `<p class="world-where">${dimBadge({ dimension: b.dim })}${coords(b)}</p>`}
-      <p class="muted">${esc(txt(b.seen))}</p>
-      ${b.x == null ? '' : `<div class="cmd"><code>${esc(tpCmd(b))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command">${I.copy}</button></div>`}
-      <small class="faint">${b.x == null ? 'Marked from what you told me, not from the scan.' : `Found by a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}${S.status[b.farm] ? '' : `; status set to ${statusLabel(b.status)} from the scan`}.`}</small></section>`;
+      ${p ? `<div class="where-row">${dimBadge({ dimension: p.dim })}${coords(p)}<button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${xyz(p)}" data-msg="Coordinates copied" aria-label="Copy coordinates">${I.copy}</button></div>
+        ${o ? `<p class="portal"><span>Portal in the ${o.dim === 'nether' ? 'Nether' : 'Overworld'}</span><span class="coords num">${xyz(o)}</span><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${xyz(o)}" data-msg="Portal coordinates copied" aria-label="Copy portal coordinates">${I.copy}</button></p>` : ''}`
+        : `<p class="muted">No coordinates yet. Stand at the farm, press F3 + C and paste it here.</p>`}
+      ${b && txt(b.seen) ? `<p class="muted">${esc(txt(b.seen))}</p>` : ''}
+      ${fromScan ? `<div class="cmd"><code>${esc(tpCmd(b))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command">${I.copy}</button></div>` : ''}
+      ${source ? `<small class="faint">${source}</small>` : ''}
+      <div class="card-actions"><button type="button" class="btn press" data-action="coords-open">${p ? 'Change coordinates' : 'Add coordinates'}</button>${built ? `<button type="button" class="btn press" data-action="measure-open">Measure rate</button>` : ''}</div></section>`;
+  }
+  function coordsSheet(f) {
+    const p = placeOf(f.id); const mine = S.coords[f.id];
+    openSheet(`Where is the ${txt(f.name) || f.id}?`, `<form data-coords-form style="display:grid;gap:16px" novalidate>
+        <div class="ff"><label for="co-at">Coordinates</label><input id="co-at" autocomplete="off" spellcheck="false" placeholder="Paste F3 + C, or x y z" value="${p ? esc(xyz(p)) : ''}">
+          <p class="err" data-err hidden>Paste F3 + C or type three numbers.</p><small>F3 + C in game copies where you stand, with the dimension.</small></div>
+        <div class="ff"><label for="co-dim">Dimension</label><div class="select"><select id="co-dim">${Object.entries(DIMS).map(([k, l]) => `<option value="${k}"${((p && p.dim) || dimOf(f) || 'overworld') === k ? ' selected' : ''}>${l}</option>`).join('')}</select></div></div>
+      </form>`,
+      `${mine ? '<button type="button" class="btn btn-quiet press" data-action="coords-clear">Remove</button>' : '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>'}<button type="button" class="btn btn-primary press" data-action="coords-save">Save</button>`,
+      (wrap) => { const at = $('#co-at', wrap); at.addEventListener('input', () => { const q = FP.parseCoords(at.value); if (q && q.dim) $('#co-dim', wrap).value = q.dim; }); });
+  }
+  function saveCoords(f) {
+    const at = $('#co-at'); if (!at) return;
+    const p = FP.parseCoords(at.value);
+    if (!p) { const err = $('[data-coords-form] [data-err]'); err.hidden = true; void err.offsetWidth; err.hidden = false; at.setAttribute('aria-invalid', 'true'); at.focus(); return; }
+    S.coords[f.id] = { x: p.x, y: p.y, z: p.z, dim: p.dim || $('#co-dim').value };
+    store.set('coords', S.coords); closeSheet(); refreshWhere(f); toast('Coordinates saved');
+  }
+  function refreshWhere(f) { const w = $('[data-where]'); if (w) { w.innerHTML = whereBlock(f); w.firstElementChild && w.firstElementChild.classList.add('swap'); } refreshList(false); }
+
+  /* measuring the real rate with Carpet's hopper counters */
+  const WOOL = ['white', 'orange', 'magenta', 'light_blue', 'yellow', 'lime', 'pink', 'gray', 'light_gray', 'cyan', 'purple', 'blue', 'brown', 'green', 'red', 'black'];
+  function measureSteps(c) {
+    const step = (t, cmd) => `<li>${t ? `<p>${t}</p>` : ''}${cmd ? `<div class="cmd"><code>${esc(cmd)}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(cmd)}" aria-label="Copy ${esc(cmd)}">${I.copy}</button></div>` : ''}</li>`;
+    return step('Turn on hopper counters (Carpet).', '/carpet hopperCounters true')
+      + step(`Point the farm's collection hopper into a ${esc(FR.prettyName(c).toLowerCase())} wool block. Items still pass through, and get counted.`)
+      + step('Reset the counter, then run an hour of game time as fast as your PC can.', `/counter ${c} reset`)
+      + step('', '/tick sprint 72000')
+      + step('Read the items per hour.', `/counter ${c}`);
+  }
+  function measureSheet(f) {
+    const r = S.rates[dkey(f)]; const c = 'green';
+    openSheet(`Measure: ${txt(f.name) || f.id}`, `<div class="block"><div class="ff"><label for="m-wool">Wool colour</label><div class="select"><select id="m-wool">${WOOL.map((w) => `<option value="${w}"${w === c ? ' selected' : ''}>${esc(FR.prettyName(w))}</option>`).join('')}</select></div></div>
+        <ol class="steps" data-steps>${measureSteps(c)}</ol></div>
+      <form data-rate-form style="display:grid;gap:16px" novalidate><div class="field-row">
+        <div class="ff"><label for="m-what">Item</label><input id="m-what" autocomplete="off" maxlength="40" placeholder="Iron ingots" value="${esc(r && r.what)}"></div>
+        <div class="ff"><label for="m-n">Per hour</label><input id="m-n" type="number" inputmode="numeric" min="0" value="${r ? r.n : ''}"></div></div>
+        <p class="err" data-err hidden>Type the number the counter shows.</p></form>`,
+      `${r ? '<button type="button" class="btn btn-quiet press" data-action="rate-clear">Remove</button>' : '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>'}<button type="button" class="btn btn-primary press" data-action="rate-save">Save rate</button>`,
+      (wrap) => { const sel = $('#m-wool', wrap); sel.addEventListener('change', () => { $('[data-steps]', wrap).innerHTML = measureSteps(sel.value); }); });
+  }
+  function saveRate(f) {
+    const n = Math.round(Number($('#m-n').value));
+    if (!$('#m-n').value || !Number.isFinite(n) || n < 0) { const err = $('[data-rate-form] [data-err]'); err.hidden = true; void err.offsetWidth; err.hidden = false; $('#m-n').setAttribute('aria-invalid', 'true'); $('#m-n').focus(); return; }
+    S.rates[dkey(f)] = { n, what: $('#m-what').value.trim(), date: today() };
+    store.set('rates', S.rates); closeSheet(); refreshDesign(f); toast('Rate saved');
+  }
+  function refreshDesign(f) { const body = $('[data-design-body]'); if (body) { body.innerHTML = designBody(f); body.firstElementChild.classList.add('swap'); } }
+
+  /* pasting Litematica's material list */
+  function listSheet(f) {
+    const o = pasted(f);
+    openSheet('Paste the material list', `<p class="muted">In Litematica open the placement's Material List and press Write to file. Open that file, copy all of it and paste it here.</p>
+      <form data-list-form style="display:grid;gap:8px" novalidate><div class="ff"><label for="l-text">Material list</label>
+        <textarea id="l-text" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="| Hopper | 66 | 66 | 0 |"></textarea></div>
+        <p class="found none" data-found aria-live="polite">Nothing pasted yet.</p></form>`,
+      `${o ? '<button type="button" class="btn btn-quiet press" data-action="list-reset">Use the video counts</button>' : '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>'}<button type="button" class="btn btn-primary press" data-action="list-save" disabled>Use this list</button>`,
+      (wrap) => {
+        const t = $('#l-text', wrap);
+        t.addEventListener('input', () => {
+          const list = FP.parseMaterialList(t.value, FR.normalize); const el = $('[data-found]', wrap);
+          el.textContent = list.length ? `${list.length} items, ${fmt(list.reduce((s, m) => s + m.count, 0))} blocks in all` : (t.value.trim() ? 'No items found. Paste the whole file.' : 'Nothing pasted yet.');
+          el.classList.toggle('none', !list.length); $('[data-action="list-save"]', wrap).disabled = !list.length;
+        });
+      });
+  }
+  function saveList(f) {
+    const list = FP.parseMaterialList(($('#l-text') || {}).value, FR.normalize); if (!list.length) return;
+    S.mats[dkey(f)] = { list, date: today() }; store.set('mats', S.mats); closeSheet(); refreshDesign(f); toast(`${list.length} items from Litematica`);
   }
   function worldExtras() {
     const list = S.world ? S.world.builds.filter((b) => !b.farm) : [];
@@ -979,7 +1234,7 @@
     const farms = S.farms.filter((f) => ['planned', 'building'].includes(statusOf(f.id)));
     const all = []; const usedBy = new Map();
     farms.forEach((f) => {
-      const d = designOf(f); const mats = d ? arr(d.materials) : [];
+      const mats = matsOf(f);
       all.push(...mats);
       FR.expand(mats, S.depthMats).items.forEach((it) => { if (!usedBy.has(it.id)) usedBy.set(it.id, []); usedBy.get(it.id).push(txt(f.name) || f.id); });
     });
@@ -1191,9 +1446,10 @@
     if (parts[0] === 'materials') return { name: 'materials' };
     if (parts[0] === 'commands') return { name: 'commands' };
     if (parts[0] === 'mods') return { name: 'mods', id: parts[1] ? dec(parts[1]) : null };
+    if (parts[0] === 'plan' && parts[1]) return { name: 'plan', code: parts.slice(1).join('/') };
     return { name: 'farms' };
   }
-  const TAB = { farms: 0, farm: 0, materials: 1, mods: 2, commands: 3 };
+  const TAB = { farms: 0, farm: 0, materials: 1, mods: 2, commands: 3, plan: 0 };
   function setNav(r) {
     const i = TAB[r.name];
     $$('[data-nav]').forEach((nav) => {
@@ -1211,7 +1467,12 @@
 
   const view = $('#view');
   function render(nav) {
-    const r = parse();
+    let r = parse();
+    if (r.name === 'plan') {
+      /* a plan link: show the farms and ask before replacing anything */
+      const code = r.code; history.replaceState(null, '', '#/'); r = parse();
+      if (S.loaded) setTimeout(() => offerPlan(code), 60); else S.planCode = code;
+    }
     setNav(r);
     const desk = desktop.matches;
     const railScroll = $('.rail') ? $('.rail').scrollTop : 0;
@@ -1236,7 +1497,7 @@
     } else if (r.name === 'farm') {
       html = `<div class="enter">${detailView(farmById(r.id))}</div>${footer()}`;
     } else {
-      html = `<div class="enter">${listHead(false)}<div data-list>${farmRows(null, nav !== false)}</div>${worldExtras()}</div>${footer()}`;
+      html = `<div class="enter">${listHead(false)}<div data-list>${farmRows(null, nav !== false)}</div>${afkBlock()}${worldExtras()}${planBlock()}</div>${footer()}`;
     }
     view.innerHTML = html;
     refreshProgress();
@@ -1363,6 +1624,9 @@
       $$('button', segEl).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === v)));
     }
     renderActionBar(parse());
+    const w = $('[data-where]'); if (w) w.innerHTML = whereBlock(f);
+    const fm = $('[data-farm-mats]'); if (fm) fm.innerHTML = farmMaterials(f);
+    refreshNext(); refreshSide();
     toast(v ? `${txt(f.name) || f.id}: ${statusLabel(v)}` : `${txt(f.name) || f.id}: status cleared`);
   }
 
@@ -1409,12 +1673,12 @@
       $$('[data-action="f-dim"], [data-action="f-st"]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.value === 'all')));
       refreshList(); const sc = $('[data-show-count]'); if (sc) sc.textContent = `Show ${visibleFarms().length} farms`;
     }
-    else if (act === 'copy-farm' && f) { const d = designOf(f); const res = FR.expand(d ? d.materials : [], S.depthFarm); if (res.items.length) copy(`${txt(f.name)} (${S.depthFarm})\n` + listText(res), res.items.length); else toast('No materials to copy'); }
+    else if (act === 'copy-farm' && f) { const res = FR.expand(matsOf(f), S.depthFarm); if (res.items.length) copy(`${txt(f.name)} (${S.depthFarm})\n` + listText(res), res.items.length); else toast('No materials to copy'); }
     else if (act === 'guide') {
       const open = a.getAttribute('aria-expanded') !== 'true'; a.setAttribute('aria-expanded', String(open));
       const p = document.getElementById(a.getAttribute('aria-controls')); if (p) { p.toggleAttribute('data-open', open); p.toggleAttribute('inert', !open); }
     }
-    else if (act === 'copy-cmd') { copy(a.dataset.cmd, 1, 'Command copied'); }
+    else if (act === 'copy-cmd') { copy(a.dataset.cmd, 1, a.dataset.msg || 'Command copied'); }
     else if (act === 'cmd-copy') {
       const c = cmdById(a.dataset.id); if (!c) return;
       copy(c.cmd, 1, c.label ? `Copied: ${c.label}` : 'Command copied');
@@ -1441,6 +1705,22 @@
       const p = $('#howto-panel'); p.toggleAttribute('data-open', S.howto); p.toggleAttribute('inert', !S.howto);
     }
     else if (act === 'retry') { boot(); }
+    else if (act === 'not-now') { S.notNow.push(a.dataset.id); store.set('notNow', S.notNow); refreshNext(); }
+    else if (act === 'next-reset') { S.notNow = []; store.set('notNow', S.notNow); refreshNext(); }
+    else if (act === 'afk-open') afkSheet();
+    else if (act === 'afk-save') saveAfk();
+    else if (act === 'afk-clear') { S.afk = null; store.set('afk', null); closeSheet(); refreshSide(); toast('AFK spot cleared'); }
+    else if (act === 'coords-open' && f) coordsSheet(f);
+    else if (act === 'coords-save' && f) saveCoords(f);
+    else if (act === 'coords-clear' && f) { delete S.coords[f.id]; store.set('coords', S.coords); closeSheet(); refreshWhere(f); toast('Coordinates removed'); }
+    else if (act === 'measure-open' && f) measureSheet(f);
+    else if (act === 'rate-save' && f) saveRate(f);
+    else if (act === 'rate-clear' && f) { delete S.rates[dkey(f)]; store.set('rates', S.rates); closeSheet(); refreshDesign(f); toast('Measured rate removed'); }
+    else if (act === 'list-open' && f) listSheet(f);
+    else if (act === 'list-save' && f) saveList(f);
+    else if (act === 'list-reset' && f) { delete S.mats[dkey(f)]; store.set('mats', S.mats); closeSheet(); refreshDesign(f); toast('Back to the video counts'); }
+    else if (act === 'plan-copy') copyPlan();
+    else if (act === 'plan-load') loadPlan();
   });
 
   function updateGathered() {
@@ -1460,7 +1740,15 @@
       const p = $('[data-mods-progress]'); if (p) p.innerHTML = modsProgress();
     }
   });
-  document.addEventListener('submit', (e) => { if (e.target.matches('[data-cmd-form]')) { e.preventDefault(); const b = $('[data-action="cmd-save"]'); saveCmd(b && b.dataset.id); } });
+  document.addEventListener('submit', (e) => {
+    if (e.target.matches('[data-cmd-form]')) { e.preventDefault(); const b = $('[data-action="cmd-save"]'); saveCmd(b && b.dataset.id); return; }
+    if (!e.target.closest('.sheet')) return;
+    e.preventDefault();
+    const r = parse(); const f = r.name === 'farm' ? farmById(r.id) : null;
+    if (e.target.matches('[data-afk-form]')) saveAfk();
+    else if (e.target.matches('[data-coords-form]') && f) saveCoords(f);
+    else if (e.target.matches('[data-rate-form]') && f) saveRate(f);
+  });
   document.addEventListener('keydown', (e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey) && e.target.matches('#cmd-text')) { e.preventDefault(); e.target.form.requestSubmit(); } });
   document.addEventListener('input', (e) => { if (e.target.matches('[data-search]')) { S.q = e.target.value; refreshList(); } });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && openSheetEl) { e.preventDefault(); closeSheet(); } });
@@ -1493,6 +1781,7 @@
     }
     clearTimeout(slow);
     render(true);
+    if (S.planCode && S.loaded) { const c = S.planCode; S.planCode = null; offerPlan(c); }
     await modsP;
     const r = parse();
     if (r.name === 'mods') render(true);
