@@ -956,10 +956,10 @@
   function worldBlock(b) {
     if (!b) return '';
     return `<section class="world-card block"><span class="eyebrow">In your world</span>
-      <p class="world-where">${dimBadge({ dimension: b.dim })}${coords(b)}</p>
+      ${b.x == null ? '' : `<p class="world-where">${dimBadge({ dimension: b.dim })}${coords(b)}</p>`}
       <p class="muted">${esc(txt(b.seen))}</p>
-      <div class="cmd"><code>${esc(tpCmd(b))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command">${I.copy}</button></div>
-      <small class="faint">Found by a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}${S.status[b.farm] ? '' : `; status set to ${statusLabel(b.status)} from the scan`}.</small></section>`;
+      ${b.x == null ? '' : `<div class="cmd"><code>${esc(tpCmd(b))}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(tpCmd(b))}" aria-label="Copy teleport command">${I.copy}</button></div>`}
+      <small class="faint">${b.x == null ? 'Marked from what you told me, not from the scan.' : `Found by a scan of world ${esc(txt(S.world.world))} on ${esc(txt(S.world.scanned))}${S.status[b.farm] ? '' : `; status set to ${statusLabel(b.status)} from the scan`}.`}</small></section>`;
   }
   function worldExtras() {
     const list = S.world ? S.world.builds.filter((b) => !b.farm) : [];

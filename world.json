@@ -1,5 +1,5 @@
 {
-  "scanned": "2026-10-28",
+  "scanned": "2026-10-28", "updated": "2026-10-29",
   "world": "200509",
   "note": "Read from the save files by a block and entity scan, not seen in game. Matches are a best guess from what each place contains.",
   "builds": [
@@ -21,11 +21,13 @@
       "seen": "132 farmland with carrots and potatoes, nether wart on soul sand" },
     { "id": "smelter", "farm": null, "name": "Furnace Smelter", "dim": "overworld", "x": 936, "y": 65, "z": -1168,
       "seen": "50 furnaces fed by hopper minecarts on 102 powered rails" },
-    { "id": "crafter", "farm": null, "name": "Auto-crafter", "dim": "overworld", "x": 896, "y": 70, "z": -1152,
-      "seen": "4 crafters, 82 white stained glass, hoppers and a snow golem; purpose a guess" },
-    { "id": "nether-roof", "farm": null, "name": "Nether roof build", "dim": "nether", "x": 168, "y": 130, "z": -216,
-      "seen": "scaffolding and glass above the roof, warped trapdoors, hoppers and chests; maybe the start of a gold farm" },
-    { "id": "east-build", "farm": null, "name": "Build at 1568 144", "dim": "overworld", "x": 1568, "y": 100, "z": 144,
-      "seen": "scaffolding up to y 190, dispensers and observers at y 102 to 133, a hopper sorter at y 67, a nether portal; purpose unclear" }
+    { "id": "snow-farm", "farm": null, "name": "Snow Farm", "dim": "overworld", "x": 896, "y": 70, "z": -1152,
+      "seen": "bigbooty17's snow farm: a snow golem, 4 crafters turning snowballs into blocks, hoppers into chests" },
+    { "id": "hoglin-farm", "farm": "hoglin-farm", "name": "Hoglin Farm", "status": "built", "dim": "nether", "x": 168, "y": 130, "z": -216,
+      "seen": "On the nether roof: stone bricks, scaffolding and glass, warped trapdoors, warped fungus, a campfire, hoppers into chests" },
+    { "id": "mob-farm", "farm": null, "name": "Mob Farm", "dim": "overworld", "x": 1568, "y": 100, "z": 144,
+      "seen": "All-mob farm for string, bone meal and gunpowder: scaffolding up to y 190, dispensers and observers at y 102 to 133, a hopper sorter at y 67; spiders, creepers, skeletons and zombies nearby" },
+    { "id": "slime-farm", "farm": "slime-farm", "name": "Slime Farm", "status": "built",
+      "seen": "Built, but the scan couldn't place it: this design uses Oozing potions, so it isn't in a slime chunk and has no tell-tale blocks. Add the coordinates when you're next there." }
   ]
 }
