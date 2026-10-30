@@ -1441,6 +1441,146 @@
       ]
     },
     {
+      "id": "big-iron-farm",
+      "name": "Big Iron Farm",
+      "dimension": "overworld",
+      "where": "Flat open ground away from your base: one module is about 4x4 chunks (64x64). Keep it more than 16 blocks from other villagers, beds and golems",
+      "requirements": [
+        "21 villagers (7 pods of 3)",
+        "Zombies to scare each pod (4 in the world download)"
+      ],
+      "primary": {
+        "title": "Minecraft 1.21 Ultimate Iron Farm Tutorial - 83,000 Iron Per Hour!",
+        "creator": "Shulkercraft",
+        "video_url": "https://www.youtube.com/watch?v=835S_L50Xek",
+        "video_id": "835S_L50Xek",
+        "published": "2022-10-12",
+        "works_on": "Java 1.16 - 1.21 (26.3 unverified)",
+        "rate": "~2,700 ingots/h per module",
+        "size": "~64x64 (4x4 chunks) per module",
+        "difficulty": "hard",
+        "schematic": {
+          "url": "https://wisehosting.com/dl?w=Iron-Farm-2700-Per-Hour",
+          "format": "world download",
+          "found_in": "video description"
+        },
+        "materials": [
+          {
+            "item": "smooth_stone",
+            "count": 3293
+          },
+          {
+            "item": "warped_fence_gate",
+            "count": 411
+          },
+          {
+            "item": "spruce_fence_gate",
+            "count": 317
+          },
+          {
+            "item": "white_stained_glass",
+            "count": 184
+          },
+          {
+            "item": "spruce_trapdoor",
+            "count": 102
+          },
+          {
+            "item": "lava_bucket",
+            "count": 97
+          },
+          {
+            "item": "cyan_stained_glass_pane",
+            "count": 76
+          },
+          {
+            "item": "cyan_bed",
+            "count": 42
+          },
+          {
+            "item": "smooth_stone_slab",
+            "count": 23
+          },
+          {
+            "item": "blue_ice",
+            "count": 19
+          },
+          {
+            "item": "chest",
+            "count": 10
+          },
+          {
+            "item": "hopper",
+            "count": 7
+          },
+          {
+            "item": "torch",
+            "count": 7
+          },
+          {
+            "item": "sticky_piston",
+            "count": 4
+          },
+          {
+            "item": "redstone",
+            "count": 4
+          },
+          {
+            "item": "slime_block",
+            "count": 3
+          },
+          {
+            "item": "water_bucket",
+            "count": 2
+          },
+          {
+            "item": "comparator",
+            "count": 2
+          },
+          {
+            "item": "redstone_block",
+            "count": 2
+          },
+          {
+            "item": "cauldron",
+            "count": 1
+          },
+          {
+            "item": "lever",
+            "count": 1
+          },
+          {
+            "item": "repeater",
+            "count": 1
+          }
+        ],
+        "materials_source": "schematic",
+        "notes": "Design by Aurigas (IRON DESCENT, https://youtu.be/XVGRDHgED8I). Modular: one module (the counts here) makes ~2,700/h; the video's full build is 36 modules for ~83,000/h. Counts are for one module, read from Shulkercraft's 1-module world download on 2026-10-30 (blocks only, the superflat floor left out). Water: 443 source blocks, so make an infinite source first. Neither bigbooty17 nor potato_noir has a big iron farm; bigbooty17's 1,200/h one is the normal Iron Farm."
+      },
+      "alternatives": [
+        {
+          "title": "NEW BEST IRON FARM Minecraft 1.21/26.2! (2000/h)",
+          "creator": "MCBlanky",
+          "video_url": "https://www.youtube.com/watch?v=1b8Myvit1Eg",
+          "video_id": "1b8Myvit1Eg",
+          "published": "2026-01-18",
+          "works_on": "Java 1.21 - 26.2",
+          "rate": "~2,000 ingots/h (claimed)",
+          "size": "unknown",
+          "difficulty": "easy",
+          "materials": [],
+          "notes": "Smaller and recent; built for 26.2. Materials not researched."
+        }
+      ],
+      "sources": [
+        "https://www.youtube.com/watch?v=835S_L50Xek",
+        "https://wisehosting.com/dl?w=Iron-Farm-2700-Per-Hour",
+        "https://wisehosting.com/dl?w=Iron-Farm-103000-Per-Hour",
+        "https://www.youtube.com/watch?v=XVGRDHgED8I",
+        "https://www.youtube.com/watch?v=1b8Myvit1Eg"
+      ]
+    },
+    {
       "id": "witch-farm",
       "name": "Witch Farm",
       "dimension": "overworld",
