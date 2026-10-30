@@ -432,6 +432,15 @@
   .mycmd-copy:not(:has(b)) .cue { grid-row:1; }
   .mycmd .icon-btn { color:var(--muted); flex:none; }
   @media (min-width: 1100px) { .preset-list { grid-template-columns:1fr 1fr; gap:14px 20px; } }
+  .cmd-groups { display:grid; gap:4px; }
+  .cmd-group + .cmd-group { border-top:1px solid var(--line); padding-top:4px; }
+  .cmd-group-head { width:100%; display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:48px; padding:0 8px 0 2px; font-size:15px; font-weight:650; text-align:left; border-radius:var(--r); }
+  .cmd-group-head > span { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .cmd-group-head small { margin-left:8px; font-size:13px; font-weight:500; color:var(--faint); }
+  .cmd-group .cmd-list { padding-bottom:12px; }
+  [data-group-chips] { margin-top:2px; }
+  [data-group-chips] .chip { max-width:100%; }
+  [data-group-chips] .chip span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .preset-group { display:grid; gap:10px; }
   .preset-group + .preset-group { margin-top:18px; }
   .preset-list { list-style:none; display:grid; gap:14px; }
@@ -508,7 +517,7 @@
     .sources a:hover { color:var(--fg); }
     .howto > button:hover { background:var(--press-bg); }
     .mod-video:hover { background:var(--surface-2); }
-    .cmd-copy:hover, .guide-toggle:hover { background:var(--press-bg); color:var(--fg); }
+    .cmd-copy:hover, .guide-toggle:hover, .cmd-group-head:hover { background:var(--press-bg); color:var(--fg); }
     .mycmd-copy:hover { background:var(--press-bg); }
     .mycmd-copy:hover .cue { color:var(--fg); }
         .mycmd .icon-btn:hover { background:var(--press-bg); color:var(--fg); }
@@ -662,7 +671,7 @@
     status: store.get('status', {}), design: store.get('design', {}), got: store.get('got', {}),
     installed: store.get('installed', {}), cmds: [].concat(store.get('cmds', [])).filter((c) => c && c.id && c.cmd),
     depthFarm: store.get('depthFarm', 'placed'), depthMats: store.get('depthMats', 'raw'),
-    modFilter: store.get('modFilter', 'all'), howto: false,
+    modFilter: store.get('modFilter', 'all'), howto: false, cmdShut: store.get('cmdShut', {}),
     coords: store.get('coords', {}), afk: store.get('afk', null), rates: store.get('rates', {}),
     mats: store.get('mats', {}), notNow: [].concat(store.get('notNow', [])),
     navCount: 0, listScroll: 0, prevRoute: null,
@@ -1379,16 +1388,33 @@
   const saveCmds = () => store.set('cmds', S.cmds);
   const cue = `<span class="cue" aria-hidden="true"><svg class="c-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg><svg class="c-done" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg></span>`;
 
-  function myCmds(stagger) {
-    if (!S.cmds.length) return `<div class="empty"><p><b>No saved commands yet.</b><br>Save one of the presets below, or add your own.</p><button type="button" class="btn btn-primary press" data-action="cmd-new">${I.plus}New command</button></div>`;
-    return `<ul class="cmd-list${stagger ? ' stagger' : ''}">${S.cmds.map((c, i) => `<li class="mycmd" id="cmd-${esc(c.id)}" style="--i:${i}">
+  // Groups in the order they first appear (newest first); commands without a group go last, as "Other".
+  const cmdGroups = () => {
+    const names = [...new Set(S.cmds.map((c) => (c.group || '').trim()).filter(Boolean))];
+    const out = names.map((name) => ({ name, items: S.cmds.filter((c) => (c.group || '').trim() === name) }));
+    const loose = S.cmds.filter((c) => !(c.group || '').trim());
+    if (loose.length) out.push({ name: '', items: loose });
+    return out;
+  };
+  const cmdItem = (c, i) => `<li class="mycmd" id="cmd-${esc(c.id)}" style="--i:${i}">
       <button type="button" class="mycmd-copy" data-action="cmd-copy" data-id="${esc(c.id)}" aria-label="Copy ${esc(c.label || c.cmd)}">${c.label ? `<b>${esc(c.label)}</b>` : ''}<code>${esc(c.cmd)}</code>${cue}</button>
       <button type="button" class="icon-btn press" data-action="cmd-edit" data-id="${esc(c.id)}" aria-label="Edit ${esc(c.label || 'command')}">${I.edit}</button>
-    </li>`).join('')}</ul>`;
+    </li>`;
+  function myCmds(stagger) {
+    if (!S.cmds.length) return `<div class="empty"><p><b>No saved commands yet.</b><br>Save one of the presets below, or add your own.</p><button type="button" class="btn btn-primary press" data-action="cmd-new">${I.plus}New command</button></div>`;
+    const groups = cmdGroups();
+    // No groups yet: the plain list, as before.
+    if (groups.length === 1 && !groups[0].name) return `<ul class="cmd-list${stagger ? ' stagger' : ''}">${S.cmds.map(cmdItem).join('')}</ul>`;
+    return `<div class="cmd-groups${stagger ? ' stagger' : ''}">${groups.map((g, gi) => {
+      const open = !S.cmdShut[g.name]; const pid = `cmdg-${gi}`;
+      return `<section class="cmd-group" style="--i:${gi}"><button type="button" class="cmd-group-head press" data-action="cmd-group" data-group="${esc(g.name)}" aria-expanded="${open}" aria-controls="${pid}"><span>${g.name ? esc(g.name) : 'Other'}<small class="num">${g.items.length}</small></span>${I.chevD}</button>
+        <div class="acc" id="${pid}"${open ? ' data-open' : ' inert'}><div class="acc-inner"><ul class="cmd-list">${g.items.map(cmdItem).join('')}</ul></div></div></section>`;
+    }).join('')}</div>`;
   }
+  const presetGroup = (g) => g.group.replace(/\s*\(.*\)$/, '');
   function presetList() {
     return PRESETS.map((g) => `<section class="preset-group"><span class="eyebrow">${esc(g.group)}</span><ul class="preset-list">${g.items.map(([l, c]) => `<li class="preset"><p>${esc(l)}</p>
-      <div class="cmd"><code>${esc(c)}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(c)}" aria-label="Copy ${esc(c)}">${I.copy}</button><button type="button" class="cmd-copy press" data-action="cmd-from" data-label="${esc(l)}" data-cmd="${esc(c)}" aria-label="Save a copy to your commands">${I.plus}</button></div>
+      <div class="cmd"><code>${esc(c)}</code><button type="button" class="cmd-copy press" data-action="copy-cmd" data-cmd="${esc(c)}" aria-label="Copy ${esc(c)}">${I.copy}</button><button type="button" class="cmd-copy press" data-action="cmd-from" data-label="${esc(l)}" data-cmd="${esc(c)}" data-group="${esc(presetGroup(g))}" aria-label="Save a copy to your commands">${I.plus}</button></div>
     </li>`).join('')}</ul></section>`).join('');
   }
   const cmdTip = `<p class="tip">${I.info}<span><b>F3 + C</b> in game copies where you stand. Paste it into a new command and tap <b>Bot here</b> to get a <code>/player … spawn at</code> command for that spot.</span></p>`;
@@ -1410,15 +1436,23 @@
   const botName = (label) => { const n = String(label || '').replace(/[^A-Za-z0-9_]/g, '').slice(0, 16); return n.length >= 3 ? n : 'Bot'; };
   function cmdSheet(c) {
     const isNew = !c || !c.id;
+    const groupNames = cmdGroups().map((g) => g.name).filter(Boolean);
     openSheet(isNew ? 'New command' : 'Edit command', `<form data-cmd-form style="display:grid;gap:16px" novalidate>
         <div class="ff"><label for="cmd-label">Name</label><input id="cmd-label" name="label" maxlength="60" autocomplete="off" placeholder="Hoglin bot" value="${esc(c && c.label)}"></div>
         <div class="ff"><label for="cmd-text">Command</label><textarea id="cmd-text" name="cmd" maxlength="256" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="/player Hoglin spawn at 176 64 -208">${esc(c && c.cmd)}</textarea>
           <p class="err" data-cmd-err hidden>Type or paste a command first.</p>
           <button type="button" class="btn press bot-here" data-action="bot-here" hidden>${I.bot}Bot here</button>
           <small>Chat takes up to 256 characters.</small></div>
+        <div class="ff"><label for="cmd-group">Group</label><input id="cmd-group" name="group" maxlength="40" autocomplete="off" placeholder="Hoglin farm" value="${esc(c && c.group)}">
+          ${groupNames.length ? `<div class="chips" data-group-chips>${groupNames.map((g) => `<button type="button" class="chip press" data-action="cmd-pick-group" data-group="${esc(g)}" aria-pressed="false"><span>${esc(g)}</span></button>`).join('')}</div>` : ''}
+          <small>Commands with the same group sit together. Leave it empty for Other.</small></div>
       </form>`,
       `${isNew ? '<button type="button" class="btn btn-quiet press" data-action="sheet-close">Cancel</button>' : `<button type="button" class="btn btn-quiet press" data-action="cmd-delete" data-id="${esc(c.id)}" style="color:var(--danger)">Delete</button>`}<button type="button" class="btn btn-primary press" data-action="cmd-save" data-id="${esc(c && c.id || '')}">Save</button>`,
-      (wrap) => { const t = $('#cmd-text', wrap); const sync = () => { $('[data-action="bot-here"]', wrap).hidden = !F3C.test(t.value); }; t.addEventListener('input', sync); sync(); });
+      (wrap) => {
+        const t = $('#cmd-text', wrap); const sync = () => { $('[data-action="bot-here"]', wrap).hidden = !F3C.test(t.value); }; t.addEventListener('input', sync); sync();
+        const g = $('#cmd-group', wrap); const syncG = () => { $$('[data-action="cmd-pick-group"]', wrap).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.group === g.value.trim()))); };
+        g.addEventListener('input', syncG); syncG();
+      });
   }
   function saveCmd(id) {
     const form = $('[data-cmd-form]'); if (!form) return;
@@ -1427,9 +1461,11 @@
     if (!cmd) { err.hidden = true; void err.offsetWidth; err.hidden = false; t.setAttribute('aria-invalid', 'true'); t.focus(); return; }
     if (!cmd.startsWith('/')) cmd = '/' + cmd;
     const label = $('#cmd-label', form).value.trim();
+    const group = $('#cmd-group', form).value.trim().replace(/\s+/g, ' ');
     const old = id && cmdById(id);
-    if (old) { old.label = label; old.cmd = cmd; }
-    else { id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6); S.cmds.unshift({ id, label, cmd }); }
+    if (old) { old.label = label; old.cmd = cmd; old.group = group; }
+    else { id = Date.now().toString(36) + Math.random().toString(36).slice(2, 6); S.cmds.unshift({ id, label, cmd, group }); }
+    if (S.cmdShut[group]) { delete S.cmdShut[group]; store.set('cmdShut', S.cmdShut); } // show where it landed
     saveCmds(); closeSheet(); refreshCmds(id); toast(old ? 'Command saved' : 'Command added');
   }
   function deleteCmd(id) {
@@ -1686,7 +1722,14 @@
     }
     else if (act === 'cmd-new') cmdSheet(null);
     else if (act === 'cmd-edit') { const c = cmdById(a.dataset.id); if (c) cmdSheet(c); }
-    else if (act === 'cmd-from') cmdSheet({ label: a.dataset.label, cmd: a.dataset.cmd });
+    else if (act === 'cmd-from') cmdSheet({ label: a.dataset.label, cmd: a.dataset.cmd, group: a.dataset.group });
+    else if (act === 'cmd-pick-group') { const g = $('#cmd-group'); if (g) { g.value = a.getAttribute('aria-pressed') === 'true' ? '' : a.dataset.group; g.dispatchEvent(new Event('input')); } }
+    else if (act === 'cmd-group') {
+      const open = a.getAttribute('aria-expanded') !== 'true'; a.setAttribute('aria-expanded', String(open));
+      const p = document.getElementById(a.getAttribute('aria-controls')); if (p) { p.toggleAttribute('data-open', open); p.toggleAttribute('inert', !open); }
+      if (open) delete S.cmdShut[a.dataset.group]; else S.cmdShut[a.dataset.group] = 1;
+      store.set('cmdShut', S.cmdShut);
+    }
     else if (act === 'cmd-save') saveCmd(a.dataset.id);
     else if (act === 'cmd-delete') deleteCmd(a.dataset.id);
     else if (act === 'bot-here') {
