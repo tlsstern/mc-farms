@@ -5501,6 +5501,39 @@
         "https://wisehosting.com/dl?w=Huge-Gold-Farm-Litematic",
         "https://www.youtube.com/watch?v=C_knSIffqy8"
       ]
+    },
+    {
+      "id": "blue-axolotl",
+      "name": "Blue Axolotl",
+      "dimension": "overworld",
+      "where": "Anywhere with water; axolotls come from lush caves",
+      "requirements": [
+        "Two axolotls caught in buckets (lush caves)",
+        "Lots of buckets of tropical fish: each breed costs 2, and a blue baby is a 1 in 1200 chance"
+      ],
+      "primary": {
+        "title": "How to Build the BEST Blue Axolotl Farm in Minecraft 26.2",
+        "creator": "Shocktor",
+        "video_url": "https://www.youtube.com/watch?v=L8nY9_UwSP4",
+        "video_id": "L8nY9_UwSP4",
+        "published": "2022-06-01",
+        "works_on": "Java 1.19 - 26.2 (26.3 assumed)",
+        "rate": "1 in 1200 babies is blue; parents breed every 5 min",
+        "size": null,
+        "difficulty": "easy",
+        "schematic": {
+          "url": null,
+          "format": null,
+          "found_in": "none"
+        },
+        "materials": [],
+        "materials_source": null,
+        "notes": "Goal: get a blue axolotl. Once you have one, breed it with any axolotl: each baby has a 50% chance to be blue too (Minecraft Wiki)."
+      },
+      "alternatives": [],
+      "sources": [
+        "https://minecraft.wiki/w/Tutorial:Axolotl_farming"
+      ]
     }
   ]
 }
